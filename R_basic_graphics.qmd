@@ -1,0 +1,133 @@
+---
+tag: ecoinformatics, R, 課程, 生態資訊學, graphics,
+---
+
+# 繪圖
+
+R 支援基本的繪圖，包括散布圖(distribution plot)、盒鬚圖(boxplot)、直方圖(histogram)甚至是地圖等。若需要進階的繪圖，可安裝 ```ggplot2``` 等第三方套件支援。
+
+## 基本繪圖
+
+我們以下圖一來說明 R 繪圖的基本元件及定義
+![](https://i.imgur.com/1wK9Z08.jpg)
+圖一、R 的基本繪圖
+
+A: 繪圖區，呈現點、線等圖之處
+B: 圖標題(graph title, R 選項:```main```)
+C: X 軸(x-axis)
+D: Y 軸(y-axis)
+E: X 變數標題 (x label, R 選項: ```xlab```)
+F: Y 變數標題 (y label, R 選項: ```ylab```)
+
+
+
+### 盒鬚圖(boxplot)
+
+```R
+# 加載 mtcars 資料集，接下來就可以直接
+# 使用 mtcars 裡頭的變數
+# 未加載 mtcars 要使用 mpg 變數: mtcars$mpg
+# 加載之後只需要使用 mpg
+attach(mtcars)
+boxplot(mpg)
+# 繪製完之後卸載 mtcars
+detach(mtcars)
+```
+
+![](https://i.imgur.com/bwa2k4q.jpg)
+圖二、盒鬚圖
+
+
+### 直方圖(histogram)
+
+```R
+attach(mtcars)
+hist(mpg)
+detach(mtcars)
+```
+
+![](https://i.imgur.com/rBOcrgu.jpg)
+圖三、直方圖範例
+
+其他選項：
+```breaks```: 直方柱數量(number of bins)，例如 ```breaks = 10``` 為繪製
+```freq```: 預設使用出現的頻度，若設定為 ```FALSE``` 則會繪製 probability densities
+
+
+也可以繪製多個不同變數
+```R
+attach(mtcars)
+boxplot(mpg, wt, drat, wt, qsec)
+detach(mtcars)
+```
+![](https://i.imgur.com/Rs1CbMa.jpg)
+圖四、多個直方圖合併在同一個圖表中
+
+使用 ```ggplot2``` 來繪圖
+
+
+
+
+### 散布圖(scatterplot)
+
+```R
+attach(mtcars)
+plot(x = hp, y = mpg, main = 'Scatterplot: HP v.s. MPG')
+detach(mtcars)
+```
+
+![](https://i.imgur.com/tt2xUP2.jpg)
+
+### 細部調整參數
+
+TBD
+
+## 參考資料以及延伸閱讀
+
+* [R graphics gallery](http://r-graph-gallery.com)
+* [Quick-R graph](https://www.statmethods.net/graphs/index.html)
+
+## 練習
+
+登入 datacamp 之後可以自我練習 R 繪圖
+https://www.datacamp.com/courses/data-visualization-in-r
+
+
+### 課堂練習 RScript
+```R
+#
+hdata <- rnorm(100)
+# draw histogram using hist()
+hist(hdata, axes = FALSE)
+axis(1)
+axis(3)
+box()
+
+
+### Use examples from Quick-R website
+attach(mtcars)
+# 單純繪圖，由螢幕輸出圖表
+  plot(wt, mpg, type = "p", xlab = "WT (unit)",
+       ylab="MPG (miles)")
+  # lm 為 linear model (簡單線性回歸)
+  abline(lm(mpg~wt), lwd = 2, lty = 2, 
+         col = "#ff000099")
+  title("Regression of MPG on Weight")
+
+quartz()
+heat.colors(5)
+terrain.colors(10)
+```
+
+### 作業
+
+1. 請使用 R 內建的 iris 資料集，嘗試繪出類似下列的盒鬚圖。圖中必須包含標題、x 及 y 軸標籤。
+ (1) 請繪製不同物種(欄位 Species，分別有 setosa, versicolor, virginica 三種)和花瓣長度（欄位名稱為 Petal.Length）的盒鬚圖。
+
+![](https://i.imgur.com/hcFWu5s.png)
+
+ (2) 請把這三種物種的盒鬚圖著上不同顏色
+ 
+2. 請繪出 sepal length (x 軸) 和 sepal width (y 軸) 的散佈圖，並把不同物種以不同顏色表示。
+
+3. 請將以下三張小圖使用 ```par()``` 或是 ```layout``` 組合成一張圖（共3張小圖）。第一張為 setosa 的花瓣長度及寬度散佈圖，第二張為 versicolor 的萼片長度及寬度散佈圖，第三張為 virginica 的萼片長度及寬度散佈圖

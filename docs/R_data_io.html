@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.646">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>生態資訊學：R 語言應用 - 7&nbsp; 檔案的輸出入</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./R_function.html" rel="next">
+<link href="./R_flow_control.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">生態資訊學：R 語言應用</span>
+  </a>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <a href="" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mutolisp/ecoinfo" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_introduction.html" class="sidebar-item-text sidebar-link">R 基礎入門</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_fundamental.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_arithmetic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">資料結構</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_flow_control.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_io.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_data_management.html" class="sidebar-item-text sidebar-link">資料管理</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_sorting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">資料的排序</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_combination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_filtering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_scientific_name.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_database.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./visualization.html" class="sidebar-item-text sidebar-link">視覺化</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic_graphics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_advance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#讀取檔案" id="toc-讀取檔案" class="nav-link active" data-scroll-target="#讀取檔案"> <span class="header-section-number">7.1</span> 讀取檔案</a>
+  <ul class="collapse">
+  <li><a href="#大檔案的讀取" id="toc-大檔案的讀取" class="nav-link" data-scroll-target="#大檔案的讀取"> <span class="header-section-number">7.1.1</span> 大檔案的讀取</a></li>
+  </ul></li>
+  <li><a href="#檔案的輸出" id="toc-檔案的輸出" class="nav-link" data-scroll-target="#檔案的輸出"> <span class="header-section-number">7.2</span> 檔案的輸出</a></li>
+  <li><a href="#工作資料的儲存" id="toc-工作資料的儲存" class="nav-link" data-scroll-target="#工作資料的儲存"> <span class="header-section-number">7.3</span> 工作資料的儲存</a></li>
+  <li><a href="#練習-script" id="toc-練習-script" class="nav-link" data-scroll-target="#練習-script"> <span class="header-section-number">7.4</span> 練習 Script</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_data_io.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_data_io.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>把外部資料輸入進 R 的時候，可使用 csv (逗號分隔檔案)或是 txt 資料表的格式。如果你習慣使用 Microsoft Excel 的話，也可以安裝<a href="https://cran.r-project.org/web/packages/readxl/index.html"><code>readxl</code></a> 這個套件來讀取 Excel 的檔案格式。</p>
+<section id="讀取檔案" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="讀取檔案"><span class="header-section-number">7.1</span> 讀取檔案</h2>
+<p><strong>讀取 Microsoft Excel 檔案</strong></p>
+<p>讀取 Excel 時，可使用 <a href="https://cran.r-project.org/web/packages/readxl/index.html"><code>readxl</code></a> 套件中的 <code>read_excel()</code> 來讀取，讀取的時候需要設定活頁簿(sheet)的名稱，若不知道名稱可以用 <code>excel_sheets()</code> 來取得名稱</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># 載入 readxl 檔案</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># 使用 excel_sheets 讀取 excel 中的 sheet 名稱</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>sheetNames <span class="ot">&lt;-</span> <span class="fu">excel_sheets</span>(<span class="st">'some_excel_file.xlsx'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># 假設只讀取第一個 sheet</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>excelFile <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">'some_excel_file.xlsx'</span>, </span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="at">sheet =</span> sheetNames[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>讀取 csv 檔案</strong></p>
+<p>假設我們有個資料表需要輸入進 R 分析，這個資料表長得像這樣： <a href="https://gist.github.com/mutolisp/83cc1fb6784c07e90542655c7e9f8da0">資料下載</a></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">id</th>
+<th>plot</th>
+<th>species</th>
+<th style="text-align: right;">cover</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A01</td>
+<td>A</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A01</td>
+<td>B</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A02</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A02</td>
+<td>C</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>A02</td>
+<td>D</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>A02</td>
+<td>E</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>A03</td>
+<td>F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>A04</td>
+<td>F</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>A04</td>
+<td>G</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>A05</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>A05</td>
+<td>E</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>A05</td>
+<td>F</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>A06</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>A07</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>A07</td>
+<td>B</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>A07</td>
+<td>C</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17</td>
+<td>A08</td>
+<td>C</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">18</td>
+<td>A08</td>
+<td>D</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19</td>
+<td>A08</td>
+<td>G</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20</td>
+<td>A08</td>
+<td>H</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>原始資料的樣貌(csv 檔案請參見 <code>examples/ch1_r_project/data/datainput_example.csv</code>):</p>
+<pre><code>id,plot,species,cover
+1,A01,A,5
+2,A01,B,10
+3,A02,A,1
+4,A02,C,2
+5,A02,D,3
+6,A02,E,15
+7,A03,F,25
+8,A04,F,10
+9,A04,G,5
+10,A05,A,1
+11,A05,E,1
+12,A05,F,1
+13,A06,A,1
+14,A07,A,1
+15,A07,B,1
+16,A07,C,5
+17,A08,C,10
+18,A08,D,1
+19,A08,G,2
+20,A08,H,1</code></pre>
+<p>總共有 20 筆資料，四個欄位，第一列(row)是欄位的名稱。 在把資料輸入進 R 時，記得要先使用 Excel 或是 LibreOffice 看一下，因為有些資料可能沒有清理乾淨(例如分隔符號不統一、空白行、空白欄位等)。讀取資料時，也有可能碰到編碼的問題，例如 Windows 都用 Big5 編碼，碰到 Unicode (萬國碼，通常是 UTF-8)的資料時會出現錯誤亂碼等。這些問題我們先略過不提，在「資料清理」的部份會再詳細解說。</p>
+<p>讀取資料使用 <code>read.table()</code> 或是 <code>read.csv()</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># 在讀資料之前，請先確定資料的位置</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># 是絕對路徑或是相對路徑，例如在 Windows 中</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># "C:\Users\User\Desktop\data\example.csv" 是絕對路徑</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># "data\example.csv" 是相對路徑</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>rawdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/datainput_example.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>常用的參數有 <code>header</code> (欄位名稱的有無)、<code>sep</code>(分隔符號)、<code>na.strings</code> (沒有資料的字串，例如 -9999)、<code>skip</code> (省略的行數)等。例如預設讀入 csv 時，會把第一列當成欄位名稱，若你的資料中沒有欄位名稱，就可以使用<code>header=FALSE</code> 來關掉讀取第一列當成欄位名稱。 分隔符號則是當你在讀取以 Tab、pipeline (|) 所需要輸入的符號，例如以 Tab 分隔，參數則為 <code>sep = "\t"</code> (<code>\t</code> 代表 Tab 鍵)。另外還有個常用的是編碼(encodings)，如果編碼是 unicode，參數為<code>encoding = "UTF-8"</code>。</p>
+<section id="大檔案的讀取" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="大檔案的讀取"><span class="header-section-number">7.1.1</span> 大檔案的讀取</h3>
+<p>不管你是使用 <code>read.table()</code> 或是 <code>read.csv()</code> 等輸入指令，碰到大檔案的時候，我會建議使用 <code>data.table</code> 套件底下的<code>fread()</code> 來讀取資料。舉例來說，有個 csv 檔案約 20 MB，如果使用 <code>read.csv()</code> 來讀取大概要 3.4 秒：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># proc.time() 來取得計算的時間</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>ptm <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  a_csvread <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/testdata.csv'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">proc.time</span>() <span class="sc">-</span> ptm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>但如果使用 <code>fread()</code>，則只需要 0.132 秒。</p>
+<p><code>{.r `code-line-numbers`="3"} ptm &lt;- proc.time()    a_fread &lt;- fread('data/testdata.csv') proc.time() - ptm</code></p>
+<p>因此當你如果有讀取大檔案的需求，請使用 <code>fread()</code> 來讀取檔案。</p>
+</section>
+</section>
+<section id="檔案的輸出" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="檔案的輸出"><span class="header-section-number">7.2</span> 檔案的輸出</h2>
+<p>和 <code>read.csv</code> 相同，有 read 就有 write，例如：</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">write.csv</span>(x, <span class="st">'file/path/to/output/file.csv'</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>`<code>write.csv()</code> 預設會輸出列數，若你沒有這個需求的話， 可以把它關閉(<code>row.names=FALSE</code>)。</p>
+<p>另外 data.table 中，也可以使用 <code>data.table::fwrite()</code> 來輸出檔案。</p>
+</section>
+<section id="工作資料的儲存" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="工作資料的儲存"><span class="header-section-number">7.3</span> 工作資料的儲存</h2>
+<p>在 R 裡頭可以把目前工作階段中儲存之變數、載入的資料用 <code>save.image('儲存的路徑/.rdata')</code> 儲存成 R 映像檔，以方便下次使用。在使用 RStudio 退出時，通常也會問您是否要儲存工作階段的映像檔案至家目錄下，如下圖</p>
+<p><img src="https://i.imgur.com/mZvFXLl.png" class="img-fluid"></p>
+<p>若要手動儲存與載入的話，可以分別使用 <code>save.image()</code> 和 <code>load()</code> 來載入所儲存的 R 映像檔</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 儲存目前工作階段映像檔</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">save.image</span>(<span class="st">'到/儲存路徑/檔名.Rdata'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># 載入映象檔</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">load</span>(<span class="st">'到/儲存路徑/檔名.Rdata'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+關於路徑
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>路徑在 Windows 作業系統通常是</p>
+<pre><code>C:\\Users/yourusername/file.Rdata</code></pre>
+<p>或是相對路徑</p>
+<pre><code>dir/file.Rdata</code></pre>
+<p>如果在 Unix 或是 MacOS 請使用</p>
+<pre><code>/Users/yourusername/file.Rdata</code></pre>
+</div>
+</div>
+</section>
+<section id="練習-script" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="練習-script"><span class="header-section-number">7.4</span> 練習 Script</h2>
+<ol type="1">
+<li>基本的輸入資料練習 <a href="https://gist.github.com/mutolisp/252b751ce7235461274ca5f339043ad4"><small>R Script 下載</small></a></li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 資料的輸出入</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>spcover <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'ecoinformatics_ex1026.csv'</span>,</span>
+<span id="cb10-3"><a href="#cb10-3"></a>                    <span class="at">sep =</span> <span class="st">','</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># read.table</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>spcover<span class="sc">$</span>species</span>
+<span id="cb10-6"><a href="#cb10-6"></a>spcover<span class="sc">$</span>cover</span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="fu">summary</span>(spcover)</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>spcover <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">'C:</span><span class="sc">\\</span><span class="st">Desktop</span><span class="sc">\\</span><span class="st">ecoinformatics_ex1026.csv'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co"># 使用 file.choose() 用檔案總管開啟</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>spcover <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="fu">file.choose</span>())</span>
+<span id="cb10-12"><a href="#cb10-12"></a></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co"># 使用 fread 開啟大檔案速度會比 read.csv 快</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>ptm <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb10-15"><a href="#cb10-15"></a>test1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'~/Downloads/cwb2006-2015/raw/200601_auto_hr.txt'</span>, <span class="at">skip=</span><span class="dv">73</span>)</span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="fu">proc.time</span>() <span class="sc">-</span> ptm</span>
+<span id="cb10-17"><a href="#cb10-17"></a></span>
+<span id="cb10-18"><a href="#cb10-18"></a>ptm <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb10-19"><a href="#cb10-19"></a>test1 <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">'~/Downloads/cwb2006-2015/raw/200601_auto_hr.txt'</span>, <span class="at">skip=</span><span class="dv">73</span>)</span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="fu">proc.time</span>() <span class="sc">-</span> ptm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>處理有中文的外部資料輸入 <a href="https://git.io/vFZQB"><small>R Script 下載</small></a></li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># 練習從政府開放資料網下載資料</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co"># https://data.gov.tw/dataset/6091</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># 全臺灣大專院校名錄</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># 預設在 data.gov.tw 上面的編碼是 UTF-8</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># 記得把路徑改成你的檔案路徑，例如 C:\\Users\\username\\u1_new.csv</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co"># skip = 2</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>uniList <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'~/Downloads/u1_new.csv'</span>, </span>
+<span id="cb11-9"><a href="#cb11-9"></a>                    <span class="at">skip =</span> <span class="dv">2</span>)</span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co"># 另外我們也可以使用 data.table 的 fread 來讀取</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb11-13"><a href="#cb11-13"></a>uniList.df <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="st">'~/Downloads/u1_new.csv'</span>,</span>
+<span id="cb11-14"><a href="#cb11-14"></a>                                <span class="at">skip =</span> <span class="dv">2</span>, </span>
+<span id="cb11-15"><a href="#cb11-15"></a>                                <span class="at">encoding =</span> <span class="st">'UTF-8'</span>, </span>
+<span id="cb11-16"><a href="#cb11-16"></a>                                <span class="at">header =</span> T)</span>
+<span id="cb11-17"><a href="#cb11-17"></a></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="co"># 設定好正確編碼後，若讀取仍出現亂碼，請確認一下你的</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="co"># 系統語系(locale)是否正確</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="co"># 輸入 Sys.getlocale() ，如果不是 Chinese (Traditional)_Taiwan.950</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="co"># 者，請輸入下列指令設定 RStudio/R 的語系</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a><span class="co"># Sys.setlocale("LC_ALL","Chinese (Traditional)_Taiwan.950")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./R_flow_control.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./R_function.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

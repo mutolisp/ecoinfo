@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.646">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Cheng-Tao Lin">
+<meta name="dcterms.date" content="2022-05-02">
+
+<title>生態資訊學：R 語言應用 - 16&nbsp; ggplot2 繪圖簡介</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./R_ggplot2_advance.html" rel="next">
+<link href="./R_basic_graphics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">生態資訊學：R 語言應用</span>
+  </a>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <a href="" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mutolisp/ecoinfo" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_introduction.html" class="sidebar-item-text sidebar-link">R 基礎入門</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_fundamental.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_arithmetic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">資料結構</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_flow_control.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_io.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_data_management.html" class="sidebar-item-text sidebar-link">資料管理</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_sorting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">資料的排序</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_combination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_filtering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_scientific_name.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_database.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./visualization.html" class="sidebar-item-text sidebar-link">視覺化</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic_graphics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_advance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#ggplot2-繪圖簡介" id="toc-ggplot2-繪圖簡介" class="nav-link active" data-scroll-target="#ggplot2-繪圖簡介"> <span class="header-section-number">16.1</span> 1. ggplot2 繪圖簡介</a>
+  <ul class="collapse">
+  <li><a href="#套用多個幾何元件圖層" id="toc-套用多個幾何元件圖層" class="nav-link" data-scroll-target="#套用多個幾何元件圖層"> <span class="header-section-number">16.1.1</span> 1.2 套用多個幾何元件圖層</a></li>
+  <li><a href="#套用統計模式" id="toc-套用統計模式" class="nav-link" data-scroll-target="#套用統計模式"> <span class="header-section-number">16.1.2</span> 1.3 套用統計模式</a></li>
+  <li><a href="#套用不同的主題" id="toc-套用不同的主題" class="nav-link" data-scroll-target="#套用不同的主題"> <span class="header-section-number">16.1.3</span> 1.5 套用不同的主題</a></li>
+  <li><a href="#加入誤差棒error-bar" id="toc-加入誤差棒error-bar" class="nav-link" data-scroll-target="#加入誤差棒error-bar"> <span class="header-section-number">16.1.4</span> 1.8 加入誤差棒(error bar)</a></li>
+  </ul></li>
+  <li><a href="#參考文獻與延伸閱讀" id="toc-參考文獻與延伸閱讀" class="nav-link" data-scroll-target="#參考文獻與延伸閱讀"> <span class="header-section-number">16.2</span> 參考文獻與延伸閱讀</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_ggplot2_intro.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_ggplot2_intro.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Cheng-Tao Lin </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 2, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="ggplot2-繪圖簡介" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="ggplot2-繪圖簡介"><span class="header-section-number">16.1</span> 1. ggplot2 繪圖簡介</h2>
+<p>上一節簡介了 R 的基本繪圖後，你應該對於使用 R 繪製圖形具有簡單的認識，這一節將會使用 <code>ggplot2</code> 這個現代的繪圖函式庫來繪製。<code>ggplot2</code> 是 grammar of graphical plot 2 的縮寫，最早由 Wilkison (2005) 所提出的建立的 R 繪圖文法，後來由 Wickham (2009) 所開發出來的套件。ggplot2 簡要來說就是將資料繪製成圖形的過程中，從統計數據產製成幾何元件(geometry objects，例如：散佈圖、折線圖、柱狀圖等)的美學屬性(aesthetic attribute，例如：顏色、形狀、大小等)之映射。以 ggplot2 繪圖文法所繪製的圖由資料、幾何元件、座標系統、主題(theme)等所構成，而相關的繪圖元件，不管是繪圖類型、座標系統都能使用加號(+)串連在一起。ggplot2 包含三個主要繪圖項目，我們以下圖1來示意：</p>
+<ol type="1">
+<li><strong>資料(data)</strong>：繪圖的資料來源，一般會先使用 <code>ggplot()</code> 來輸入資料</li>
+<li>繪圖類型，即<strong>幾何元件</strong>(geometry; 簡稱 <code>geom</code> )：繪圖的類型，例如柱狀圖(bar plot)、散佈圖(scatter plot)、盒鬚圖(box plot)等。ggplot2 中可以疊加不同的幾何元件圖層</li>
+<li><strong>座標系統(coordinate system)</strong>：繪圖的座標系統，預設是<code>coord_cartesian()</code></li>
+</ol>
+<p><img src="https://i.imgur.com/KAjDQ2k.png" class="img-fluid"> 圖1、ggplot2 文法示意圖</p>
+<p>ggplot2 的語法結構如下：</p>
+<p><img src="https://i.imgur.com/2cFk4vx.png" class="img-fluid"></p>
+<p>一個以 ggplot2 繪製的圖形，必須要包含 ggplot(data) + geom_<em>function</em>(mapping) 這兩個必要的繪圖元件，即資料與要繪製圖的幾何元件。其餘的座標函式(coordinate functions)、多圖排列組合函式(facet functions)、軸刻度函式(scale functions)與主題函式(theme functions)則不一定要指定。</p>
+<p>我們以燃油經濟效率資料集(R 內建的 mpg 資料集)做為範例來解釋。在繪圖前，我們必須先決定要繪製哪種類型的圖、變數多寡(一個、兩個或是三個以上)，至於其餘的繪圖顏色、形狀、座標軸細節等可以繪圖過程中再微調決定。</p>
+<p>假設我們繪製的條件如下： 1. 資料集：mtcars 資料集 2. 繪製類型：散佈圖 3. 變數：兩個變數，分別為「發動機的排氣量(displ = engine displacement，單位為公升)」與「高速油耗(hwy = highway mileage，即每加崙可行駛的英哩數)，其中發動機的排氣量為自變數(x)，高速油耗為應變數(y)</p>
+<p>以 ggplot2 繪製圖形的 R 程式碼如下：</p>
+<div class="cell" data-code-line-number="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ex1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R_ggplot2_intro_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>在上述的 R 語法中，使用了 <code>ggplot()</code> 和 <code>geom_point()</code> 這兩個繪圖元件。其中 <code>ggplot()</code> 是起始繪圖的函式，資料載入 <a href="https://rpubs.com/shailesh/mpg-exploration">mpg 資料集</a>；而 <code>geom_point()</code> 則是繪製「幾何元件」的點，在 <code>ggplot2</code> 中以 <code>geom</code> 開頭的函式都是繪製幾何元件的功能，例如 <code>geom_smooth()</code>、<code>geom_boxplot()</code> 以及 <code>geom_abline()</code> 等。繪製出來的結果如下圖2。</p>
+<p><img src="https://i.imgur.com/JHdTfuI.png" class="img-fluid"> 圖2、使用 ggplot2 來繪製發動機排氣量和高速油耗之散佈圖</p>
+<p>我們也可以將 <code>aes()</code> 放在 ggplot 中，並存成一個變數 fig2，例如：</p>
+<p>``{r} fig2 &lt;- ggplot(data = mpg, aes(x = displ, y = hwy)) + geom_point() fig2</p>
+<pre><code>
+### 1.1 繪製三個以上變數
+
+若要在二維的圖中呈現三個變數，我們可以考慮用顏色來區別。我們設定第三個變數為不同的車輛型式(即 class，為類別資料)，R 程式碼如下：
+
+::: {.cell code-line-number='3'}
+
+```{.r .cell-code}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))</code></pre>
+<div class="cell-output-display">
+<p><img src="R_ggplot2_intro_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<p>:::</p>
+<p><img src="https://i.imgur.com/VCPd9zb.png" class="img-fluid"></p>
+<p>圖3、繪製三個以上的變數範例</p>
+<section id="套用多個幾何元件圖層" class="level3" data-number="16.1.1">
+<h3 data-number="16.1.1" class="anchored" data-anchor-id="套用多個幾何元件圖層"><span class="header-section-number">16.1.1</span> 1.2 套用多個幾何元件圖層</h3>
+<p>在上述圖3的例子中我們在 <code>geom_point()</code> 中使用了 <code>mapping = aes()</code>。 ggplot2 可使用多個圖層疊加起來，你也可以在上面圖3套疊平滑趨勢曲線，例如：</p>
+<div class="cell" data-code-line-number="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="R_ggplot2_intro_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><img src="https://i.imgur.com/NJW7t9I.png" class="img-fluid"></p>
+<p>圖4、套用散佈圖(geom_point)與平滑趨勢曲線(geom_smooth)</p>
+</section>
+<section id="套用統計模式" class="level3" data-number="16.1.2">
+<h3 data-number="16.1.2" class="anchored" data-anchor-id="套用統計模式"><span class="header-section-number">16.1.2</span> 1.3 套用統計模式</h3>
+<p>我們也能在 ggplot2 中套用不同的統計模式，像是迴歸模型(regression models)。假設我們想求得發動機排氣量和高速油耗之間的關聯性，可以使用簡單線性迴歸，類似在 1.2 節中使用 <code>geom_smooth()</code> 的方式，只需要加上 <code>method = "lm"</code> 即可(lm 代表 linear regression)，繪圖的時候 ggplot2 也會自動預設加上信賴區間，R 程式碼如下：</p>
+<p>``{r} ggplot(data = mpg) + geom_point(mapping = aes(x = displ, y = hwy, color = class)) + geom_smooth(mapping = aes(x = displ, y = hwy), method = “lm”)</p>
+<pre><code>
+![](https://i.imgur.com/e4lGE6Q.png)
+圖5、散佈圖加上線性模型
+
+``geom_smooth()`` 預設支援常用的迴歸模式，像是簡單線性迴歸(simple linear regression; ``method = "lm"``)、廣義線性模型(Generalised Linear Model; GLM; ``method = "glm"``)、廣義加成模型(Generalised Additive Model; GAM; ``method = "gam"``)。也能夠自行定義模型的參數，例如二項式分布(binomial)、布瓦松分布(Poisson)等，程式碼如下：
+``{r}
+# 使用 binomial family，連結函數為 logit
+geom_smooth(method = "glm", method.args = list(family = "binomial(link = logit)"))</code></pre>
+<p>如果要自行設定方程式也可以，使用 formula 指定方程式即可，舉例來說，我們設定方程式為</p>
+<p><span class="math display">\[
+\begin{equation}
+y = x^2 + exp (x)
+\end{equation}
+\]</span></p>
+<p>以上面的方程式來繪圖，ggplot2 語法如下：</p>
+<p>``{r} ggplot(data = mpg) + geom_point(mapping = aes(x = displ, y = hwy, color = class)) + geom_smooth(mapping = aes(x = displ, y = hwy), method = ‘lm’, formula = ‘y ~ x^2 + exp(x)’ )</p>
+<pre><code>
+![](https://i.imgur.com/kutBT5Z.png)
+圖6、散佈圖加上 $y = x^2+exp(x)$ 的線性模型適配圖
+
+### 1.4 套用不同的符號
+
+另外在繪製時也能使用不同的圖徵，即在 ``aes()`` 中加入 shape，其數值為某一個類別變數，以 mpg 資料集為例就是 ``class``：
+
+::: {.cell code-line-number='3'}
+
+```{.r .cell-code}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because
+more than 6 becomes difficult to discriminate; you have 7. Consider
+specifying shapes manually if you must have them.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 62 rows containing missing values (geom_point).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="R_ggplot2_intro_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<p>:::</p>
+<p><img src="https://i.imgur.com/PrMAoiR.png" class="img-fluid"> 圖7、套用不同的符號</p>
+</section>
+<section id="套用不同的主題" class="level3" data-number="16.1.3">
+<h3 data-number="16.1.3" class="anchored" data-anchor-id="套用不同的主題"><span class="header-section-number">16.1.3</span> 1.5 套用不同的主題</h3>
+<p>ggplot2 預設使用的是灰底加上座標格線，若要更換不同的主題，ggplot2 預設提供了黑白配色(theme_bw)、灰階配色(theme_gray)、經典配色(theme_classic)、線條配色(theme_linedraw)、暗色調配色(theme_dark)、亮色調配色(theme_light)等主題。如下圖範例所示：</p>
+<p><img src="https://i.imgur.com/LgwWDWu.png" class="img-fluid"> 圖8、不同的主題配色範例圖</p>
+<p>若要使用主題，只要加上 <code>theme_主題名稱()</code> 即可，以 mpg 資料集為例，其完整語法為：</p>
+<p>``{r} ggplot(data = mpg) + geom_point(mapping = aes(x = displ, y = hwy, color = class)) + theme_bw()</p>
+<pre><code>### 1.6 美學屬性參數微調
+
+**aes  或 geom_$function 參數：**
+* x：設定 x = $變數 。若為單變數，繪製時 x 軸為變數，y 軸則為次數或密度
+* y ：設定 y = $變數。若為單變數，繪製時 y 軸為變數，x 軸則為次數或密度
+* alpha：透明度，數值為 0–1，從完全透明至完全不透明
+* color：前景(線條、框線)顏色，可使用顏色的英文(例：white)，或是16進位碼(例：#ffffff 為白色)
+* fill：背景填色
+* linetype：線條的類型，可使用 0–6 的代碼，分別代表：0 = 空白(blank), 1 = 實線(solid), 2 = 虛線(dashed), 3 = 點線(dotted)，4 = 點虛線(dotdash), 5 = 長虛線(longdash), 6 = 雙虛線(twodash)
+* size：線條粗細
+* shape：圖形類別，0–16
+* weight：權重
+
+### 1.7 排列位置調整
+
+在圖形的幾何元件(``geom_$function``)可使用 ``position`` 來調整，位置排列的方式有分散排列(dodge)、填滿在某個元件之中(fill)、堆疊(stack)、分散點排列(jitter)、推移(nudge)等。
+
+範例1：使用 mpg 資料集，繪製燃料和不同驅動類型的條狀圖
+``{r}
+ggplot(data = mpg, mapping = aes(fl, fill = drv)) +
+    geom_bar()</code></pre>
+<p>預設會用疊加的方式繪製：</p>
+<p><img src="https://i.imgur.com/JXB1Kmp.png" class="img-fluid"></p>
+<p>如果加上分散排列，如下面語法：</p>
+<p>``{r} ggplot(data = mpg, mapping = aes(fl, fill = drv)) + geom_bar(position = ‘dodge’)</p>
+<pre><code>
+則會呈現下列圖形：
+
+![](https://i.imgur.com/XHsza95.png)
+
+
+若使用填滿(fill)的方式，就會和堆疊很類似，只不過填滿的每個條狀都會等長，如下列的語法：
+``{r}
+ggplot(data = mpg, mapping = aes(fl, fill = drv)) +
+    geom_bar(position = 'fill')</code></pre>
+<p><img src="https://i.imgur.com/Z5Wc63X.png" class="img-fluid"></p>
+</section>
+<section id="加入誤差棒error-bar" class="level3" data-number="16.1.4">
+<h3 data-number="16.1.4" class="anchored" data-anchor-id="加入誤差棒error-bar"><span class="header-section-number">16.1.4</span> 1.8 加入誤差棒(error bar)</h3>
+<p>有時候在繪圖的時候，我們會在圖上面加註誤差棒，以了解數據的誤差範圍。若誤差棒的長度愈長，代表其誤差愈大。誤差棒的長度一般是標準差(standard deviation)或標準誤(standard error)。ggplot2 可使用 <code>geom_errorbar(), geom_linerange(), geom_pointrange()</code> 或 <code>geom_crossbar()</code> 等。</p>
+<p>下面我們以<a href="https://gist.github.com/mutolisp/93f863c0676dfca83749e011f8ef69a9">澎湖南方四島資料集</a> 作為範例來繪製不同土壤性質平均的條型圖加上誤差棒。因為要計算不同土壤性質的平均、標準誤，我們使用 tidyverse 宇宙中的 dplyr 套件之工具來篩選和聚集資料(<a href="https://dplyr.tidyverse.org/reference/select.html">select</a>, <a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a>, <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>, <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a> 等)，計算完每個不同土壤性質的平均和標準誤之後，再使用 ggplot2 來繪圖。詳細繪製的語法如下：</p>
+<p>``{r} library(tidyverse) library(ggplot2)</p>
+<p>sisland.env_summary &lt;- sisland.env %&gt;% # 選擇目標欄位：島嶼(island)、土壤有機質(SOM)、pH、鎂離子(Mg)、 # 鈉離子(Na), 岩石地比例(rock_ratio) select(island, SOM, pH, Mg, Na, rock_ratio) %&gt;% # 將寬表轉成長表，但排除島嶼。聚集後的索引(key，也就是土壤性質， # 像是SOM, pH 等)重新命名為 soil_properties # 數值(value)重新命名為 measurements gather(key = ‘soil_properties’, value = ‘measurements’, -island) %&gt;% # 以島嶼和土壤性質作為群組 group_by(island, soil_properties) %&gt;% # 使用 summarise 來計算平均和標準誤 summarise(mean = mean(measurements), se = sd(measurements) / length(measurements)) # 使用 ggplot2 繪圖 ggplot(data = sisland.env_summary, mapping = aes(x= soil_properties, y = mean, fill = island)) + # 手動填色 scale_fill_brewer(palette = ‘Pastel1’) + # 使用 geom_bar() 繪製條型圖 geom_bar(stat = ‘identity’, position = ‘dodge’) + # 加上誤差棒 geom_errorbar，使用平均數加減一個標準誤 geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.3, position = position_dodge(0.9))</p>
+<pre><code>
+繪製出圖結果如下：
+![](https://i.imgur.com/f1rD4w4.png)
+
+### 1.9 多圖排列(facet)
+
+這裡的多圖排列(facet)指的是把一張圖依照不同的離散變數來切分成數個子圖。另外一個把多個不同小圖組成一個完整大圖，請參見 1.7 節小圖。以 mpg 資料集來說，若我們要依照不同的汽缸數(cyl 欄位)來分別看發動機排氣量(displ)和市區油耗(cty)，我們可以使用 ``facet_grid()`` 來依據汽缸數來切成小圖：
+
+![](https://i.imgur.com/wO58VTd.png)
+圖9、不同汽缸車輛的發動機排氣量和高速油耗比較圖
+
+ggplot2 語法為：
+``{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = class)) + 
+  geom_point() +
+  facet_grid(cols = vars(cyl))</code></pre>
+<p>其中 facet_grid() 裡頭可以依照 cols (欄)或 rows (列) 來排列。不管是欄或列都要放 vars(離散的變數)。也可以同時加入兩種不同的離散變數來排列，例如不同汽缸數(以欄來排列)和不同燃料(以列來排列)來做比較： ``{r} ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = class)) + geom_point() + facet_grid(rows = vars(fl), cols = vars(cyl))</p>
+<pre><code>產製出來的圖如下圖：
+
+![](https://i.imgur.com/FQhBdWH.png)
+圖10、facet_grid 範例，以燃料(fl)和汽缸數(cyl)類型來做為小圖單元顯示發動機排氣量和高速油耗的比較組圖
+
+註：4,5,6,8 代表汽缸數，c, d, e, p, r 分別代表是燃料或動力類型，c = CNS (compressed natural gas 壓縮天然氣), d = diesel (柴油), e = electricity (電力), p = premium (高級汽油，類似我們的 92 無鉛汽油，辛烷值約在91以上)，r = regular (一般汽油，辛烷值通常約 87)
+
+### 1.10 小圖組成大圖
+
+若要把許多張不同的小圖組合成一張大圖，可以透過 [ggpubr](https://cran.r-project.org/package=ggpubr) 和 [gridExtra](https://cran.r-project.org/package=gridExtra) 等套件來實作。本節將使用 ggpubr 的 ``ggarrange()`` 來組合小圖。組合的步驟分為兩部分，第一個是使用 ``ggplot2`` 來產生圖，接下來再使用 ``ggarrange()``  來組合。
+
+若我們有四張圖要組合起來，我們可以使用下列的語法：
+``{r}
+# 1. 先建立個別四張圖
+g1 &lt;- ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  labs(title = 'theme_bw') +
+  theme_bw()
+g2 &lt;- ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = cty, color = class)) +
+  labs(title = 'theme_gray') +
+  theme_gray()
+g3 &lt;- ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) +
+  labs(title = 'theme_classic') +
+  theme_classic()
+g4 &lt;- ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = cty, color = class)) +
+  labs(title = 'theme_linedraw') +
+  theme_linedraw()
+# 2. 使用 ggpubr 的 ggarrange() 來組合
+library(ggpubr)
+g_all &lt;- ggarrange(g1, g2, g3, g4)
+g_all</code></pre>
+<p><img src="https://i.imgur.com/rAsPWg1.png" class="img-fluid"></p>
+<p>但上面的圖如果要放在報告中，會出現以下的問題 1. 重複顯示圖例 2. 沒有小圖的編號，若文章內容要引用就不知道指的是哪張小圖</p>
+<p>所以我們可以加上 <code>common.legend = TRUE</code> 和 <code>labels = c('(a)', '(b)', '(c)', '(d)')</code> 來修正：</p>
+<p>``{r} g_all &lt;- ggarrange(g1, g2, g3, g4, labels = c(‘(a)’, ‘(b)’, ‘(c)’, ‘(d)’), font.label = list(size = 10), common.legend = TRUE, legend=“bottom”) g_all</p>
+<pre><code>
+修正後的圖如下：
+
+![](https://i.imgur.com/jWlNPrC.png)
+
+### 1.11 儲存與輸出
+
+輸出圖片除了使用 RStudio 本身的介面來儲存外，可以直接使用``ggsave()``來儲存圖片為不同的格式和大小，``ggsave()``支援輸出 png, pdf, jpg 等不同格式，也能夠設定 dpi 和圖片長寬等資訊。一般的輸出語法為：
+
+``{r}
+# 將 1.7 節的 g_all 儲存成 g_all.png，並設定 dpi 為 300
+ggsave(g_all, filename = 'g_all.png', dpi = 300)</code></pre>
+<p>但若圖片中有多位元的文字，在部分作業系統可能會無法顯示，這時候可以使用 <a href="https://cran.r-project.org/package=ggpubr">Cairo</a> 套件，輸出的時候繪圖裝置要選擇 cairo_pdf() 或是其他 Cairo 支援的裝置。或是使用 <a href="https://cran.r-project.org/package=showtext">showtext</a> 套件，使用的語法如下：</p>
+<p>``{r} library(showtext) showtext_auto() # Not RUN g1 &lt;- ggplot(…) ggsave(g1, filename = ‘g1.png’) ```</p>
+</section>
+</section>
+<section id="參考文獻與延伸閱讀" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="參考文獻與延伸閱讀"><span class="header-section-number">16.2</span> 參考文獻與延伸閱讀</h2>
+<p>Wickham, H. (2009) ggplot2: Elegant Graphics for Data Analysis. 2nd Edition, Springer, New York. https://doi.org/10.1007/978-0-387-98141-3`</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./R_basic_graphics.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./R_ggplot2_advance.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

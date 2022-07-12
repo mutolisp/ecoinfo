@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.646">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-01-23">
+
+<title>生態資訊學：R 語言應用 - 14&nbsp; 讓 Rstudio 支援資料庫</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./visualization.html" rel="next">
+<link href="./R_scientific_name.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">生態資訊學：R 語言應用</span>
+  </a>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <a href="" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mutolisp/ecoinfo" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_introduction.html" class="sidebar-item-text sidebar-link">R 基礎入門</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_fundamental.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_arithmetic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">資料結構</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_flow_control.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_io.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_data_management.html" class="sidebar-item-text sidebar-link">資料管理</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_sorting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">資料的排序</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_combination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_filtering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_scientific_name.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_database.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./visualization.html" class="sidebar-item-text sidebar-link">視覺化</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic_graphics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_advance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#安裝" id="toc-安裝" class="nav-link active" data-scroll-target="#安裝"> <span class="header-section-number">14.1</span> 1. 安裝</a>
+  <ul class="collapse">
+  <li><a href="#不同作業系統平台安裝注意事項及說明" id="toc-不同作業系統平台安裝注意事項及說明" class="nav-link" data-scroll-target="#不同作業系統平台安裝注意事項及說明"> <span class="header-section-number">14.1.1</span> 不同作業系統平台安裝注意事項及說明</a></li>
+  <li><a href="#windows-平台" id="toc-windows-平台" class="nav-link" data-scroll-target="#windows-平台"> <span class="header-section-number">14.1.2</span> 1.1 Windows 平台</a></li>
+  <li><a href="#macos-平台" id="toc-macos-平台" class="nav-link" data-scroll-target="#macos-平台"> <span class="header-section-number">14.1.3</span> 1.2 MacOS 平台</a></li>
+  <li><a href="#跨平台使用-docker" id="toc-跨平台使用-docker" class="nav-link" data-scroll-target="#跨平台使用-docker"> <span class="header-section-number">14.1.4</span> 1.3 跨平台使用 docker</a></li>
+  </ul></li>
+  <li><a href="#設定" id="toc-設定" class="nav-link" data-scroll-target="#設定"> <span class="header-section-number">14.2</span> 2. 設定</a>
+  <ul class="collapse">
+  <li><a href="#設定-odbc" id="toc-設定-odbc" class="nav-link" data-scroll-target="#設定-odbc"> <span class="header-section-number">14.2.1</span> 2.1 設定 odbc</a></li>
+  <li><a href="#設定-postgresql" id="toc-設定-postgresql" class="nav-link" data-scroll-target="#設定-postgresql"> <span class="header-section-number">14.2.2</span> 2.2 設定 PostgreSQL</a></li>
+  </ul></li>
+  <li><a href="#在-rstudio-中使用資料庫" id="toc-在-rstudio-中使用資料庫" class="nav-link" data-scroll-target="#在-rstudio-中使用資料庫"> <span class="header-section-number">14.3</span> 3. 在 RStudio 中使用資料庫</a>
+  <ul class="collapse">
+  <li><a href="#連接資料庫" id="toc-連接資料庫" class="nav-link" data-scroll-target="#連接資料庫"> <span class="header-section-number">14.3.1</span> 3.1 連接資料庫</a></li>
+  <li><a href="#建立資料表table" id="toc-建立資料表table" class="nav-link" data-scroll-target="#建立資料表table"> <span class="header-section-number">14.3.2</span> 3.2 建立資料表(Table)</a></li>
+  <li><a href="#查詢資料表" id="toc-查詢資料表" class="nav-link" data-scroll-target="#查詢資料表"> <span class="header-section-number">14.3.3</span> 查詢資料表</a></li>
+  <li><a href="#參考資料" id="toc-參考資料" class="nav-link" data-scroll-target="#參考資料"> <span class="header-section-number">14.3.4</span> 參考資料</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_database.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_database.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="安裝" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="安裝"><span class="header-section-number">14.1</span> 1. 安裝</h2>
+<p>為了要在 RStudio 中能連接並使用資料庫系統，請安裝以下表 1.1 和表1.2 所需程式。建議安裝的流程如下：</p>
+<ol type="1">
+<li>安裝 R 語言</li>
+<li>安裝 RStudio</li>
+<li>安裝 RPostgres, DBI 還有 odbc 等套件</li>
+<li>安裝 PostgreSQL</li>
+<li>安裝 pgAdmin</li>
+<li>安裝 psqlODBC</li>
+</ol>
+<p><strong>表1.1</strong> 在 RStudio 使用資料庫所需要的程式</p>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 11%">
+<col style="width: 27%">
+<col style="width: 12%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>名稱</th>
+<th>必要性</th>
+<th>說明</th>
+<th>網址</th>
+<th>授權</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R</td>
+<td>必須安裝</td>
+<td>R 語言</td>
+<td>https://www.r-project.org</td>
+<td>GNU General Public License v2/v3 可免費自由使用、複製、修改</td>
+</tr>
+<tr class="even">
+<td>RStudio</td>
+<td>必須安裝</td>
+<td>R 的整合性開發環境(Integrated Desktop Environment; IDE)</td>
+<td>https://rstudio.com</td>
+<td>商業軟體授權，但是具有開源授權。社群版可免費使用，商業使用需付費</td>
+</tr>
+<tr class="odd">
+<td>PostgreSQL</td>
+<td>必須安裝</td>
+<td>關聯式資料庫管理系統(relational database management system)</td>
+<td>https://postgresql.org</td>
+<td>PostgreSQL license (免費，類似 BSD 或 MIT 的授權，可以自由使用、複製、修改甚至使用於商業用途)</td>
+</tr>
+<tr class="even">
+<td>psqlODBC</td>
+<td>必須安裝</td>
+<td>PostgreSQL ODBC (Open Database Connectivity)</td>
+<td>https://odbc.postgresql.org</td>
+<td>LGPL (Library General Public License)</td>
+</tr>
+<tr class="odd">
+<td>pgAdmin</td>
+<td>選擇性安裝，強烈建議安裝</td>
+<td>管理 PostgreSQL 的前端工具</td>
+<td>https://www.pgadmin.org</td>
+<td>PostgreSQL license (免費)</td>
+</tr>
+<tr class="even">
+<td>pgcli</td>
+<td>選擇性安裝，推薦安裝</td>
+<td>Python 寫的 PostgreSQL 命令列介面</td>
+<td>https://www.pgcli.com</td>
+<td>BSD 3-Clause license (免費)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表1.2</strong> R 所需要之套件</p>
+<table class="table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 31%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>R 套件</th>
+<th>說明</th>
+<th>網址</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>odbc</td>
+<td>R ODBC 開放資料庫連結套件</td>
+<td>https://cran.r-project.org/web/packages/odbc/index.html</td>
+</tr>
+<tr class="even">
+<td>DBI</td>
+<td>R 資料庫介面(database interface)</td>
+<td>https://cran.r-project.org/web/packages/DBI/index.html</td>
+</tr>
+<tr class="odd">
+<td>RPostgres</td>
+<td>Rcpp 的 PostgreSQL 介面套件</td>
+<td>https://cran.r-project.org/web/packages/RPostgres/index.html</td>
+</tr>
+</tbody>
+</table>
+<section id="不同作業系統平台安裝注意事項及說明" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="不同作業系統平台安裝注意事項及說明"><span class="header-section-number">14.1.1</span> 不同作業系統平台安裝注意事項及說明</h3>
+</section>
+<section id="windows-平台" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="windows-平台"><span class="header-section-number">14.1.2</span> 1.1 Windows 平台</h3>
+<p>可至 <a href="%5Bhttps://www.enterprisedb.com/downloads/postgres-postgresql-downloads%5D(https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)">EnterpriseDB</a> 下載安裝</p>
+</section>
+<section id="macos-平台" class="level3" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="macos-平台"><span class="header-section-number">14.1.3</span> 1.2 MacOS 平台</h3>
+<p>請先安裝 <a href="https://brew.sh/index_zh-tw">Homebrew</a> 套件管理系統，再透過 brew 來安裝以下的軟體</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> brew install postgresql unixodbc psqlodbc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="跨平台使用-docker" class="level3" data-number="14.1.4">
+<h3 data-number="14.1.4" class="anchored" data-anchor-id="跨平台使用-docker"><span class="header-section-number">14.1.4</span> 1.3 跨平台使用 docker</h3>
+<p>Docker 是一個虛擬化的軟體平台，可快速地安裝、測試與佈署應用程式。Docker 核心是 GNU/Linux，因此在許多 Linux 作業系統中都有內建。 這裡指的虛擬化(virtualization)是在作業系統層上進行，和一般人熟知的虛擬機器(virtual machine)不同。Docker 是透過「容器(container)」來實作虛擬化，而這個「容器」和早期於 Unix 作業系統上的 jail (例如 <a href="https://zh.wikipedia.org/wiki/FreeBSD_jail">FreeBSD 的 jail</a>)本質是相同的，都是透過 <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> 機制來隔離環境應用程式，像是沙盒(sandbox)一樣。在 jail 沒有漏洞的情況下，不論你在裡頭惡搞都不會影響到外面的作業系統。所以如果你想要測試和玩玩看 RStudio, PostgreSQL，而不是安裝在你平常工作的作業環境中，推薦使用 docker 來安裝。目前大部分常用的自由軟體或開源軟體都有支援 docker，對 docker 有興趣的可以讀這篇 <a href="https://cwhu.medium.com/docker-tutorial-101-c3808b899ac6">docker 的基礎教學</a> 。使用 docker 之前請先安裝 docker/docker desktop</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pull postgres</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 或是使用 tag 來拉取您要安裝的版本</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># https://hub.docker.com/_/postgres?tab=tags</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 例如：</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pull postgres:14.1</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">--name</span> 容器名稱<span class="er">(</span><span class="ex">例如postgres</span><span class="kw">)</span> <span class="ex">-e</span> POSTGRES_PASSWORD=密碼 <span class="at">-d</span> postgres</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 其餘設定請參閱 docker 網站</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>至於類 Unix 系統，像是 *BSD, GNU/Linux 的使用者，我想你們應該不需要再多說明了吧？</p>
+<p><a href="使用%20Docker%20安裝%20R%20和%20RStudio%20(待研究).md">使用 Docker 安裝 R 和 RStudio (待研究)</a></p>
+</section>
+</section>
+<section id="設定" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="設定"><span class="header-section-number">14.2</span> 2. 設定</h2>
+<section id="設定-odbc" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="設定-odbc"><span class="header-section-number">14.2.1</span> 2.1 設定 odbc</h3>
+<p>如果是在類 Unix 系統(包含 Mac)，請在家目錄下(/Users/yourAccountName) 建立 .odbcinst.ini 和 .odbc.ini</p>
+<p>.odbcinst.ini</p>
+<pre><code>[PostgreSQL Driver]
+Driver          = /opt/homebrew/lib/psqlodbcw.so</code></pre>
+<p>註：如果 MacOS 使用 homebrew，ODBC 驅動程式預設位置在 /opt/homebrew/lib 底下，其餘的作業系統可能在 /usr/local/lib 底下，請再查閱作業系統的使用手冊</p>
+<p>.odbc.ini</p>
+<pre><code>[databaseName]
+Driver              = PostgreSQL Driver
+Database            = 資料庫的名稱
+Servername          = localhost
+UserName            = 你的帳號
+Password            = 你的密碼
+Port                = 5432
+
+[ecoinformatics]
+Driver              = PostgreSQL Driver
+Database            = ecoinformatics
+Servername          = localhost
+UserName            = *ruser*
+Password            = *r_dataScience*
+Port                = 5432</code></pre>
+</section>
+<section id="設定-postgresql" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="設定-postgresql"><span class="header-section-number">14.2.2</span> 2.2 設定 PostgreSQL</h3>
+<p>連進資料庫</p>
+<pre><code>pgcli -d postgres</code></pre>
+<p>建立使用者，並設定密碼與權限</p>
+<p><em>方法一：使用命令列方式執行</em></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> ruser <span class="kw">WITH</span> <span class="kw">PASSWORD</span> <span class="st">'r_dataScience'</span>;</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> ecoinformatics <span class="kw">WITH</span> OWNER <span class="op">=</span> ruser;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>方法二：使用 pgAdmin 建立</em></p>
+<ol type="1">
+<li><p>開啟 pgAdmin 並連進資料庫後，從 Login/Group Roles 中按滑鼠右鍵：Create &gt; Login/Group Role。</p>
+<p><img src="https://i.imgur.com/Zg8g9RY.jpg" class="img-fluid" alt="圖 2.2.1"> 圖 2.2.1</p></li>
+<li><p>設定權限，讓 ruser 可以登入並建立資料庫，即開啟 “Can login?” 和 “Create databases?”。設定完之後按 Save</p>
+<p><img src="https://i.imgur.com/bKkIUfR.png" class="img-fluid" alt="圖 2.2.2"> 圖 2.2.2</p></li>
+<li><p>建立資料庫：在左邊選單中的 Databases 按滑鼠右鍵，選擇 “Create” &gt; “Databases..”。輸入資料庫名稱，這邊以 ecoinformatics 為範例，Owner 選擇 ruser。最後按 Save 建立資料庫。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/MGuoWGd.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 2.2.3</figcaption><p></p>
+</figure>
+</div>
+<p>圖 2.2.3</p></li>
+</ol>
+</section>
+</section>
+<section id="在-rstudio-中使用資料庫" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="在-rstudio-中使用資料庫"><span class="header-section-number">14.3</span> 3. 在 RStudio 中使用資料庫</h2>
+<section id="連接資料庫" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="連接資料庫"><span class="header-section-number">14.3.1</span> 3.1 連接資料庫</h3>
+<p>開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下圖 3.1.1)。點選我們建立的 ecoinformatics odbc 設定</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/V8a594Q.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 3.1.1 建立一筆與資料庫的連結</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="course/生態資訊學/講義/讓%20Rstudio%20支援資料庫/Rstudio_createdb_connection.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 3.1.1 建立一筆與資料庫的連結</figcaption><p></p>
+</figure>
+</div>
+<p>圖 3.1.1 建立一筆與資料庫的連結</p>
+<p>點選完 ecoinformatics 之後，會開啟詳細參數的設定(圖3.1.2)，你可以在這裡選擇把參數丟進 R Console 或是新建一個 R Script 把指令丟出去，之後再執行指令建立一筆資料庫連結。透過 DBI 套件去連結的指令如下：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(odbc<span class="sc">::</span><span class="fu">odbc</span>(), <span class="st">"ecoinformatics"</span>, <span class="at">timeout =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>上面的指令中，<code>[dbConnect()](https://dbi.r-dbi.org/reference/dbconnect)</code> 是 DBI 套件連接資料庫的函式，裡頭的參數需包含資料庫的驅動程式(database driver)。以本例來說，是使用 <code>odbc::odbc()</code> 來連接 PostgreSQL 資料庫，而 “ecoinformatics” 則是我們寫在 <code>odbc.ini</code> 設定檔中的參數名稱；timeout 則是等待連接時間為 10 秒，超過後無法連接則回傳錯誤訊息。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/oyWIT9X.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 3.1.2 資料庫連結指令</figcaption><p></p>
+</figure>
+</div>
+<p>圖 3.1.2 資料庫連結指令</p>
+<p>若成功連接的話，就能夠看到正確顯示範例資料庫 <code>ecoinformatics</code> 的畫面</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/7xRN3cO.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 3.1.3 成功連接資料庫的畫面</figcaption><p></p>
+</figure>
+</div>
+<p>圖 3.1.3 成功連接資料庫的畫面</p>
+</section>
+<section id="建立資料表table" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="建立資料表table"><span class="header-section-number">14.3.2</span> 3.2 建立資料表(Table)</h3>
+<p>當連進資料庫時，裡頭是空的狀態。所以我們可以透過 DBI 套件的 <code>dbCreateTable()</code> 來新建資料表。以下用 R 內建的 iris 資料集，使用 <code>dbCreateTable</code>(<em>連線的物件</em>, <em>資料表</em>, R裡頭的資料框架) 來建立一個資料表。</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># 建立資料庫連線，目標資料庫為 PostgreSQL 的 ecoinformatics</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(odbc<span class="sc">::</span><span class="fu">odbc</span>(), <span class="st">"ecoinformatics"</span>, <span class="at">timeout =</span> <span class="dv">10</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># 建立資料表，請注意以下第二個參數要使用 " (雙引號)</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="fu">dbCreateTable</span>(con, <span class="st">"iris"</span>, iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>但這樣的只是單純建立資料表，並不會把資料匯入 iris 資料表中，若要匯入資料，請使用 <code>dbWriteTable()</code>。</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+資料庫知識
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>一般的關聯式資料庫，儲存資料的單元是資料表(table)，和試算表(spreadsheet)很類似，都是二維的結構，由<strong>欄</strong>(columns，直向)和<strong>列</strong>(rows，橫向；又稱做紀錄[records])所組成。對於 LibreOffice Scalc 或 Microsoft Excel 的試算表來說，列是有順序的(也就是由 1, 2, 3, …)，但資料庫中的資料表的列並無一定順序，可以透過 SQL 查詢依照某特定欄位來排序；而欄則是變數(variables)，例如一個圖書館資料庫中，會儲存書目、ISBN、作者，在資料庫管理系統中則會存在欄位中。在建立資料表的時和試算表不同的是，一般的關聯式資料庫中的資料表需要有嚴謹的資料類型(data definition)定義，比如說「書目」儲存的是文字格式，那我們就要告訴資料庫要用哪種類型的文字格式以及所需的儲存資料長度。以 postgres 來說，文字相關的資料類型就有 <em>character</em> (可縮寫為 char)、<em>character</em> <em>varying</em> (縮寫為 varchar) 和 <em>text</em>。這三種的差別在於儲存的文字是否可變長度或固定長度，還有儲存長度若比固定長度短，是否會填充空格等差別。</p>
+<p>在儲存資料表時，通常會用「<strong>資料定義語言(data definition language; DDL)</strong> 」來定義資料類型、長度、限制(constraints，常見的像是主鍵索引限制[primary key constraint]、外部索引鍵限制[foreign key constraint])、視觀表(view)等。以下是一個簡單的 DDL：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- For any line beginning with "--" means comment</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> iris (</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"Sepal.Length"</span> <span class="dt">double</span> <span class="dt">precision</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"Sepal.Width"</span> <span class="dt">double</span> <span class="dt">precision</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"Petal.Length"</span> <span class="dt">double</span> <span class="dt">precision</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"Petal.Width"</span> <span class="dt">double</span> <span class="dt">precision</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"Species"</span> <span class="dt">varchar</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>上面這個 DDL 中，用白話翻譯就是：如果資料表 iris 不存在的話，就建立一個資料表；此資料表中有五個欄位，分別是 “Sepal.Length” (資料類型是<a href="https://zh.wikipedia.org/wiki/雙精度浮點數">雙精確數</a>[double precision]，簡單說就是小數)、 “Sepal.Width”(雙精確數)、”Petal.Length” (雙精確數)、”Petal.Width” (雙精確數)和 “Species” (可變長度的文字)。這樣的語法我們也稱作「<strong>結構化查詢語言(structural query language; SQL)</strong>」，詳細 SQL 介紹請參見</p>
+<p><a href="結構化查詢語言.md">[結構化查詢語言]</a></p>
+</div>
+</div>
+</section>
+<section id="查詢資料表" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="查詢資料表"><span class="header-section-number">14.3.3</span> 查詢資料表</h3>
+<p>在這個章節中，我們將練習使用 <a href="https://cran.r-project.org/web/packages/rgbif/index.html">rgbif</a> 來擷取 <a href="https://gbif.org">GBIF</a> 網站上的資料集，並存進 PostgreSQL 的資料庫中，最後再透過 <code>dbGetQuery()</code> 來查詢資料。 請先安裝好 <a href="https://cran.r-project.org/web/packages/rgbif">rgbif</a>, <a href="https://cran.r-project.org/web/packages/leaflet">leaflet</a> 和 <a href="https://cran.r-project.org/web/packages/tidyverse">tidyverse</a> 這三個套件</p>
+<p>rgbif 可以使用 <code>occ_search()</code> 來搜尋物種，</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">library</span>(rgbif)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+✔ tibble  3.1.7     ✔ dplyr   1.0.8
+✔ tidyr   1.2.0     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co"># 使用 occ_search 來搜尋物種</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>query_results <span class="ot">&lt;-</span> <span class="fu">occ_search</span>(<span class="at">scientificName =</span> <span class="st">'Abies kawakamii'</span>,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>           <span class="at">hasCoordinate =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-6"><a href="#cb14-6"></a>           <span class="at">limit =</span> <span class="dv">100000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="參考資料" class="level3" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="參考資料"><span class="header-section-number">14.3.4</span> 參考資料</h3>
+<ol type="1">
+<li><a href="https://db.rstudio.com/best-practices/drivers/">https://db.rstudio.com/</a></li>
+<li><a href="https://www.postgresql.org/docs/14/tutorial-install.html">https://www.postgresql.org/docs/14/tutorial-install.html</a></li>
+<li><a href="https://hub.docker.com/_/postgres">https://hub.docker.com/_/postgres</a></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./R_scientific_name.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./visualization.html" class="pagination-link">
+        <span class="nav-page-text">視覺化</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

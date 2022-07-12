@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.646">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-07-12">
+
+<title>生態資訊學：R 語言應用 - 3&nbsp; 基本操作</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./R_arithmetic.html" rel="next">
+<link href="./R_fundamental.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">生態資訊學：R 語言應用</span>
+  </a>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <a href="" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mutolisp/ecoinfo" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_introduction.html" class="sidebar-item-text sidebar-link">R 基礎入門</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_fundamental.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_arithmetic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">資料結構</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_flow_control.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_io.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_data_management.html" class="sidebar-item-text sidebar-link">資料管理</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_sorting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">資料的排序</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_combination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_filtering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_scientific_name.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_database.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./visualization.html" class="sidebar-item-text sidebar-link">視覺化</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic_graphics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_advance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#註解" id="toc-註解" class="nav-link active" data-scroll-target="#註解"> <span class="header-section-number">3.0.1</span> 註解</a></li>
+  <li><a href="#使用函式及表示式" id="toc-使用函式及表示式" class="nav-link" data-scroll-target="#使用函式及表示式"> <span class="header-section-number">3.0.2</span> 使用函式及表示式</a></li>
+  <li><a href="#指定變數variables" id="toc-指定變數variables" class="nav-link" data-scroll-target="#指定變數variables"> <span class="header-section-number">3.0.3</span> 指定變數(variables)</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_basic.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_basic.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 12, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p>R 一開啟的時候會出現類似<a href="https://zh.wikipedia.org/wiki/終端">終端機</a>的介面顯示， 如下圖 2-1 所示，</p>
+<p><img src="img/ch1_r_console.png" id="fig-R_console" class="img-fluid" alt="R Console"> <img src="https://i.imgur.com/nCQYyzq.png" class="img-fluid" alt="R Console"></p>
+<p>圖 2-1、R console (這裡以 RStudio 為例)</p>
+<p>圖 2-1 是使用 <a href="http://rstudio.com">RStudio</a> 開啟 R console。上半部顯示 R 的版本、平台(platform)、版權的宣告及相關資訊等。最下面有個大於(&gt;)符號，後方游標閃爍，在這個「大於」符號後面是接受輸入命令區，你可以在這邊輸入 R 的指令。</p>
+<p>在解釋 R console 使用之前，先解釋電腦程式語言的兩大類群，分別為編譯式語言(compiled language)及直譯式語言(interpreted language)。編譯式語言需要透過<a href="https://zh.wikipedia.org/wiki/編譯器">編譯器(compiler)</a> 把程式碼翻譯成機器能懂得二進位碼，而直譯式語言則直接在直譯器中輸入程式碼即可。R 語言就是一種直譯式的語言，只要把指令輸入在 R console 中，R 就會直接執行不需要額外再透過編譯器。</p>
+<p>在 R console 中，隨時都可以接受指令的輸入，原則上 R 會一行一行的執行，你可以把這裡當成計算機，例如你可以試著輸入 <span class="math display">\[ 3 \times 128 \]</span> (相乘使用 「*」符號，數學運算的部分後面的章節會再詳細解釋)。</p>
+<p><code>R &gt; 3*128 [1] 384</code></p>
+<p>第二個例子是 5 除以 3：</p>
+<p><code>R &gt; 5 / 3 [1] 1.666667</code></p>
+<p>眼尖的你可能會發現到上面的第一個例子沒有空格，第二個例子有空格。 在 R 裡面運算符號和數值之間的空格不會影響到執行的結果， 但我建議你可以在數值和運算符號中保留空格， 這可以讓閱讀 R 程式碼時更加舒適且美觀。</p>
+<section id="註解" class="level3" data-number="3.0.1">
+<h3 data-number="3.0.1" class="anchored" data-anchor-id="註解"><span class="header-section-number">3.0.1</span> 註解</h3>
+<p>在撰寫 R 語言時，只要開頭有井字號(#)的 R 都會把它視為註解。 因此不論後面再加上什麼指令或函式，R 都會把這些當成註解不執行， 例如：</p>
+<p><code>R # 這是註解 #### 這也是註解</code></p>
+<p>如果你有多行文字需要註解，在 RStudio 中，你可以把這幾行選取起來，在選單 Code 中的 Comment/Uncomment Lines 把這幾行註解起來。或是使用快速鍵 Shift-Ctrl-C (MacOS 則是 Shift-Command-C)註解。而註解有何用處呢？就是能夠把 R 程式中額外需要解釋的，像是某功能代表什麼意思？各個參數的限制，有沒有什麼其他值得給自己或他人參考的文字內容等。另外註解還有一個很重要的功能就是幫助自己回憶 code，當你花了許多時間寫了許多 R code，過了一段時間可能忘記到底在寫些什麼，這些註解就可以幫助你回憶。比如說下面是一個 R 函式，我就會在函式的前方寫這個函式是在做什麼、輸入資料的類型以及參數解釋等：</p>
+<p>``R ## [FUNCTION] Find countries in focal list and store PolySet in a vector # # arguments: # * ref_area.prj: projected area (SpatialPolygon object) # * focal_list: focal list # find_focal &lt;- function(ref_area.prj, focal_list) { require(PBSmapping) focal_list.ps &lt;- vector(mode=“list”, length=length(focal_list)) for ( i in 1:length(focal_list) ) { # check if the focal_list names match the fieldname in ref_area.prj if ( focal_list[i] %in% ref_area.prj<span class="math inline">\(NAME ) {  focal_list.ps[[i]] &lt;- combinePolys(SpatialPolygons2PolySet(ref_area.prj[ref_area.prj\)</span>NAME==focal_list[i],])) } else { print(paste(“Error!”, focal_list[i],“does not match in the reference area”, sep=” “)) } } return(focal_list.ps) }</p>
+<p>``</p>
+</section>
+<section id="使用函式及表示式" class="level3" data-number="3.0.2">
+<h3 data-number="3.0.2" class="anchored" data-anchor-id="使用函式及表示式"><span class="header-section-number">3.0.2</span> 使用函式及表示式</h3>
+<p>R 裡頭執行指令或是函式(function)時，必須要加上括號，例如 <code>ls()</code>，如果沒有加上括號「()」，R 預設就會把其原始碼在螢幕上印出，例如:</p>
+<p><code>R &gt; ls function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,     pattern, sorted = TRUE) {     if (!missing(name)) {     ... 中間省略 ...             }         }         grep(pattern, all.names, value = TRUE)     }     else all.names } &lt;bytecode: 0x1039a66e0&gt; &lt;environment: namespace:base&gt;</code></p>
+<p>若輸入的指令為 <code>ls()</code> 時才會正確去執行該函式，即：</p>
+<p><code>R &gt; ls() character(0)</code></p>
+<p>如何自訂函式我們會在後面的<a href="https://hackmd.io/s/S1FsWYQWX">自訂函式</a>章節裡頭介紹。</p>
+</section>
+<section id="指定變數variables" class="level3" data-number="3.0.3">
+<h3 data-number="3.0.3" class="anchored" data-anchor-id="指定變數variables"><span class="header-section-number">3.0.3</span> 指定變數(variables)</h3>
+<p>對於複雜一點的 R 程式，也許你會想有沒有什麼其他的方式可以重複使用計算過的數值、或是執行過的函式呢？舉例來說，我想計算 15 塊錢美金可以換算成多少新臺幣， 假設一塊美金可以換成 31.53 新臺幣，R 可以這樣計算：</p>
+<p><code>R &gt; 15 * 31.53 [1] 472.95</code></p>
+<p>但每天的美金兌換新臺幣的匯率都不同，這個時候我們就可以把「匯率」當成一個「變數(variable)」，顧名思義，變數就是會「變」動的「數」值(或文字、函式等)。所以我們用變數的概念來呈現上述的例子：</p>
+<p><code>R 變數名稱 &lt;- 數值或文字、函式</code></p>
+<p>其中 <code>&lt;-</code> 代表「指定(assign)」的意思，在 R 的語法中，你也可以使用 <code>=</code> 來代表「指定」變數或函式，但為了不讓初學者和邏輯上的相等(R 使用兩個等號 <code>==</code>)混淆，在這裡我們建議使用 <code>&lt;-</code> 來代表指定變數。因此計算匯率的語法可以這麼寫：</p>
+<p><code>R # 把 USDTWD 這個變數指定數值為 31.53 &gt; USDTWD &lt;- 31.53 # 計算 15 塊美金等於多少新臺幣 &gt; 15 * USDTWD [1] 472.95</code></p>
+<p>另外，當你選擇變數的時候，可能會有數值或文字的差異，在 R 和 Excel 不同的是，R 在處理數值或文字資料時必須先定義好其類型，一般來說 R 的資料分為數值類及文字類這兩大類型。如果是數值類型的資料，使用時直接輸入數字即可，例如：</p>
+<p><code>R &gt; a_number &lt;- 123.5 &gt; a_numer [1] 123.5 &gt; b_number &lt;- 50 &gt; b_number [1] 50</code></p>
+<p>若是文字資料，則需要加上引號(’’)或雙引號(““)，例如：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> character_a <span class="ot">&lt;-</span> <span class="st">'Veni, vici, vidi'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> character_a</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Veni, vici, vidi"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> character_b <span class="ot">&lt;-</span> <span class="st">"Hello world!"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> character_b</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello world!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>像上面例子的文字資料，通常我們稱字串(string)或是文字(character)。而數值資料則包括整數(integer)、實數(numeric)、雙精確數(double-precision number)、複數(complex)等。另外還有一類特殊的資料類型，在 R 裡頭會使用 <code>NA</code> (Not Available; 不是數值或不存在此物件，通常是缺乏資料) 或 <code>NaN</code> (Not a Number; 不屬於數值)來表示。若數值資料無限大，則是使用 <code>inf</code> 來表示。</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./R_fundamental.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./R_arithmetic.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.646">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>生態資訊學：R 語言應用 - 11&nbsp; 資料篩選</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./R_data_wrangling.html" rel="next">
+<link href="./R_data_combination.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">生態資訊學：R 語言應用</span>
+  </a>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <a href="" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mutolisp/ecoinfo" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_introduction.html" class="sidebar-item-text sidebar-link">R 基礎入門</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_fundamental.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_arithmetic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">資料結構</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_flow_control.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_io.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_data_management.html" class="sidebar-item-text sidebar-link">資料管理</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_sorting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">資料的排序</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_combination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_filtering.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_scientific_name.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_database.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./visualization.html" class="sidebar-item-text sidebar-link">視覺化</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic_graphics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_advance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#使用-data.table-來篩選資料" id="toc-使用-data.table-來篩選資料" class="nav-link active" data-scroll-target="#使用-data.table-來篩選資料"> <span class="header-section-number">11.1</span> 使用 data.table 來篩選資料</a></li>
+  <li><a href="#透過外部資料庫-sql-篩選資料" id="toc-透過外部資料庫-sql-篩選資料" class="nav-link" data-scroll-target="#透過外部資料庫-sql-篩選資料"> <span class="header-section-number">11.2</span> 透過外部資料庫 SQL 篩選資料</a>
+  <ul class="collapse">
+  <li><a href="#安裝相關的-r-套件" id="toc-安裝相關的-r-套件" class="nav-link" data-scroll-target="#安裝相關的-r-套件"> <span class="header-section-number">11.2.1</span> 安裝相關的 R 套件</a></li>
+  <li><a href="#sql-語法" id="toc-sql-語法" class="nav-link" data-scroll-target="#sql-語法"> <span class="header-section-number">11.2.2</span> SQL 語法</a></li>
+  <li><a href="#在-r-裡頭使用-sql" id="toc-在-r-裡頭使用-sql" class="nav-link" data-scroll-target="#在-r-裡頭使用-sql"> <span class="header-section-number">11.2.3</span> 在 R 裡頭使用 SQL</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_data_filtering.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_data_filtering.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>當你面對一筆資料的時候，除了基礎的排序外，你可能還會想要篩選資料來進一步了解其樣貌。例如家戶所得的收支報告，你可能會想知道除了平均所得之外，哪一個縣市的收入最高？哪一個鄉鎮市區的收入最低？諸如此類的問題就可以使用 data.table、dplyr 套件或是透過結構化查詢語言(structural query language)來篩選查詢外部的資料庫。</p>
+<section id="使用-data.table-來篩選資料" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="使用-data.table-來篩選資料"><span class="header-section-number">11.1</span> 使用 data.table 來篩選資料</h2>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+[注意資訊]
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>請先安裝 <code>data.table</code> 套件，可由 RStudio 介面安裝或是手動安裝</p>
+</div>
+</div>
+<p>範例一：使用 mtcars 資料集。篩選第三列至第十列的資料</p>
+<p>解析：和 data.frame 相同用法，<code>DT[m, n]</code>，其中<code>m</code>代表列數，<code>n</code>代表行數。使用 <code>mtcars[3:10, ]</code> 即可篩選出第三列至第十列的資料</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># 載入 data.table</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># 把</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>mtcars.dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(mtcars)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>mtcars.dt[<span class="dv">3</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+2: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+3: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+4: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+5: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+6: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+7: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+8: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</code></pre>
+</div>
+</div>
+<p>範例二：請篩選出四汽缸(cyl)的車</p>
+<p>解析：我們可以使用 <code>DT[ 欄位名稱 == 4]</code> 來篩選出四汽缸的汽車，在 data.table 中，可以直接使用欄位的名稱，例如 cyl, disp, hp 等欄位名稱，不需要再加上引號。因此在子集合中我們只需要輸入 <code>cyl == 4</code> 即可：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>mtcars.dt[ cyl <span class="sc">==</span> <span class="dv">4</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+ 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+ 2: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+ 3: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+ 4: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+ 5: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+ 6: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+ 7: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+ 8: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+ 9: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+10: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+11: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+</div>
+<p>範例三：請篩選初四汽缸的車中，每加崙可行駛的里程(mpg)平均</p>
+<p>解析：我們可以使用子集合的方式先把四汽缸的車篩選出來，再計算其平均，即 <code>mtcars.dt[ cyl == 4][, mean(mpg)]</code>，其計算結果為 26.66364</p>
+<p>範例四：請計算不同汽缸數車輛之個別行駛里程平均數</p>
+<p>解析：可使用上述範例中的方式一一計算，或是使用 data.table 中的 <code>DT[m, n, by=特定欄位]</code>來計算：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>mtcars.dt[, <span class="fu">mean</span>(mpg), by<span class="ot">=</span>cyl]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   cyl       V1
+1:   6 19.74286
+2:   4 26.66364
+3:   8 15.10000</code></pre>
+</div>
+</div>
+</section>
+<section id="透過外部資料庫-sql-篩選資料" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="透過外部資料庫-sql-篩選資料"><span class="header-section-number">11.2</span> 透過外部資料庫 SQL 篩選資料</h2>
+<p>資料庫有非常多種類型，最常見的是關聯式資料庫(relational database)，諸如常見的 Microsoft SQL Server, SQLite, MySQL/MariaDB, PostgreSQL 等都是關聯式資料庫。在 R 裡頭可以透過一些第三方的套件，像是 RSQLite, odbc, DBI 等來連結。因為架設資料庫需要許多額外的步驟和設定，在此我們用一個輕量化、開放公用領域(public domain)的資料庫 <a href="https://sqlite.org/index.html">SQLite</a>來做為示範。SQLite 使用相當廣泛，它本身可把資料庫封裝成一個檔案，載入快速且十分輕量化，因此有許多手機 app 都是使用 SQLite 做為資料庫管理系統。</p>
+<section id="安裝相關的-r-套件" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="安裝相關的-r-套件"><span class="header-section-number">11.2.1</span> 安裝相關的 R 套件</h3>
+<p>請先安裝 RSQLite</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">install.packages</span>(<span class="st">"RSQLite"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">install.packages</span>(<span class="st">"DBI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sql-語法" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="sql-語法"><span class="header-section-number">11.2.2</span> SQL 語法</h3>
+<p>這節中將簡介 SQL(Structural Query Language) 的語法，主要會以查詢(Query)來做說明。</p>
+<p>SQL</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> table_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="在-r-裡頭使用-sql" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="在-r-裡頭使用-sql"><span class="header-section-number">11.2.3</span> 在 R 裡頭使用 SQL</h3>
+<p>第一個步驟是載入 DBI 套件，然後建立資料庫的連結。可以想像成有個虛擬的伺服器，要使用 <code>dbConnect()</code> 來連結這個資料庫。使用的資料庫引擎則是 <code>RSQLite::SQLite()</code>。其中您也可以暫時把資料庫放在記憶體中，或是寫入一個實際的檔案，如下列語法：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># 在記憶體中建立一個暫存的 SQLite 資料庫</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">":memory:"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># 若您想要建立實體檔案的話，請輸入以下語法</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># 其中 '/tmp/test.db' 就是這個檔案的位置</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">'/tmp/test.db'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>一開始這個資料庫是空的，所以我們嘗試使用 <code>dbWriteTable()</code>來把 mtcars 資料集寫入資料表 “mtcars” 中：</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 一樣我們用 mtcars 為例</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co"># 要先建立</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>寫入之後我們可以使用 <code>dbListTables()</code> 來確認一下有沒有這個資料表：</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>範例：使用 SQL 語法來篩選出大於四汽缸的車輛</p>
+<p>作法： 1. 先建立資料庫的連結，使用 <code>dbConnect()</code> 2. 把 mtcars 寫入同名的 mtcars 資料表 3. 使用 dbSendQuery 送出查詢 4. 使用 fetch() 把結果撈回來</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb12-2"><a href="#cb12-2"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">'/tmp/test.db'</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">dbWriteTable</span>(con, <span class="st">'mtcars'</span>, mtcars)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>results <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(con,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="st">"SELECT * FROM mtcars WHERE cyl &gt; 4"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="fu">fetch</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>結果如下：</p>
+<pre><code>    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+3  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+4  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+5  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+6  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+7  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+8  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+9  16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+10 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+11 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+12 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+13 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+14 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+15 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+16 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+17 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+18 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+19 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+20 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+21 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./R_data_combination.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./R_data_wrangling.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

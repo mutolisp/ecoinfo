@@ -1,0 +1,135 @@
+# 資料篩選
+
+當你面對一筆資料的時候，除了基礎的排序外，你可能還會想要篩選資料來進一步了解其樣貌。例如家戶所得的收支報告，你可能會想知道除了平均所得之外，哪一個縣市的收入最高？哪一個鄉鎮市區的收入最低？諸如此類的問題就可以使用 data.table、dplyr 套件或是透過結構化查詢語言(structural query language)來篩選查詢外部的資料庫。
+
+## 使用 data.table 來篩選資料
+
+::: {.callout-note}
+## [注意資訊]
+請先安裝 ```data.table``` 套件，可由 RStudio 介面安裝或是手動安裝
+:::
+
+範例一：使用 mtcars 資料集。篩選第三列至第十列的資料
+
+解析：和 data.frame 相同用法，```DT[m, n]```，其中```m```代表列數，```n```代表行數。使用 ```mtcars[3:10, ]``` 即可篩選出第三列至第十列的資料
+
+```{r, `code-line-numbers`="3"}
+# 載入 data.table
+library(data.table)
+# 把
+mtcars.dt <- as.data.table(mtcars)
+mtcars.dt[3:10, ]
+```
+
+範例二：請篩選出四汽缸(cyl)的車
+
+解析：我們可以使用 ```DT[ 欄位名稱 == 4]``` 來篩選出四汽缸的汽車，在 data.table 中，可以直接使用欄位的名稱，例如 cyl, disp, hp 等欄位名稱，不需要再加上引號。因此在子集合中我們只需要輸入 ```cyl == 4``` 即可：
+
+```{r, `code-line-numbers`="3"}
+mtcars.dt[ cyl == 4 ]
+```
+
+
+範例三：請篩選初四汽缸的車中，每加崙可行駛的里程(mpg)平均
+
+解析：我們可以使用子集合的方式先把四汽缸的車篩選出來，再計算其平均，即 ```mtcars.dt[ cyl == 4][, mean(mpg)]```，其計算結果為 26.66364
+
+範例四：請計算不同汽缸數車輛之個別行駛里程平均數
+
+解析：可使用上述範例中的方式一一計算，或是使用 data.table 中的 ```DT[m, n, by=特定欄位]```來計算：
+
+```{r, `code-line-numbers`="3"}
+mtcars.dt[, mean(mpg), by=cyl]
+```
+
+## 透過外部資料庫 SQL 篩選資料
+
+資料庫有非常多種類型，最常見的是關聯式資料庫(relational database)，諸如常見的 Microsoft SQL Server, SQLite, MySQL/MariaDB, PostgreSQL 等都是關聯式資料庫。在 R 裡頭可以透過一些第三方的套件，像是 RSQLite, odbc, DBI 等來連結。因為架設資料庫需要許多額外的步驟和設定，在此我們用一個輕量化、開放公用領域(public domain)的資料庫 [SQLite](https://sqlite.org/index.html)來做為示範。SQLite 使用相當廣泛，它本身可把資料庫封裝成一個檔案，載入快速且十分輕量化，因此有許多手機 app 都是使用 SQLite 做為資料庫管理系統。
+
+### 安裝相關的 R 套件
+
+請先安裝 RSQLite
+```{.r code-line-numbers="3"}
+install.packages("RSQLite")
+install.packages("DBI")
+```
+
+### SQL 語法
+
+這節中將簡介 SQL(Structural Query Language) 的語法，主要會以查詢(Query)來做說明。
+
+SQL
+```sql
+SELECT * FROM table_name;
+```
+
+### 在 R 裡頭使用 SQL
+
+第一個步驟是載入 DBI 套件，然後建立資料庫的連結。可以想像成有個虛擬的伺服器，要使用 ```dbConnect()``` 來連結這個資料庫。使用的資料庫引擎則是 ```RSQLite::SQLite()```。其中您也可以暫時把資料庫放在記憶體中，或是寫入一個實際的檔案，如下列語法：
+
+```{.r code-line-numbers="3"}
+library(DBI)
+# 在記憶體中建立一個暫存的 SQLite 資料庫
+con <- dbConnect(RSQLite::SQLite(), ":memory:")
+# 若您想要建立實體檔案的話，請輸入以下語法
+# 其中 '/tmp/test.db' 就是這個檔案的位置
+
+con <- dbConnect(RSQLite::SQLite(), '/tmp/test.db')
+```
+
+一開始這個資料庫是空的，所以我們嘗試使用 ```dbWriteTable()```來把 mtcars 資料集寫入資料表  "mtcars" 中：
+
+```{.r code-line-numbers="3"}
+# 一樣我們用 mtcars 為例
+# 要先建立
+dbWriteTable(con, "mtcars", mtcars)
+```
+
+寫入之後我們可以使用 ```dbListTables()``` 來確認一下有沒有這個資料表：
+
+```{.r code-line-numbers="3"}
+dbListTables(con)
+```
+
+範例：使用 SQL 語法來篩選出大於四汽缸的車輛
+
+作法：
+1. 先建立資料庫的連結，使用 ```dbConnect()```
+2. 把 mtcars 寫入同名的 mtcars 資料表
+3. 使用 dbSendQuery 送出查詢
+4. 使用 fetch() 把結果撈回來
+
+```{.r code-line-numbers="3"}
+library(DBI)
+con <- dbConnect(RSQLite::SQLite(), '/tmp/test.db')
+
+dbWriteTable(con, 'mtcars', mtcars)
+results <- dbSendQuery(con,
+    "SELECT * FROM mtcars WHERE cyl > 4")
+fetch(results)
+```
+結果如下：
+```
+    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+3  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+4  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+5  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+6  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+7  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+8  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+9  16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+10 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+11 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+12 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+13 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+14 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+15 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+16 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+17 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+18 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+19 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+20 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+21 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+```

@@ -1,0 +1,60 @@
+# 資料的排序
+
+在 R 裡頭最常用到的排序功能是 ``order()`` 和 ``sort()``。 這些排序函式不只能夠針對 vector 排序，也能排序 data.frame, list 等不同的資料結構。以下是排序的一些例子介紹：
+
+
+```{r, `code-line-numbers`="3"}
+# 先用 sample.int 產生 10 個 1–100 的整數
+s1 <- sample.int(100, 10)
+s1
+```
+
+```{r, `code-line-numbers`="3"}
+# 使用 order 排序
+order(s1) 
+```
+
+此時你會發現怎麼跟想像中的不太一樣，用 ``order()`` 排序完給的是順序，即最小的是第八個、次之是第六個，...，而不是排序好的數字，若要直接針對一個數列排序，就得要用 ``sort()`` 了。所以如果用 ``order()`` 把原本的數列排序好顯示則要用 ``s1[order(s1)]``：
+
+```{r, `code-line-numbers`="3"}
+s1[order(s1)]
+```
+
+等同於
+
+```{r, `code-line-numbers`="3"}
+sort(s1)
+```
+
+你可能會觀察到不管是 ``order()`` 或是 ``sort()`` 都是升冪排序(ascending)，那如果要用降冪排序(descending)呢？
+
+```{r, `code-line-numbers`="3"}
+sort(s1, decreasing = TRUE)
+```
+
+如果要針對 data.frame 排序呢？ 如果你嘗試使用 ``sort()`` 來排序一個 data.frame 的話，馬上就會得到錯誤訊息顯示如下：
+
+```{.r code-line-numbers="3"}
+sort(mtcars)
+Error in `[.data.frame`(x, order(x, na.last = > na.last, decreasing = decreasing)) : 
+undefined columns selected
+```
+
+因為 ``sort`` 本身只能針對 vector 和部分的 factor 資料排序(僅有一個變數的資料)，所以多個變數的 data.frame 就得要使用``order()`` 來排序了。我們以 mtcars 資料集為例來說明 ``order()`` 的使用：
+
+```{r, `code-line-numbers`="3"}
+# 先載入 mtcars 資料集
+attach(mtcars)
+# 針對馬力(hp)來降冪排序
+mtcars[order(hp, decreasing = TRUE),]
+# 另外一個快速降冪排序法可以在變數前面加上減字號
+mtcars[order(-hp),]
+```
+
+除了針對單一變數的排序，R 是不是也能針對多個變數依序來排序呢？答案是可以的，只要在 ``order()`` 中依序填入你想要排序的變數即可，例如我們要針對馬力(hp)先降冪排序，接下來針對汽缸數(cyl)排序，可以這樣做：
+
+```{r, `code-line-numbers`="3"}
+mtcars[order(-hp, cyl),]
+```
+
+[本節範例 code 下載](https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/demos/data_manage_sort1.R)`]

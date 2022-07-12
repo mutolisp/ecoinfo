@@ -1,0 +1,160 @@
+# 學名資料處理
+
+在處理生態或生物多樣性資料時，學名往往都會是一個棘手的問題。有些資料集內，用學名加作者；有些則是僅用學名不含作者。這些文字上可以使用正規表示式(regular expression)
+
+## 使用正規表示式來處理學名
+
+:::info
+tbw
+:::
+
+## 使用 GNParser 來處理學名
+
+GNParser 是 [Global Names Architecture (GNA)](http://globalnames.org)底下的一個專案。GNA 主要的目的是提供處理生物物種線上資訊服務，除了建立索引、檢核學名，也能在文件中查找學名。而 GNParser 能夠把複雜的學名拆解成許多元件，例如：
+
+**案例：把學名去除掉命名者**
+
+鹽膚木的學名為 *Rhus javanica* L. 作者為林奈(L.)，若要去掉命名者則是把 *javanica* 後面全部刪除就行了。
+    
+但若是有種以下位階者，例如羅氏鹽膚木
+
+*Rhus javanica* L. var. *roxburghii* (DC.) Rehd. & E.H. Wilson
+
+其中 (DC.) Rehd. & E.H. Wilson 為此變種學名的作者，若要全部移除作者，就要把 L. (基本異名[basionym]的作者)
+
+
+
+
+### 安裝
+
+請至 https://gitlab.com/gogna/gnparser/-/releases 下載安裝。安裝很簡單，若您是 Windows 的使用者，只需要把檔案下載完(參考下圖)之後解壓縮至 C:\Program Files 裡頭就行了。若是放在其他路徑則需要在環境變數中設定路徑([可參考此教學](https://hackmd.io/@yizhewang/B1zdXG4br))。
+
+![](https://i.imgur.com/3IRmXub.png)
+
+### 使用
+
+GNParser 可以使用指令和網頁介面來操作，如果打算透過 R 來呼叫 GNParser 的話，可以先學習指令的操作。若您使用 Windows 作業系統，可以執行命令提示字元(cmd)，在裡頭輸入指令；若您使用類 Unix 作業系統(*BSD, MacOS, GNU/Linux 等)，可以使用終端機(Terminal)來輸入。一般來說，Windows 的使用者會在 gnparser 後方加上 .exe。例如```gnparser.exe ...```
+#### 1. 基本的指令操作
+
+```shell
+gnparser "Scientific name Author"
+```
+:::info
+[Windows 使用者限定]若您找不到 gnparser (or gnparser.exe)，可能是您的環境變數未加上正確路徑，可以輸入絕對路徑來執行，例如：
+```
+C:\Program Files\gnparser\gnparser.exe "Scientific name Author"
+```
+:::
+
+舉例來說，若要處理 *Rhus javanica* L. 就直接輸入：
+
+```shell
+gnparser -f pretty "Rhus javanica L."
+```
+
+就會把此學名解析成以下的結果：
+```
+{
+  "parsed": true,
+  "quality": 1,
+  "verbatim": "Rhus javanica L.",
+  "normalized": "Rhus javanica L.",
+  "canonicalName": {
+    "simple": "Rhus javanica",
+    "full": "Rhus javanica"
+  },
+  "details": [
+    {
+      "genus": {
+        "value": "Rhus"
+      },
+      "specificEpithet": {
+        "value": "javanica",
+        "authorship": {
+          "value": "L.",
+          "basionymAuthorship": {
+            "authors": [
+              "L."
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "positions": [
+    ["genus",0,4],
+    ["specificEpithet",5,13],
+    ["authorWord",14,16]
+  ],
+  "surrogate": false,
+  "virus": false,
+  "hybrid": false,
+  "bacteria": false,
+  "nameStringId": "b74019b9-5b07-57e5-bdc4-e9cc4bfaf75b",
+  "parserVersion": "v0.9.0"
+}
+
+```
+
+看起來很複雜，實際上這個是 [json](https://zh.wikipedia.org/wiki/JSON) 的格式，也就是輕量化的資料交換格式。簡單來說，json 的語法是 key:attribute (關鍵字：數值/屬性)。以上面的例子來說，其中的 ```"verbatim":"Rhus javanica L."``` 代表原始輸入學名(```verbatim```)，以及其值(```Rhus javanica L.```)。一般來說 json 比較適合用機器來讀，如果單純想要解析學名以 csv 格式，不要使用 json 輸出，可以加上參數```-f simple```，例如：
+
+```shell
+gnparser -f simple "Rhus javanica L."
+```
+
+gnparser 就會以 csv 的形式輸出(windows 上面用逗號分隔，在 MacOS 上則用```|```分隔)，結果如下：
+
+```
+b74019b9-5b07-57e5-bdc4-e9cc4bfaf75b|Rhus javanica L.|Rhus javanica|Rhus javanica|L.||1
+```
+
+各欄位定義分別為 ```nameStringId(名稱的 id)```, ```verbatim(原始學名)```, ```simple(簡單學名不含作者、不含種下階層名，例如 var./subsp./f., etc)```, ```full(學名不含作者，包含種下階層名稱)```, ```authorship(作者)```, ```year```，最後一個則是 ```quality```。
+
+其中 quality 代表的意義如下
+
+| quality 數值 | 定義               |
+| ----------- | ----------------  |
+| 1           | 未偵測到任何學名問題  |
+| 2           | 偵測到小問題，但正規化的結果仍然良好 |
+| 3           | 學名有嚴重的問題，結果令人存疑  |
+| 0           | 字串無法辨識為學名，而且解析失敗 |
+
+
+#### 2. 批次操作
+
+GNParser 也支援批次操作，可一次處理多筆學名，例如：
+
+```shell
+gnparser -f simple names.txt
+```
+
+亦可配合重新導向存成另外一個檔名
+
+```shell
+gnparser -f simple names.txt > names_parsed.txt
+```
+
+您可以[下載範例資料](https://gist.github.com/mutolisp/95563aa9e305a7825c8edcfa7cbb3418)後來練習。
+
+
+#### 3. 和 R 整合
+
+您也可以在 R 之中呼叫 GNParser，例如：
+
+```{.r code-line-numbers="3"}
+# 載入 data.table
+library(data.table)
+# 透過 system() 來呼叫 gnparser
+# 如果出現錯誤，可能是路徑沒設定正確。
+# 可使用絕對路徑，例如 C:\bin\gnparser.exe -f simple ...
+system("gnparser -f simple names.txt > names_parsed.txt")
+parsed <- fread("names_parsed.txt")    
+```
+
+若您想透過 json 的方式來解析，也可以安裝 ```jsonlite``` 套件來處理，例如：
+
+```{.r, code-line-numbers="3"}
+library(jsonlite)
+# 僅輸出不含作者的完整學名
+jsonlite::fromJSON(names_parsed[1])$canonicalName$full
+```

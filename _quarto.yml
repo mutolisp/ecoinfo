@@ -3,13 +3,13 @@ project:
   output-dir: docs
 
 book:
-  title: "ecoinformatics"
+  title: "生態資訊學：R 語言應用"
   author: "Cheng-Tao Lin aka mutolisp  林政道"
   date: "2022-07-12"
   page-navigation: true
   language: zh
   number-depth: 2
-  repo-url: https://github.com/mutolisp/
+  repo-url: https://github.com/mutolisp/ecoinfo
   repo-actions: [edit, issue, source]
   downloads: [pdf, epub, docx]
   navbar:
@@ -17,7 +17,10 @@ book:
     collapse: true
   sharing: [facebook, twitter]
   sidebar:
-    style: docked
+    tools:
+      - icon: github
+      - text: Source Code
+        url: https://github.com/mutolisp/ecoinfo
 
 
   chapters:
@@ -42,6 +45,9 @@ book:
       - R_database.qmd
     - part: visualization.qmd
       chapters:
+      - R_basic_graphics.qmd
+      - R_ggplot2_intro.qmd
+      - R_ggplot2_advance.qmd
       - references.qmd
 
 bibliography: references.bib
@@ -51,11 +57,11 @@ format:
     theme: default
     code-copy: true
     fig-responsive: true
-  pdf:
-    header-includes:
-      - \usepackage{fontspec} # 使用 fontspec package
-      - \usepackage{xeCJK}    # 使用 xeCJK package
-      - \setCJKmainfont{Songti TC}
-    documentclass: scrreprt
+    #  pdf:
+    #    header-includes:
+    #      - \usepackage{fontspec} # 使用 fontspec package
+    #      - \usepackage{xeCJK}    # 使用 xeCJK package
+    #      - \setCJKmainfont{Songti TC}
+    #    documentclass: scrreprt
   epub:
     css: epub-styles.css

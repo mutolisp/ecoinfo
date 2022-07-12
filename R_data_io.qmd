@@ -1,7 +1,7 @@
 ---
 tag: ecoinformatics, R
 ---
-# 檔案的輸入
+# 檔案的輸出入
 
 
 把外部資料輸入進 R 的時候，可使用 csv (逗號分隔檔案)或是 txt 資料表的格式。如果你習慣使用 Microsoft Excel 的話，也可以安裝[``readxl``](https://cran.r-project.org/web/packages/readxl/index.html) 這個套件來讀取 Excel 的檔案格式。

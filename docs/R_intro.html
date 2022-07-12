@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.646">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-01-24">
+
+<title>生態資訊學：R 語言應用 - 1&nbsp; R 的介紹</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./R_fundamental.html" rel="next">
+<link href="./R_introduction.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">生態資訊學：R 語言應用</span>
+  </a>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse">
+    <a href="" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mutolisp/ecoinfo" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_introduction.html" class="sidebar-item-text sidebar-link">R 基礎入門</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_fundamental.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">基本操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_arithmetic.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">數學運算及邏輯判斷</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">資料結構</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_flow_control.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">流程控制</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_io.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">檔案的輸出入</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">自定函式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./R_data_management.html" class="sidebar-item-text sidebar-link">資料管理</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_sorting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">資料的排序</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_combination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">資料組合</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_filtering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">資料篩選</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_scientific_name.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">學名資料處理</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_database.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">讓 Rstudio 支援資料庫</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a href="./visualization.html" class="sidebar-item-text sidebar-link">視覺化</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_basic_graphics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">繪圖</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplot2 繪圖簡介</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R_ggplot2_advance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ggplot2 繪圖各論</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#本章概要" id="toc-本章概要" class="nav-link active" data-scroll-target="#本章概要"> <span class="header-section-number">1.1</span> 本章概要</a></li>
+  <li><a href="#為什麼要使用-r" id="toc-為什麼要使用-r" class="nav-link" data-scroll-target="#為什麼要使用-r"> <span class="header-section-number">1.2</span> 為什麼要使用 R?</a></li>
+  <li><a href="#安裝-r" id="toc-安裝-r" class="nav-link" data-scroll-target="#安裝-r"> <span class="header-section-number">1.3</span> 安裝 R</a></li>
+  <li><a href="#整合性圖形介面環境" id="toc-整合性圖形介面環境" class="nav-link" data-scroll-target="#整合性圖形介面環境"> <span class="header-section-number">1.4</span> 整合性圖形介面環境</a>
+  <ul class="collapse">
+  <li><a href="#rstudio-總覽" id="toc-rstudio-總覽" class="nav-link" data-scroll-target="#rstudio-總覽"> <span class="header-section-number">1.4.1</span> RStudio 總覽</a></li>
+  </ul></li>
+  <li><a href="#faq" id="toc-faq" class="nav-link" data-scroll-target="#faq"> <span class="header-section-number">1.5</span> FAQ</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_intro.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_intro.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R 的介紹</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 24, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p><a href="https://hackmd.io/y3Ix2ubhTX6uQ-CWzOvgBA">HackMD 協作</a></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>請先安裝好 <a href="http://www.rstudio.com">Rstudio</a> 以及 <a href="http://www.r-project.org">R</a></p>
+</div>
+</div>
+<section id="本章概要" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="本章概要"><span class="header-section-number">1.1</span> 本章概要</h2>
+<p>本章將會介紹 R 以及 RStudio 這個整合性開發環境</p>
+</section>
+<section id="為什麼要使用-r" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="為什麼要使用-r"><span class="header-section-number">1.2</span> 為什麼要使用 R?</h2>
+<p>現在市面上有許多商業的專業統計軟體，例如 SAS、SPSS、Statistica等，為什麼我要介紹各位使用 R?你可能會問，我這些資料很簡單，用Microsoft Excel 做統計分析或 SPSS 按一按就好了，報表也都能漂亮地印出來，為什麼還要再多花心思去學一套新的軟體? 因為 R 是:</p>
+<ol type="1">
+<li>百分之百自由軟體 (free software)，這意味著你可以自由取得、複製及散佈</li>
+<li>開放原始碼，R 的原始碼是公開的，你可以閱讀甚至修改</li>
+<li>龐大的使用者社群,因為自由軟體的特性,所以全世界有許多人貢獻他們的心力與 程式碼,所以許多新的統計方法可以很快就有 R 套件的支援</li>
+<li>跨平台 (cross-platform),不管你是使用 Windows, GNU/Linux, Mac OS 甚至是 FreeBSD,都可以執行 R 程式</li>
+<li>易於開發套件，你可以使用 C 或是 FORTRAN 語言開發延伸套件</li>
+<li>整合性高，可使用諸如 bash, python (rpy2) 或是 perl (RSPerl) 等語言呼叫 R 物件寫作</li>
+<li>高品質的圖形與表格排版輸出</li>
+<li>支援許多資料分析的功能，可處理大量的資料</li>
+</ol>
+</section>
+<section id="安裝-r" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="安裝-r"><span class="header-section-number">1.3</span> 安裝 R</h2>
+<p>在這個章節中,我不打算花太多的篇幅講 R 的安裝,都是重點提示，詳細的安裝說明請至 R 的網站上閱讀。R 的下載網址為 http://www.r-project.org 現在的 GNU/Linux 作業系統通常都會有套件管理 程式,你可以直接從該套件管理 程式安裝 R 程式，下面以 Debian/Ubuntu 的 apt 套件管理程式為例，示範如何安裝: 終端機底下安裝 R 主程式(或是你可以從圖形化的套件管理程式來安裝)</p>
+<pre class="shell"><code># apt-get install r-base</code></pre>
+<p>在 Windows 作業系統中安裝 R 程式只需要下載執行檔 R-版本號碼.exe, 並按照步驟安裝即可。因為 R 本身的圖形開發介面較為陽春，在這裡我們將使用 RStudio 這套整合性的開發環境來教學，請參見下節</p>
+</section>
+<section id="整合性圖形介面環境" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="整合性圖形介面環境"><span class="header-section-number">1.4</span> 整合性圖形介面環境</h2>
+<p>雖然 R 本身是透過指令控制的，官方提供的套件也有簡單的整合性圖形介面環境可以使用，非官方的整合軟體像是 <a href="http://sourceforge.net/projects/tinn-r">tinn-r</a> 或是 <a href="http://www.rstudio.com">RStudio</a>等，我們推薦使用 <a href="http://www.rstudio.com">RStudio</a>來進行 R 的指令寫作、測試以及管理工作環境、安裝第三方套件等功能。</p>
+<section id="rstudio-總覽" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="rstudio-總覽"><span class="header-section-number">1.4.1</span> RStudio 總覽</h3>
+<p>對於常常需要使用 R 來做統計分析的人來說，RStudio是一個非常方便又強大的整合性工具。它除了基本的指令語法強化功能(syntax highlighting， 透過不同的顏色顯示函式功能、變數等，可提高程式碼的易讀性)、<a href="https://support.rstudio.com/hc/en-us/articles/205273297-Code-Completion">tab 鍵指令補齊</a>、歷史指令控制管理、資料變數管理等功能外，也整合了<a href="https://www.r-bloggers.com/rstudio-and-github/">版本控制系統</a>(version control，預設使用的是 <a href="http://git-scm.com">git</a> ，需要額外安裝)、第三方套件管理、<a href="http://rmarkdown.rstudio.com">Markdown 語法</a>、簡報投影片等。除此之外，RStudio 最重要的特徵就是它也是開放原始碼軟體，而且完全免費！</p>
+<ul>
+<li><p>安裝 RStudio</p>
+<p>請至 <a href="https://www.rstudio.com/products/rstudio/download/">RStudio Desktop</a> 下載安裝即可。</p></li>
+<li><p>建立新專案</p>
+<p>首先我們用專案管理的方式來建立新專案，從 RStudio 功能選單中的 Project 項目中選擇子項目的 Create Project 建立一個新的專案，如下圖:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/Tu49CTJ.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">建立新專案</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>接下來選擇專案類型及目錄名稱</p>
+<p>我們選 Empty Project</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/ViIBjPB.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">專案類型</figcaption><p></p>
+</figure>
+</div></li>
+</ul>
+<p>選擇你想要放置這個 R 專案的目錄以及這個新專案的名稱，範例名稱為 <code>ch1_r_project</code></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/8wQtijs.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">專案名稱及目錄</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>RStudio 介面介紹</p>
+<p>RStudio 有個特異的功能就是提供<a href="https://www.rstudio.com/resources/cheatsheets/">小抄(cheat sheet)</a>，這個非常實用，完整 RStudio 介面小抄請參見<a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">RStudio IDE Cheat Sheet</a>，下面將會使用 RStudio 部分截圖來介紹</p>
+<p><img src="https://i.imgur.com/1VOq2dl.png" class="img-fluid"></p>
+<p>RStudio 開啟的時候，預設切分為左右兩部分，左半部是 R script 和 R console，右半部則是 R 的後勤區(包括環境、變數、歷史指令、檔案、說明檔等)。詳細的說明請參見第二章—[[ch02_R入門基礎]]。</p></li>
+</ul>
+</section>
+</section>
+<section id="faq" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="faq"><span class="header-section-number">1.5</span> FAQ</h2>
+<ol type="1">
+<li><p>如果開啟 Rstudio 碰到 Fatal error 和權限有關的錯誤訊息導致無法開啟怎麼辦？</p>
+<blockquote class="blockquote">
+<p>先把 Rstudio 關閉，在 Windows 的開始程式列表中，在 Rtudio 上按右鍵-&gt; 選擇更多-&gt; 以系統管理員開啟</p>
+</blockquote></li>
+<li><p>Rstudio 如果執行時碰到使用者名稱為非英文字元出現錯誤該如何解決？</p>
+<blockquote class="blockquote">
+<p>例：在安裝第三方套件時出現錯誤、找不到路徑等狀況，這時候請設定 TMP、R_LIBS_USR 參數。請參考<a href="https://github.com/wush978/DataScienceAndR/wiki/Windows中文使用者與Rstudio的環境變數調校">Windows 中文使用者與 RStudio 環境變數調校</a></p>
+</blockquote></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./R_introduction.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">R 基礎入門</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./R_fundamental.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">入門基礎</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

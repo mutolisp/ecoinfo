@@ -1,0 +1,240 @@
+---
+tags: ["#課程/生態資訊學", "#database", "#postgresql", "#RStudio", "#odbc", "#dbi"]
+Date: 2022-01-24 23:14:39
+date: 2022-01-23 23:59:41
+modificationDate: 2022-04-14 16:31:20
+---
+
+# 讓 Rstudio 支援資料庫
+
+## 1. 安裝
+
+為了要在 RStudio 中能連接並使用資料庫系統，請安裝以下表 1.1 和表1.2 所需程式。建議安裝的流程如下：
+
+1. 安裝 R 語言
+2. 安裝 RStudio
+3. 安裝 RPostgres, DBI 還有 odbc 等套件
+4. 安裝 PostgreSQL
+5. 安裝 pgAdmin
+6. 安裝 psqlODBC
+
+**表1.1** 在 RStudio 使用資料庫所需要的程式
+
+| 名稱       | 必要性                   | 說明                                                        | 網址                        | 授權                                                                                          |
+| ---------- | ------------------------ | ----------------------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------- |
+| R          | 必須安裝                 | R 語言                                                      | https://www.r-project.org   | GNU General Public License v2/v3 可免費自由使用、複製、修改                                   |
+| RStudio    | 必須安裝                 | R 的整合性開發環境(Integrated Desktop Environment; IDE)     | https://rstudio.com         | 商業軟體授權，但是具有開源授權。社群版可免費使用，商業使用需付費                              |
+| PostgreSQL | 必須安裝                 | 關聯式資料庫管理系統(relational database management system) | https://postgresql.org      | PostgreSQL license (免費，類似 BSD 或 MIT 的授權，可以自由使用、複製、修改甚至使用於商業用途) |
+| psqlODBC   | 必須安裝                 | PostgreSQL ODBC (Open Database Connectivity)                | https://odbc.postgresql.org | LGPL (Library General Public License)                                                         |
+| pgAdmin    | 選擇性安裝，強烈建議安裝 | 管理 PostgreSQL 的前端工具                                  | https://www.pgadmin.org     | PostgreSQL license (免費)                                                                     |
+| pgcli      | 選擇性安裝，推薦安裝     | Python 寫的 PostgreSQL 命令列介面                           | https://www.pgcli.com       | BSD 3-Clause license (免費)                                                                   |
+
+**表1.2** R 所需要之套件
+
+| R 套件    | 說明                             | 網址                                                         |
+| --------- | ------------------------------- | ------------------------------------------------------------ |
+| odbc      | R ODBC 開放資料庫連結套件          | https://cran.r-project.org/web/packages/odbc/index.html      |
+| DBI       | R 資料庫介面(database interface) | https://cran.r-project.org/web/packages/DBI/index.html       |
+| RPostgres | Rcpp 的 PostgreSQL 介面套件      | https://cran.r-project.org/web/packages/RPostgres/index.html |
+
+### 不同作業系統平台安裝注意事項及說明
+
+### 1.1 Windows 平台
+
+可至 [EnterpriseDB]([https://www.enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)) 下載安裝
+
+### 1.2 MacOS 平台
+
+請先安裝 [Homebrew](https://brew.sh/index_zh-tw) 套件管理系統，再透過 brew 來安裝以下的軟體
+
+```bash
+$ brew install postgresql unixodbc psqlodbc
+```
+
+### 1.3 跨平台使用 docker
+
+Docker 是一個虛擬化的軟體平台，可快速地安裝、測試與佈署應用程式。Docker 核心是 GNU/Linux，因此在許多 Linux 作業系統中都有內建。 這裡指的虛擬化(virtualization)是在作業系統層上進行，和一般人熟知的虛擬機器(virtual machine)不同。Docker 是透過「容器(container)」來實作虛擬化，而這個「容器」和早期於 Unix 作業系統上的 jail (例如 [FreeBSD 的 jail](https://zh.wikipedia.org/wiki/FreeBSD_jail))本質是相同的，都是透過 [chroot](https://en.wikipedia.org/wiki/Chroot) 機制來隔離環境應用程式，像是沙盒(sandbox)一樣。在 jail 沒有漏洞的情況下，不論你在裡頭惡搞都不會影響到外面的作業系統。所以如果你想要測試和玩玩看 RStudio, PostgreSQL，而不是安裝在你平常工作的作業環境中，推薦使用 docker 來安裝。目前大部分常用的自由軟體或開源軟體都有支援 docker，對 docker 有興趣的可以讀這篇 [docker 的基礎教學](https://cwhu.medium.com/docker-tutorial-101-c3808b899ac6) 。使用 docker 之前請先安裝  docker/docker desktop
+
+```bash
+$ docker pull postgres
+# 或是使用 tag 來拉取您要安裝的版本
+# https://hub.docker.com/_/postgres?tab=tags
+# 例如：
+$ docker pull postgres:14.1
+
+$ docker run --name 容器名稱(例如postgres) -e POSTGRES_PASSWORD=密碼 -d postgres
+
+# 其餘設定請參閱 docker 網站
+```
+
+至於類  Unix 系統，像是 *BSD, GNU/Linux 的使用者，我想你們應該不需要再多說明了吧？
+
+[使用 Docker 安裝 R 和 RStudio (待研究)](使用%20Docker%20安裝%20R%20和%20RStudio%20(待研究).md)
+
+## 2. 設定
+
+### 2.1 設定 odbc
+
+如果是在類 Unix  系統(包含 Mac)，請在家目錄下(/Users/yourAccountName) 建立 .odbcinst.ini 和 .odbc.ini
+
+.odbcinst.ini
+
+```
+[PostgreSQL Driver]
+Driver          = /opt/homebrew/lib/psqlodbcw.so
+```
+
+註：如果 MacOS 使用 homebrew，ODBC 驅動程式預設位置在 /opt/homebrew/lib 底下，其餘的作業系統可能在 /usr/local/lib 底下，請再查閱作業系統的使用手冊
+
+.odbc.ini
+
+```
+[databaseName]
+Driver              = PostgreSQL Driver
+Database            = 資料庫的名稱
+Servername          = localhost
+UserName            = 你的帳號
+Password            = 你的密碼
+Port                = 5432
+
+[ecoinformatics]
+Driver              = PostgreSQL Driver
+Database            = ecoinformatics
+Servername          = localhost
+UserName            = *ruser*
+Password            = *r_dataScience*
+Port                = 5432
+```
+
+### 2.2 設定 PostgreSQL
+
+連進資料庫
+
+```
+pgcli -d postgres
+```
+
+建立使用者，並設定密碼與權限
+
+*方法一：使用命令列方式執行*
+
+```{.sql}
+CREATE USER ruser WITH PASSWORD 'r_dataScience';
+CREATE DATABASE ecoinformatics WITH OWNER = ruser;
+```
+
+*方法二：使用 pgAdmin 建立*
+
+1. 開啟 pgAdmin 並連進資料庫後，從 Login/Group Roles 中按滑鼠右鍵：Create > Login/Group Role。
+
+
+   ![圖 2.2.1](https://i.imgur.com/Zg8g9RY.jpg)
+   圖 2.2.1
+
+2. 設定權限，讓 ruser 可以登入並建立資料庫，即開啟 “Can login?” 和 “Create databases?”。設定完之後按 Save
+
+   ![圖 2.2.2](https://i.imgur.com/bKkIUfR.png)
+   圖 2.2.2
+
+3. 建立資料庫：在左邊選單中的 Databases 按滑鼠右鍵，選擇 “Create” > “Databases..”。輸入資料庫名稱，這邊以 ecoinformatics 為範例，Owner 選擇 ruser。最後按 Save 建立資料庫。
+
+   ![圖 2.2.3](https://i.imgur.com/MGuoWGd.jpg)
+
+   圖 2.2.3
+
+
+## 3. 在 RStudio 中使用資料庫
+
+### 3.1 連接資料庫
+
+開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下圖 3.1.1)。點選我們建立的 ecoinformatics odbc 設定
+
+![圖 3.1.1 建立一筆與資料庫的連結](https://i.imgur.com/V8a594Q.png)
+
+![圖 3.1.1 建立一筆與資料庫的連結](course/生態資訊學/講義/讓%20Rstudio%20支援資料庫/Rstudio_createdb_connection.png)
+
+圖 3.1.1 建立一筆與資料庫的連結
+
+點選完 ecoinformatics 之後，會開啟詳細參數的設定(圖3.1.2)，你可以在這裡選擇把參數丟進 R Console 或是新建一個  R Script 把指令丟出去，之後再執行指令建立一筆資料庫連結。透過 DBI 套件去連結的指令如下：
+
+```{r, `code-line-numbers`="3"}
+library(DBI)
+con <- dbConnect(odbc::odbc(), "ecoinformatics", timeout = 10)
+```
+
+上面的指令中，```[dbConnect()](https://dbi.r-dbi.org/reference/dbconnect)``` 是 DBI 套件連接資料庫的函式，裡頭的參數需包含資料庫的驅動程式(database driver)。以本例來說，是使用 ```odbc::odbc()``` 來連接 PostgreSQL 資料庫，而 "ecoinformatics" 則是我們寫在 ```odbc.ini``` 設定檔中的參數名稱；timeout 則是等待連接時間為 10 秒，超過後無法連接則回傳錯誤訊息。
+
+![圖 3.1.2 資料庫連結指令](https://i.imgur.com/oyWIT9X.png)
+
+圖 3.1.2 資料庫連結指令
+
+若成功連接的話，就能夠看到正確顯示範例資料庫 ```ecoinformatics``` 的畫面
+
+
+![圖 3.1.3 成功連接資料庫的畫面](https://i.imgur.com/7xRN3cO.png)
+
+圖 3.1.3 成功連接資料庫的畫面
+
+### 3.2 建立資料表(Table)
+
+當連進資料庫時，裡頭是空的狀態。所以我們可以透過 DBI 套件的 ```dbCreateTable()``` 來新建資料表。以下用 R 內建的 iris 資料集，使用 ```dbCreateTable```(*連線的物件*,  *資料表*, R裡頭的資料框架) 來建立一個資料表。
+
+```{.r code-line-numbers="3"}
+library(DBI)
+# 建立資料庫連線，目標資料庫為 PostgreSQL 的 ecoinformatics
+con <- dbConnect(odbc::odbc(), "ecoinformatics", timeout = 10)
+# 建立資料表，請注意以下第二個參數要使用 " (雙引號)
+dbCreateTable(con, "iris", iris)
+```
+
+但這樣的只是單純建立資料表，並不會把資料匯入 iris 資料表中，若要匯入資料，請使用 ```dbWriteTable()```。
+
+
+::: {.callout-note}
+### 資料庫知識
+一般的關聯式資料庫，儲存資料的單元是資料表(table)，和試算表(spreadsheet)很類似，都是二維的結構，由**欄**(columns，直向)和**列**(rows，橫向；又稱做紀錄[records])所組成。對於 LibreOffice Scalc 或 Microsoft Excel 的試算表來說，列是有順序的(也就是由 1, 2, 3, ...)，但資料庫中的資料表的列並無一定順序，可以透過 SQL 查詢依照某特定欄位來排序；而欄則是變數(variables)，例如一個圖書館資料庫中，會儲存書目、ISBN、作者，在資料庫管理系統中則會存在欄位中。在建立資料表的時和試算表不同的是，一般的關聯式資料庫中的資料表需要有嚴謹的資料類型(data definition)定義，比如說「書目」儲存的是文字格式，那我們就要告訴資料庫要用哪種類型的文字格式以及所需的儲存資料長度。以 postgres 來說，文字相關的資料類型就有 *character* (可縮寫為 char)、*character* *varying* (縮寫為 varchar) 和 *text*。這三種的差別在於儲存的文字是否可變長度或固定長度，還有儲存長度若比固定長度短，是否會填充空格等差別。
+
+
+在儲存資料表時，通常會用「**資料定義語言(data definition language; DDL)** 」來定義資料類型、長度、限制(constraints，常見的像是主鍵索引限制[primary key constraint]、外部索引鍵限制[foreign key constraint])、視觀表(view)等。以下是一個簡單的 DDL：
+
+```{.sql}
+-- For any line beginning with "--" means comment
+CREATE TABLE IF NOT EXISTS iris (
+    "Sepal.Length" double precision,
+    "Sepal.Width" double precision,
+    "Petal.Length" double precision,
+    "Petal.Width" double precision,
+    "Species" varchar
+);
+```
+
+上面這個 DDL 中，用白話翻譯就是：如果資料表 iris 不存在的話，就建立一個資料表；此資料表中有五個欄位，分別是 “Sepal.Length” (資料類型是[雙精確數](https://zh.wikipedia.org/wiki/雙精度浮點數)[double precision]，簡單說就是小數)、 “Sepal.Width”(雙精確數)、”Petal.Length” (雙精確數)、”Petal.Width” (雙精確數)和 “Species” (可變長度的文字)。這樣的語法我們也稱作「**結構化查詢語言(structural query language; SQL)**」，詳細 SQL 介紹請參見
+
+[[結構化查詢語言]](結構化查詢語言.md)
+
+:::
+
+### 查詢資料表
+
+在這個章節中，我們將練習使用 [rgbif](https://cran.r-project.org/web/packages/rgbif/index.html) 來擷取 [GBIF](https://gbif.org) 網站上的資料集，並存進 PostgreSQL 的資料庫中，最後再透過 ```dbGetQuery()``` 來查詢資料。
+請先安裝好 [rgbif](https://cran.r-project.org/web/packages/rgbif), [leaflet](https://cran.r-project.org/web/packages/leaflet) 和  [tidyverse](https://cran.r-project.org/web/packages/tidyverse) 這三個套件
+
+rgbif 可以使用 ```occ_search()``` 來搜尋物種，
+
+```{r, `code-line-numbers`="3"}
+library(rgbif)
+library(tidyverse)
+library(leaflet)
+
+# 使用 occ_search 來搜尋物種
+query_results <- occ_search(scientificName = 'Abies kawakamii',
+           hasCoordinate = TRUE,
+           limit = 100000)
+```
+
+
+### 參考資料
+
+1. [https://db.rstudio.com/](https://db.rstudio.com/best-practices/drivers/)
+2. [https://www.postgresql.org/docs/14/tutorial-install.html](https://www.postgresql.org/docs/14/tutorial-install.html)
+3. [https://hub.docker.com/_/postgres](https://hub.docker.com/_/postgres)
