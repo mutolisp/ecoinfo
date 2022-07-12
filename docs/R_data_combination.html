@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">資料塑形轉換</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -444,10 +444,10 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb12-2"><a href="#cb12-2"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z
-1 1 a -0.494671828420966
-2 3 b -0.407762834826426
-3 5 a   1.00318269095987
-4 7 c  -1.82018850483896</code></pre>
+1 1 a  -3.15252252119463
+2 3 b  0.236594555465534
+3 5 a -0.522491091927937
+4 7 c    1.0132086329092</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -455,10 +455,10 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb14-2"><a href="#cb14-2"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x a b
-1 1 1 F
-2 3 2 F
-3 5 4 T
-4 7 3 T</code></pre>
+1 1 3 F
+2 3 1 F
+3 5 2 T
+4 7 4 T</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -466,10 +466,10 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">merge</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a -0.494671828420966 1 F
-2 3 b -0.407762834826426 2 F
-3 5 a   1.00318269095987 4 T
-4 7 c  -1.82018850483896 3 T</code></pre>
+1 1 a  -3.15252252119463 3 F
+2 3 b  0.236594555465534 1 F
+3 5 a -0.522491091927937 2 T
+4 7 c    1.0132086329092 4 T</code></pre>
 </div>
 </div>
 </section>
@@ -486,9 +486,9 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb18-5"><a href="#cb18-5"></a><span class="fu">merge</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a -0.494671828420966 1 F
-2 3 b -0.407762834826426 2 F
-3 5 a   1.00318269095987 4 T</code></pre>
+1 1 a  -3.15252252119463 3 F
+2 3 b  0.236594555465534 1 F
+3 5 a -0.522491091927937 2 T</code></pre>
 </div>
 </div>
 <p>如果要實作 left 或 right join 呢？<code>merge()</code> 中只要加上參數 <code>all.x = TRUE</code> 或是 <code>all.y = TRUE</code> 即可，x 指的是第一個提到的 df1， y 則是 df2，也可以直接在 <code>merge()</code> 的參數中指定，例如 <code>merge(x=df1, y=df2)</code>。</p>
@@ -497,19 +497,19 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="fu">merge</span>(df1, df2, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a -0.494671828420966 1 F
-2 3 b -0.407762834826426 2 F
-3 5 a   1.00318269095987 4 T</code></pre>
+1 1 a  -3.15252252119463 3 F
+2 3 b  0.236594555465534 1 F
+3 5 a -0.522491091927937 2 T</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">merge</span>(df1, df2, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x    y                  z a b
-1 1    a -0.494671828420966 1 F
-2 3    b -0.407762834826426 2 F
-3 5    a   1.00318269095987 4 T
-4 7 &lt;NA&gt;               &lt;NA&gt; 3 T</code></pre>
+1 1    a  -3.15252252119463 3 F
+2 3    b  0.236594555465534 1 F
+3 5    a -0.522491091927937 2 T
+4 7 &lt;NA&gt;               &lt;NA&gt; 4 T</code></pre>
 </div>
 </div>
 <p>除了 R 內建 base 的 merge 之外，你也可以嘗試使用 Wickham 寫的 <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr</a> 套件中的 <a href="https://dplyr.tidyverse.org/reference/join.html"><code>left_join()</code></a>、<a href="https://dplyr.tidyverse.org/reference/join.html"><code>right_join()</code></a>及<a href="https://dplyr.tidyverse.org/reference/join.html"><code>inner_join()</code></a>等功能。在 dplyr 中 join 的使用可參見下表：</p>
@@ -566,9 +566,9 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a -0.494671828420966 1 F
-2 3 b -0.407762834826426 2 F
-3 5 a   1.00318269095987 4 T</code></pre>
+1 1 a  -3.15252252119463 3 F
+2 3 b  0.236594555465534 1 F
+3 5 a -0.522491091927937 2 T</code></pre>
 </div>
 </div>
 <p>結果如下：</p>
@@ -585,9 +585,9 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a -0.494671828420966 1 F
-2 3 b -0.407762834826426 2 F
-3 5 a   1.00318269095987 4 T</code></pre>
+1 1 a  -3.15252252119463 3 F
+2 3 b  0.236594555465534 1 F
+3 5 a -0.522491091927937 2 T</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># 等同於 left_join(df1, df2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
