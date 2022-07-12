@@ -1,0 +1,221 @@
+---
+tag: ecoinformatics, R
+---
+# 檔案的輸入
+
+
+把外部資料輸入進 R 的時候，可使用 csv (逗號分隔檔案)或是 txt 資料表的格式。如果你習慣使用 Microsoft Excel 的話，也可以安裝[``readxl``](https://cran.r-project.org/web/packages/readxl/index.html) 這個套件來讀取 Excel 的檔案格式。
+
+## 讀取檔案
+
+
+__讀取 Microsoft Excel 檔案__
+
+讀取 Excel 時，可使用 [``readxl``](https://cran.r-project.org/web/packages/readxl/index.html) 套件中的 ``read_excel()`` 來讀取，讀取的時候需要設定活頁簿(sheet)的名稱，若不知道名稱可以用 ``excel_sheets()`` 來取得名稱
+
+```{.r code-line-numbers="3"}
+# 載入 readxl 檔案
+library(readxl)
+# 使用 excel_sheets 讀取 excel 中的 sheet 名稱
+sheetNames <- excel_sheets('some_excel_file.xlsx')
+# 假設只讀取第一個 sheet
+excelFile <- read_excel('some_excel_file.xlsx', 
+    sheet = sheetNames[1])
+```
+
+
+__讀取 csv 檔案__
+
+假設我們有個資料表需要輸入進 R 分析，這個資料表長得像這樣：
+[資料下載](https://gist.github.com/mutolisp/83cc1fb6784c07e90542655c7e9f8da0)
+
+| id  |  plot  |  species  |  cover  |
+| --: | ------ | --------- | ------: |
+|  1  |  A01   |  A        |   5     |
+|  2  |  A01   |  B        |  10     |
+|  3  |  A02   |  A        |   1     |
+|  4  |  A02   |  C        |   2     |
+|  5  |  A02   |  D        |   3     |
+|  6  |  A02   |  E        |  15     |
+|  7  |  A03   |  F        |  25     |
+|  8  |  A04   |  F        |  10     |
+|  9  |  A04   |  G        |   5     |
+| 10  |  A05   |  A        |   1     |
+| 11  |  A05   |  E        |   1     |
+| 12  |  A05   |  F        |   1     |
+| 13  |  A06   |  A        |   1     |
+| 14  |  A07   |  A        |   1     |
+| 15  |  A07   |  B        |   1     |
+| 16  |  A07   |  C        |   5     |
+| 17  |  A08   |  C        |  10     |
+| 18  |  A08   |  D        |   1     |
+| 19  |  A08   |  G        |   2     |
+| 20  |  A08   |  H        |   1     |
+
+原始資料的樣貌(csv 檔案請參見 ``examples/ch1_r_project/data/datainput_example.csv``):
+
+```
+id,plot,species,cover
+1,A01,A,5
+2,A01,B,10
+3,A02,A,1
+4,A02,C,2
+5,A02,D,3
+6,A02,E,15
+7,A03,F,25
+8,A04,F,10
+9,A04,G,5
+10,A05,A,1
+11,A05,E,1
+12,A05,F,1
+13,A06,A,1
+14,A07,A,1
+15,A07,B,1
+16,A07,C,5
+17,A08,C,10
+18,A08,D,1
+19,A08,G,2
+20,A08,H,1
+```
+
+
+總共有 20 筆資料，四個欄位，第一列(row)是欄位的名稱。
+在把資料輸入進 R 時，記得要先使用 Excel 或是 LibreOffice 看一下，因為有些資料可能沒有清理乾淨(例如分隔符號不統一、空白行、空白欄位等)。讀取資料時，也有可能碰到編碼的問題，例如 Windows 都用 Big5 編碼，碰到 Unicode (萬國碼，通常是 UTF-8)的資料時會出現錯誤亂碼等。這些問題我們先略過不提，在「資料清理」的部份會再詳細解說。
+
+讀取資料使用 ``read.table()`` 或是 ``read.csv()``:
+
+```{.r code-line-numbers="3"}
+# 在讀資料之前，請先確定資料的位置
+# 是絕對路徑或是相對路徑，例如在 Windows 中
+# "C:\Users\User\Desktop\data\example.csv" 是絕對路徑
+# "data\example.csv" 是相對路徑
+rawdata <- read.csv('data/datainput_example.csv')
+```
+
+常用的參數有 ``header`` (欄位名稱的有無)、``sep``(分隔符號)、``na.strings`` (沒有資料的字串，例如 -9999)、``skip`` (省略的行數)等。例如預設讀入 csv 時，會把第一列當成欄位名稱，若你的資料中沒有欄位名稱，就可以使用``header=FALSE`` 來關掉讀取第一列當成欄位名稱。
+分隔符號則是當你在讀取以 Tab、pipeline (|) 所需要輸入的符號，例如以 Tab 分隔，參數則為 ``sep = "\t"`` (``\t`` 代表 Tab 鍵)。另外還有個常用的是編碼(encodings)，如果編碼是 unicode，參數為``encoding = "UTF-8"``。
+
+### 大檔案的讀取
+
+不管你是使用 ``read.table()`` 或是 ``read.csv()`` 等輸入指令，碰到大檔案的時候，我會建議使用 ``data.table`` 套件底下的``fread()`` 來讀取資料。舉例來說，有個 csv 檔案約 20 MB，如果使用 ``read.csv()`` 來讀取大概要 3.4 秒：
+
+```{.r code-line-numbers="3"}
+# proc.time() 來取得計算的時間
+ptm <- proc.time()
+  a_csvread <- read.csv('data/testdata.csv')
+proc.time() - ptm
+```
+但如果使用 ``fread()``，則只需要 0.132 秒。
+
+```{.r `code-line-numbers`="3"}
+ptm <- proc.time()
+   a_fread <- fread('data/testdata.csv')
+proc.time() - ptm
+```
+
+因此當你如果有讀取大檔案的需求，請使用 ``fread()``
+來讀取檔案。
+
+
+## 檔案的輸出
+
+和 ``read.csv`` 相同，有 read 就有 write，例如：
+
+```{.r code-line-numbers="3"}
+write.csv(x, 'file/path/to/output/file.csv', row.names = FALSE)
+```
+
+```write.csv()`` 預設會輸出列數，若你沒有這個需求的話，
+可以把它關閉(``row.names=FALSE``)。
+
+另外 data.table 中，也可以使用 ``data.table::fwrite()`` 來輸出檔案。
+
+## 工作資料的儲存
+
+在 R 裡頭可以把目前工作階段中儲存之變數、載入的資料用 ``save.image('儲存的路徑/.rdata')`` 儲存成 R 映像檔，以方便下次使用。在使用 RStudio 退出時，通常也會問您是否要儲存工作階段的映像檔案至家目錄下，如下圖
+
+![](https://i.imgur.com/mZvFXLl.png)
+
+若要手動儲存與載入的話，可以分別使用 ``save.image()`` 和 ``load()`` 來載入所儲存的 R 映像檔
+
+```{.r code-line-numbers="3"}
+# 儲存目前工作階段映像檔
+save.image('到/儲存路徑/檔名.Rdata')
+
+# 載入映象檔
+load('到/儲存路徑/檔名.Rdata')
+
+```
+
+::: {.callout-note} 
+### 關於路徑
+
+
+路徑在 Windows 作業系統通常是
+```
+C:\\Users/yourusername/file.Rdata
+```
+或是相對路徑
+```
+dir/file.Rdata
+```
+如果在 Unix 或是 MacOS 請使用
+```
+/Users/yourusername/file.Rdata
+```
+:::
+
+
+## 練習 Script
+
+
+1. 基本的輸入資料練習 [<small>R Script 下載</small>](https://gist.github.com/mutolisp/252b751ce7235461274ca5f339043ad4)
+```{.r code-line-numbers="3"}
+# 資料的輸出入
+spcover <- read.csv('ecoinformatics_ex1026.csv',
+                    sep = ',', header = TRUE)
+# read.table
+spcover$species
+spcover$cover
+summary(spcover)
+library(data.table)
+spcover <- fread('C:\\Desktop\\ecoinformatics_ex1026.csv')
+# 使用 file.choose() 用檔案總管開啟
+spcover <- fread(file.choose())
+
+# 使用 fread 開啟大檔案速度會比 read.csv 快
+ptm <- proc.time()
+test1 <- read.csv('~/Downloads/cwb2006-2015/raw/200601_auto_hr.txt', skip=73)
+proc.time() - ptm
+
+ptm <- proc.time()
+test1 <- fread('~/Downloads/cwb2006-2015/raw/200601_auto_hr.txt', skip=73)
+proc.time() - ptm
+```
+
+2. 處理有中文的外部資料輸入 [<small>R Script 下載</small>](https://git.io/vFZQB)
+
+```{.r code-line-numbers="3"}
+# 練習從政府開放資料網下載資料
+# https://data.gov.tw/dataset/6091
+# 全臺灣大專院校名錄
+
+# 預設在 data.gov.tw 上面的編碼是 UTF-8
+# 記得把路徑改成你的檔案路徑，例如 C:\\Users\\username\\u1_new.csv
+# skip = 2
+uniList <- read.csv('~/Downloads/u1_new.csv', 
+                    skip = 2)
+# 另外我們也可以使用 data.table 的 fread 來讀取
+
+library(data.table)
+uniList.df <- data.table::fread('~/Downloads/u1_new.csv',
+                                skip = 2, 
+                                encoding = 'UTF-8', 
+                                header = T)
+
+# 設定好正確編碼後，若讀取仍出現亂碼，請確認一下你的
+# 系統語系(locale)是否正確
+# 輸入 Sys.getlocale() ，如果不是 Chinese (Traditional)_Taiwan.950
+# 者，請輸入下列指令設定 RStudio/R 的語系
+# Sys.setlocale("LC_ALL","Chinese (Traditional)_Taiwan.950")
+```

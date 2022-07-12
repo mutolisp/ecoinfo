@@ -1,0 +1,61 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "ecoinformatics"
+  author: "Cheng-Tao Lin aka mutolisp  林政道"
+  date: "2022-07-12"
+  page-navigation: true
+  language: zh
+  number-depth: 2
+  repo-url: https://github.com/mutolisp/
+  repo-actions: [edit, issue, source]
+  downloads: [pdf, epub, docx]
+  navbar:
+    search: true
+    collapse: true
+  sharing: [facebook, twitter]
+  sidebar:
+    style: docked
+
+
+  chapters:
+    - index.qmd
+    - part: R_introduction.qmd
+      chapters:
+      - R_intro.qmd
+      - R_fundamental.qmd
+      - R_basic.qmd
+      - R_arithmetic.qmd
+      - R_data_structure.qmd
+      - R_flow_control.qmd
+      - R_data_io.qmd
+      - R_function.qmd
+    - part: R_data_management.qmd
+      chapters:
+      - R_data_sorting.qmd
+      - R_data_combination.qmd
+      - R_data_filtering.qmd
+      - R_data_wrangling.qmd
+      - R_scientific_name.qmd
+      - R_database.qmd
+    - part: visualization.qmd
+      chapters:
+      - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: default
+    code-copy: true
+    fig-responsive: true
+  pdf:
+    header-includes:
+      - \usepackage{fontspec} # 使用 fontspec package
+      - \usepackage{xeCJK}    # 使用 xeCJK package
+      - \setCJKmainfont{Songti TC}
+    documentclass: scrreprt
+  epub:
+    css: epub-styles.css
