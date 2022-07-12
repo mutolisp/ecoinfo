@@ -3,6 +3,11 @@ tags: ["#課程/生態資訊學", "#database", "#postgresql", "#RStudio", "#odbc
 Date: 2022-01-24 23:14:39
 date: 2022-01-23 23:59:41
 modificationDate: 2022-04-14 16:31:20
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
 ---
 
 # 讓 Rstudio 支援資料庫
@@ -39,11 +44,11 @@ modificationDate: 2022-04-14 16:31:20
 
 ### 不同作業系統平台安裝注意事項及說明
 
-### 1.1 Windows 平台
+### Windows 平台
 
 可至 [EnterpriseDB]([https://www.enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)) 下載安裝
 
-### 1.2 MacOS 平台
+### MacOS 平台
 
 請先安裝 [Homebrew](https://brew.sh/index_zh-tw) 套件管理系統，再透過 brew 來安裝以下的軟體
 
@@ -51,11 +56,11 @@ modificationDate: 2022-04-14 16:31:20
 $ brew install postgresql unixodbc psqlodbc
 ```
 
-### 1.3 跨平台使用 docker
+### 跨平台使用 docker
 
 Docker 是一個虛擬化的軟體平台，可快速地安裝、測試與佈署應用程式。Docker 核心是 GNU/Linux，因此在許多 Linux 作業系統中都有內建。 這裡指的虛擬化(virtualization)是在作業系統層上進行，和一般人熟知的虛擬機器(virtual machine)不同。Docker 是透過「容器(container)」來實作虛擬化，而這個「容器」和早期於 Unix 作業系統上的 jail (例如 [FreeBSD 的 jail](https://zh.wikipedia.org/wiki/FreeBSD_jail))本質是相同的，都是透過 [chroot](https://en.wikipedia.org/wiki/Chroot) 機制來隔離環境應用程式，像是沙盒(sandbox)一樣。在 jail 沒有漏洞的情況下，不論你在裡頭惡搞都不會影響到外面的作業系統。所以如果你想要測試和玩玩看 RStudio, PostgreSQL，而不是安裝在你平常工作的作業環境中，推薦使用 docker 來安裝。目前大部分常用的自由軟體或開源軟體都有支援 docker，對 docker 有興趣的可以讀這篇 [docker 的基礎教學](https://cwhu.medium.com/docker-tutorial-101-c3808b899ac6) 。使用 docker 之前請先安裝  docker/docker desktop
 
-```bash
+```{.bash}
 $ docker pull postgres
 # 或是使用 tag 來拉取您要安裝的版本
 # https://hub.docker.com/_/postgres?tab=tags
@@ -73,13 +78,13 @@ $ docker run --name 容器名稱(例如postgres) -e POSTGRES_PASSWORD=密碼 -d 
 
 ## 2. 設定
 
-### 2.1 設定 odbc
+### 設定 odbc
 
 如果是在類 Unix  系統(包含 Mac)，請在家目錄下(/Users/yourAccountName) 建立 .odbcinst.ini 和 .odbc.ini
 
 .odbcinst.ini
 
-```
+```{.bash}
 [PostgreSQL Driver]
 Driver          = /opt/homebrew/lib/psqlodbcw.so
 ```
@@ -88,7 +93,7 @@ Driver          = /opt/homebrew/lib/psqlodbcw.so
 
 .odbc.ini
 
-```
+```{.bash}
 [databaseName]
 Driver              = PostgreSQL Driver
 Database            = 資料庫的名稱
@@ -106,11 +111,11 @@ Password            = *r_dataScience*
 Port                = 5432
 ```
 
-### 2.2 設定 PostgreSQL
+### 設定 PostgreSQL
 
 連進資料庫
 
-```
+```{.bash}
 pgcli -d postgres
 ```
 
@@ -127,33 +132,30 @@ CREATE DATABASE ecoinformatics WITH OWNER = ruser;
 
 1. 開啟 pgAdmin 並連進資料庫後，從 Login/Group Roles 中按滑鼠右鍵：Create > Login/Group Role。
 
-
-   ![圖 2.2.1](https://i.imgur.com/Zg8g9RY.jpg)
-   圖 2.2.1
+   ![建立使用者](https://i.imgur.com/Zg8g9RY.jpg){#fig-pgsql_create_user}
 
 2. 設定權限，讓 ruser 可以登入並建立資料庫，即開啟 “Can login?” 和 “Create databases?”。設定完之後按 Save
 
-   ![圖 2.2.2](https://i.imgur.com/bKkIUfR.png)
-   圖 2.2.2
+   ![設定 postgres 權限](https://i.imgur.com/bKkIUfR.png){#fig-grant_db_priviledge}
 
 3. 建立資料庫：在左邊選單中的 Databases 按滑鼠右鍵，選擇 “Create” > “Databases..”。輸入資料庫名稱，這邊以 ecoinformatics 為範例，Owner 選擇 ruser。最後按 Save 建立資料庫。
 
-   ![圖 2.2.3](https://i.imgur.com/MGuoWGd.jpg)
+   ![](https://i.imgur.com/MGuoWGd.jpg)
 
-   圖 2.2.3
+  
 
 
 ## 3. 在 RStudio 中使用資料庫
 
-### 3.1 連接資料庫
+### 連接資料庫
 
-開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下圖 3.1.1)。點選我們建立的 ecoinformatics odbc 設定
+開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下)。點選我們建立的 ecoinformatics odbc 設定
 
-![圖 3.1.1 建立一筆與資料庫的連結](https://i.imgur.com/V8a594Q.png)
+![ 建立一筆與資料庫的連結](https://i.imgur.com/V8a594Q.png)
 
-![圖 3.1.1 建立一筆與資料庫的連結](course/生態資訊學/講義/讓%20Rstudio%20支援資料庫/Rstudio_createdb_connection.png)
+![ 建立一筆與資料庫的連結](course/生態資訊學/講義/讓%20Rstudio%20支援資料庫/Rstudio_createdb_connection.png)
 
-圖 3.1.1 建立一筆與資料庫的連結
+ 建立一筆與資料庫的連結
 
 點選完 ecoinformatics 之後，會開啟詳細參數的設定(圖3.1.2)，你可以在這裡選擇把參數丟進 R Console 或是新建一個  R Script 把指令丟出去，之後再執行指令建立一筆資料庫連結。透過 DBI 套件去連結的指令如下：
 
@@ -164,18 +166,17 @@ con <- dbConnect(odbc::odbc(), "ecoinformatics", timeout = 10)
 
 上面的指令中，```[dbConnect()](https://dbi.r-dbi.org/reference/dbconnect)``` 是 DBI 套件連接資料庫的函式，裡頭的參數需包含資料庫的驅動程式(database driver)。以本例來說，是使用 ```odbc::odbc()``` 來連接 PostgreSQL 資料庫，而 "ecoinformatics" 則是我們寫在 ```odbc.ini``` 設定檔中的參數名稱；timeout 則是等待連接時間為 10 秒，超過後無法連接則回傳錯誤訊息。
 
-![圖 3.1.2 資料庫連結指令](https://i.imgur.com/oyWIT9X.png)
+![ 資料庫連結指令](https://i.imgur.com/oyWIT9X.png)
 
-圖 3.1.2 資料庫連結指令
+ 資料庫連結指令
 
 若成功連接的話，就能夠看到正確顯示範例資料庫 ```ecoinformatics``` 的畫面
 
 
-![圖 3.1.3 成功連接資料庫的畫面](https://i.imgur.com/7xRN3cO.png)
+![成功連接資料庫的畫面](https://i.imgur.com/7xRN3cO.png)
 
-圖 3.1.3 成功連接資料庫的畫面
 
-### 3.2 建立資料表(Table)
+### 建立資料表(Table)
 
 當連進資料庫時，裡頭是空的狀態。所以我們可以透過 DBI 套件的 ```dbCreateTable()``` 來新建資料表。以下用 R 內建的 iris 資料集，使用 ```dbCreateTable```(*連線的物件*,  *資料表*, R裡頭的資料框架) 來建立一個資料表。
 

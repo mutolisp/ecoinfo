@@ -1,5 +1,11 @@
 ---
 tag: ecoinformatics, R
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+
 ---
 # 檔案的輸出入
 

@@ -22,7 +22,6 @@ book:
       - text: Source Code
         url: https://github.com/mutolisp/ecoinfo
 
-
   chapters:
     - index.qmd
     - part: R_introduction.qmd

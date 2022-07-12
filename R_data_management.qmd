@@ -1,3 +1,11 @@
+---
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+---
+
 # 資料管理
 本節將會針對常用的資料變換形式解說。常常我們在分析資料時，
 都會遇到一些資料格式的問題，因此在這個章節的第一部分，

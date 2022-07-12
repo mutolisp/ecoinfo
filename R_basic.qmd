@@ -2,6 +2,12 @@
 sourceURL: https://hackmd.io/@mutolisp/S1CLyIynW
 tag: R, 課程, 生態資訊學
 date: 2022-07-12 12:35:20
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+
 ---
 
 # 基本操作

@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">資料塑形轉換</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -292,11 +292,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#使用正規表示式來處理學名" id="toc-使用正規表示式來處理學名" class="nav-link active" data-scroll-target="#使用正規表示式來處理學名"> <span class="header-section-number">13.1</span> 使用正規表示式來處理學名</a></li>
-  <li><a href="#使用-gnparser-來處理學名" id="toc-使用-gnparser-來處理學名" class="nav-link" data-scroll-target="#使用-gnparser-來處理學名"> <span class="header-section-number">13.2</span> 使用 GNParser 來處理學名</a>
+  <li><a href="#使用正規表示式來處理學名" id="toc-使用正規表示式來處理學名" class="nav-link active" data-scroll-target="#使用正規表示式來處理學名"> <span class="header-section-number">1</span> 使用正規表示式來處理學名</a></li>
+  <li><a href="#使用-gnparser-來處理學名" id="toc-使用-gnparser-來處理學名" class="nav-link" data-scroll-target="#使用-gnparser-來處理學名"> <span class="header-section-number">2</span> 使用 GNParser 來處理學名</a>
   <ul class="collapse">
-  <li><a href="#安裝" id="toc-安裝" class="nav-link" data-scroll-target="#安裝"> <span class="header-section-number">13.2.1</span> 安裝</a></li>
-  <li><a href="#使用" id="toc-使用" class="nav-link" data-scroll-target="#使用"> <span class="header-section-number">13.2.2</span> 使用</a></li>
+  <li><a href="#安裝" id="toc-安裝" class="nav-link" data-scroll-target="#安裝"> <span class="header-section-number">2.1</span> 安裝</a></li>
+  <li><a href="#使用" id="toc-使用" class="nav-link" data-scroll-target="#使用"> <span class="header-section-number">2.2</span> 使用</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_scientific_name.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_scientific_name.qmd" class="toc-action">View source</a></p></div></div></nav>
@@ -321,27 +321,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>在處理生態或生物多樣性資料時，學名往往都會是一個棘手的問題。有些資料集內，用學名加作者；有些則是僅用學名不含作者。這些文字上可以使用正規表示式(regular expression)</p>
-<section id="使用正規表示式來處理學名" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="使用正規表示式來處理學名"><span class="header-section-number">13.1</span> 使用正規表示式來處理學名</h2>
+<section id="使用正規表示式來處理學名" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="使用正規表示式來處理學名"><span class="header-section-number">1</span> 使用正規表示式來處理學名</h2>
 <div class="info">
 <p>tbw</p>
 </div>
 </section>
-<section id="使用-gnparser-來處理學名" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="使用-gnparser-來處理學名"><span class="header-section-number">13.2</span> 使用 GNParser 來處理學名</h2>
+<section id="使用-gnparser-來處理學名" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="使用-gnparser-來處理學名"><span class="header-section-number">2</span> 使用 GNParser 來處理學名</h2>
 <p>GNParser 是 <a href="http://globalnames.org">Global Names Architecture (GNA)</a>底下的一個專案。GNA 主要的目的是提供處理生物物種線上資訊服務，除了建立索引、檢核學名，也能在文件中查找學名。而 GNParser 能夠把複雜的學名拆解成許多元件，例如：</p>
 <p><strong>案例：把學名去除掉命名者</strong></p>
 <p>鹽膚木的學名為 <em>Rhus javanica</em> L. 作者為林奈(L.)，若要去掉命名者則是把 <em>javanica</em> 後面全部刪除就行了。</p>
 <p>但若是有種以下位階者，例如羅氏鹽膚木</p>
 <p><em>Rhus javanica</em> L. var. <em>roxburghii</em> (DC.) Rehd. &amp; E.H. Wilson</p>
 <p>其中 (DC.) Rehd. &amp; E.H. Wilson 為此變種學名的作者，若要全部移除作者，就要把 L. (基本異名[basionym]的作者)</p>
-<section id="安裝" class="level3" data-number="13.2.1">
-<h3 data-number="13.2.1" class="anchored" data-anchor-id="安裝"><span class="header-section-number">13.2.1</span> 安裝</h3>
+<section id="安裝" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="安裝"><span class="header-section-number">2.1</span> 安裝</h3>
 <p>請至 https://gitlab.com/gogna/gnparser/-/releases 下載安裝。安裝很簡單，若您是 Windows 的使用者，只需要把檔案下載完(參考下圖)之後解壓縮至 C:Files 裡頭就行了。若是放在其他路徑則需要在環境變數中設定路徑(<a href="https://hackmd.io/@yizhewang/B1zdXG4br">可參考此教學</a>)。</p>
 <p><img src="https://i.imgur.com/3IRmXub.png" class="img-fluid"></p>
 </section>
-<section id="使用" class="level3" data-number="13.2.2">
-<h3 data-number="13.2.2" class="anchored" data-anchor-id="使用"><span class="header-section-number">13.2.2</span> 使用</h3>
+<section id="使用" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="使用"><span class="header-section-number">2.2</span> 使用</h3>
 <p>GNParser 可以使用指令和網頁介面來操作，如果打算透過 R 來呼叫 GNParser 的話，可以先學習指令的操作。若您使用 Windows 作業系統，可以執行命令提示字元(cmd)，在裡頭輸入指令；若您使用類 Unix 作業系統(*BSD, MacOS, GNU/Linux 等)，可以使用終端機(Terminal)來輸入。一般來說，Windows 的使用者會在 gnparser 後方加上 .exe。例如<code>gnparser.exe ...</code> #### 1. 基本的指令操作</p>
 <pre class="shell"><code>gnparser "Scientific name Author"</code></pre>
 <div class="info">
@@ -423,16 +423,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<section id="批次操作" class="level4" data-number="13.2.2.1">
-<h4 data-number="13.2.2.1" class="anchored" data-anchor-id="批次操作"><span class="header-section-number">13.2.2.1</span> 2. 批次操作</h4>
+<section id="批次操作" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="批次操作"><span class="header-section-number">2.2.1</span> 2. 批次操作</h4>
 <p>GNParser 也支援批次操作，可一次處理多筆學名，例如：</p>
 <pre class="shell"><code>gnparser -f simple names.txt</code></pre>
 <p>亦可配合重新導向存成另外一個檔名</p>
 <pre class="shell"><code>gnparser -f simple names.txt &gt; names_parsed.txt</code></pre>
 <p>您可以<a href="https://gist.github.com/mutolisp/95563aa9e305a7825c8edcfa7cbb3418">下載範例資料</a>後來練習。</p>
 </section>
-<section id="和-r-整合" class="level4" data-number="13.2.2.2">
-<h4 data-number="13.2.2.2" class="anchored" data-anchor-id="和-r-整合"><span class="header-section-number">13.2.2.2</span> 3. 和 R 整合</h4>
+<section id="和-r-整合" class="level4" data-number="2.2.2">
+<h4 data-number="2.2.2" class="anchored" data-anchor-id="和-r-整合"><span class="header-section-number">2.2.2</span> 3. 和 R 整合</h4>
 <p>您也可以在 R 之中呼叫 GNParser，例如：</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># 載入 data.table</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="fu">library</span>(data.table)</span>
@@ -532,7 +532,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./R_data_wrangling.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">資料塑形轉換</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

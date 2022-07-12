@@ -292,12 +292,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#使用-data.table-來篩選資料" id="toc-使用-data.table-來篩選資料" class="nav-link active" data-scroll-target="#使用-data.table-來篩選資料"> <span class="header-section-number">11.1</span> 使用 data.table 來篩選資料</a></li>
-  <li><a href="#透過外部資料庫-sql-篩選資料" id="toc-透過外部資料庫-sql-篩選資料" class="nav-link" data-scroll-target="#透過外部資料庫-sql-篩選資料"> <span class="header-section-number">11.2</span> 透過外部資料庫 SQL 篩選資料</a>
+  <li><a href="#使用-data.table-來篩選資料" id="toc-使用-data.table-來篩選資料" class="nav-link active" data-scroll-target="#使用-data.table-來篩選資料"> <span class="header-section-number">1</span> 使用 data.table 來篩選資料</a></li>
+  <li><a href="#透過外部資料庫-sql-篩選資料" id="toc-透過外部資料庫-sql-篩選資料" class="nav-link" data-scroll-target="#透過外部資料庫-sql-篩選資料"> <span class="header-section-number">2</span> 透過外部資料庫 SQL 篩選資料</a>
   <ul class="collapse">
-  <li><a href="#安裝相關的-r-套件" id="toc-安裝相關的-r-套件" class="nav-link" data-scroll-target="#安裝相關的-r-套件"> <span class="header-section-number">11.2.1</span> 安裝相關的 R 套件</a></li>
-  <li><a href="#sql-語法" id="toc-sql-語法" class="nav-link" data-scroll-target="#sql-語法"> <span class="header-section-number">11.2.2</span> SQL 語法</a></li>
-  <li><a href="#在-r-裡頭使用-sql" id="toc-在-r-裡頭使用-sql" class="nav-link" data-scroll-target="#在-r-裡頭使用-sql"> <span class="header-section-number">11.2.3</span> 在 R 裡頭使用 SQL</a></li>
+  <li><a href="#安裝相關的-r-套件" id="toc-安裝相關的-r-套件" class="nav-link" data-scroll-target="#安裝相關的-r-套件"> <span class="header-section-number">2.1</span> 安裝相關的 R 套件</a></li>
+  <li><a href="#sql-語法" id="toc-sql-語法" class="nav-link" data-scroll-target="#sql-語法"> <span class="header-section-number">2.2</span> SQL 語法</a></li>
+  <li><a href="#在-r-裡頭使用-sql" id="toc-在-r-裡頭使用-sql" class="nav-link" data-scroll-target="#在-r-裡頭使用-sql"> <span class="header-section-number">2.3</span> 在 R 裡頭使用 SQL</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_data_filtering.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_data_filtering.qmd" class="toc-action">View source</a></p></div></div></nav>
@@ -322,8 +322,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>當你面對一筆資料的時候，除了基礎的排序外，你可能還會想要篩選資料來進一步了解其樣貌。例如家戶所得的收支報告，你可能會想知道除了平均所得之外，哪一個縣市的收入最高？哪一個鄉鎮市區的收入最低？諸如此類的問題就可以使用 data.table、dplyr 套件或是透過結構化查詢語言(structural query language)來篩選查詢外部的資料庫。</p>
-<section id="使用-data.table-來篩選資料" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="使用-data.table-來篩選資料"><span class="header-section-number">11.1</span> 使用 data.table 來篩選資料</h2>
+<section id="使用-data.table-來篩選資料" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="使用-data.table-來篩選資料"><span class="header-section-number">1</span> 使用 data.table 來篩選資料</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -390,23 +390,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="透過外部資料庫-sql-篩選資料" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="透過外部資料庫-sql-篩選資料"><span class="header-section-number">11.2</span> 透過外部資料庫 SQL 篩選資料</h2>
+<section id="透過外部資料庫-sql-篩選資料" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="透過外部資料庫-sql-篩選資料"><span class="header-section-number">2</span> 透過外部資料庫 SQL 篩選資料</h2>
 <p>資料庫有非常多種類型，最常見的是關聯式資料庫(relational database)，諸如常見的 Microsoft SQL Server, SQLite, MySQL/MariaDB, PostgreSQL 等都是關聯式資料庫。在 R 裡頭可以透過一些第三方的套件，像是 RSQLite, odbc, DBI 等來連結。因為架設資料庫需要許多額外的步驟和設定，在此我們用一個輕量化、開放公用領域(public domain)的資料庫 <a href="https://sqlite.org/index.html">SQLite</a>來做為示範。SQLite 使用相當廣泛，它本身可把資料庫封裝成一個檔案，載入快速且十分輕量化，因此有許多手機 app 都是使用 SQLite 做為資料庫管理系統。</p>
-<section id="安裝相關的-r-套件" class="level3" data-number="11.2.1">
-<h3 data-number="11.2.1" class="anchored" data-anchor-id="安裝相關的-r-套件"><span class="header-section-number">11.2.1</span> 安裝相關的 R 套件</h3>
+<section id="安裝相關的-r-套件" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="安裝相關的-r-套件"><span class="header-section-number">2.1</span> 安裝相關的 R 套件</h3>
 <p>請先安裝 RSQLite</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">install.packages</span>(<span class="st">"RSQLite"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">install.packages</span>(<span class="st">"DBI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="sql-語法" class="level3" data-number="11.2.2">
-<h3 data-number="11.2.2" class="anchored" data-anchor-id="sql-語法"><span class="header-section-number">11.2.2</span> SQL 語法</h3>
+<section id="sql-語法" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="sql-語法"><span class="header-section-number">2.2</span> SQL 語法</h3>
 <p>這節中將簡介 SQL(Structural Query Language) 的語法，主要會以查詢(Query)來做說明。</p>
 <p>SQL</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> table_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="在-r-裡頭使用-sql" class="level3" data-number="11.2.3">
-<h3 data-number="11.2.3" class="anchored" data-anchor-id="在-r-裡頭使用-sql"><span class="header-section-number">11.2.3</span> 在 R 裡頭使用 SQL</h3>
+<section id="在-r-裡頭使用-sql" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="在-r-裡頭使用-sql"><span class="header-section-number">2.3</span> 在 R 裡頭使用 SQL</h3>
 <p>第一個步驟是載入 DBI 套件，然後建立資料庫的連結。可以想像成有個虛擬的伺服器，要使用 <code>dbConnect()</code> 來連結這個資料庫。使用的資料庫引擎則是 <code>RSQLite::SQLite()</code>。其中您也可以暫時把資料庫放在記憶體中，或是寫入一個實際的檔案，如下列語法：</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="co"># 在記憶體中建立一個暫存的 SQLite 資料庫</span></span>

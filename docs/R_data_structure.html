@@ -292,13 +292,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#向量vector" id="toc-向量vector" class="nav-link active" data-scroll-target="#向量vector"> <span class="header-section-number">5.0.1</span> 向量(Vector)</a></li>
-  <li><a href="#類別factor" id="toc-類別factor" class="nav-link" data-scroll-target="#類別factor"> <span class="header-section-number">5.0.2</span> 類別(factor)</a></li>
-  <li><a href="#資料框架data-frame" id="toc-資料框架data-frame" class="nav-link" data-scroll-target="#資料框架data-frame"> <span class="header-section-number">5.0.3</span> 資料框架(Data Frame)</a></li>
-  <li><a href="#矩陣" id="toc-矩陣" class="nav-link" data-scroll-target="#矩陣"> <span class="header-section-number">5.0.4</span> 矩陣</a></li>
-  <li><a href="#列表list" id="toc-列表list" class="nav-link" data-scroll-target="#列表list"> <span class="header-section-number">5.0.5</span> 列表(list)</a></li>
-  <li><a href="#判斷及轉換不同的資料結構" id="toc-判斷及轉換不同的資料結構" class="nav-link" data-scroll-target="#判斷及轉換不同的資料結構"> <span class="header-section-number">5.0.6</span> 判斷及轉換不同的資料結構</a></li>
-  <li><a href="#資料結構的索引" id="toc-資料結構的索引" class="nav-link" data-scroll-target="#資料結構的索引"> <span class="header-section-number">5.0.7</span> 資料結構的索引</a></li>
+  <li><a href="#向量vector" id="toc-向量vector" class="nav-link active" data-scroll-target="#向量vector"> <span class="header-section-number">0.1</span> 向量(Vector)</a></li>
+  <li><a href="#類別factor" id="toc-類別factor" class="nav-link" data-scroll-target="#類別factor"> <span class="header-section-number">0.2</span> 類別(factor)</a></li>
+  <li><a href="#資料框架data-frame" id="toc-資料框架data-frame" class="nav-link" data-scroll-target="#資料框架data-frame"> <span class="header-section-number">0.3</span> 資料框架(Data Frame)</a></li>
+  <li><a href="#矩陣" id="toc-矩陣" class="nav-link" data-scroll-target="#矩陣"> <span class="header-section-number">0.4</span> 矩陣</a></li>
+  <li><a href="#列表list" id="toc-列表list" class="nav-link" data-scroll-target="#列表list"> <span class="header-section-number">0.5</span> 列表(list)</a></li>
+  <li><a href="#判斷及轉換不同的資料結構" id="toc-判斷及轉換不同的資料結構" class="nav-link" data-scroll-target="#判斷及轉換不同的資料結構"> <span class="header-section-number">0.6</span> 判斷及轉換不同的資料結構</a></li>
+  <li><a href="#資料結構的索引" id="toc-資料結構的索引" class="nav-link" data-scroll-target="#資料結構的索引"> <span class="header-section-number">0.7</span> 資料結構的索引</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_data_structure.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_data_structure.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -324,8 +324,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>在試算表(LibreOffice scalc 或 Excel)中，輸入的資料並不需要考慮其<a href="https://en.wikipedia.org/wiki/Data_structure">資料結構(data structure)</a>，什麼是「資料結構」呢？簡單來說就是電腦儲存資料並有效率使用資料的方式， 但 R 裡頭考量到資料處理的特性，有向量(vector)、資料框架(Data Frame)、矩陣(matrix)等不同的資料結構，本節將介紹這幾類不同的資料結構以及如何使用。我們可以使用下圖大致上來了解向量、矩陣和資料框架的不同。向量的資料只有一個維度，矩陣和資料框架都是兩個維度。只不過矩陣只能儲存一種資料類型，而資料框架則是可以儲存多種類型。可參見下圖來了解：</p>
 <p><img src="https://i.imgur.com/L3m2gF1.png" class="img-fluid"></p>
 <p>另外還有像是陣列(array)和列表(list)等資料結構。陣列和列表都是三維的，但列表內可同時包含相同類型或不同類型的資料，例如可同時含括向量、矩陣和資料框架等。</p>
-<section id="向量vector" class="level3" data-number="5.0.1">
-<h3 data-number="5.0.1" class="anchored" data-anchor-id="向量vector"><span class="header-section-number">5.0.1</span> 向量(Vector)</h3>
+<section id="向量vector" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="向量vector"><span class="header-section-number">0.1</span> 向量(Vector)</h3>
 <p>假設有一些資料的數值，我們想把它們聚合(concatenate)在一起，R 可以使用 <code>c()</code> 來把資料聚合成「向量(vector)」的形式，例如:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>)</span>
@@ -341,8 +341,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>在提及其他類型的資料結構之前，儲存資料除了數字、文字之外，還有一類型比較特別的資料類型是類別(factor)，以下簡單介紹類別的定義與特性</p>
 </section>
-<section id="類別factor" class="level3" data-number="5.0.2">
-<h3 data-number="5.0.2" class="anchored" data-anchor-id="類別factor"><span class="header-section-number">5.0.2</span> 類別(factor)</h3>
+<section id="類別factor" class="level3" data-number="0.2">
+<h3 data-number="0.2" class="anchored" data-anchor-id="類別factor"><span class="header-section-number">0.2</span> 類別(factor)</h3>
 <p>類別(factor)可分為名義類別(nominal)或是順序類別(ordinal)。名義類別的資料像是交通號誌中的紅綠燈，不同顏色分別代表不同的意義；而順序類別資料則是會有「順序」的差別，縱使用數字來代表其本身並無數值上的意義，舉例來說，在植群生態調查資料中，Braun-Blanquet 法把不同覆蓋度的估值轉換成 +, r, 1, 2, … 等不同等級，雖然有些類別是整數，在統計分析的時候整數和類別計算出來的結果不相同。</p>
 <p>R 裡頭不管是名義類別或是順序類別都是使用 <code>factor()</code> 來建立，例如：</p>
 <div class="cell">
@@ -375,8 +375,8 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 </div>
 </div>
 </section>
-<section id="資料框架data-frame" class="level3" data-number="5.0.3">
-<h3 data-number="5.0.3" class="anchored" data-anchor-id="資料框架data-frame"><span class="header-section-number">5.0.3</span> 資料框架(Data Frame)</h3>
+<section id="資料框架data-frame" class="level3" data-number="0.3">
+<h3 data-number="0.3" class="anchored" data-anchor-id="資料框架data-frame"><span class="header-section-number">0.3</span> 資料框架(Data Frame)</h3>
 <p>R 裡頭預設而且最常使用的資料結構是「資料框架」，你可以使用 <code>data.frame()</code> 建立一個資料框架，例如：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>)</span>
@@ -393,8 +393,8 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 </div>
 <p>在顯示資料框架時，每直行(欄; column)最上方會有欄位名稱，而橫列則預設會有數字序列(1, 2, 3, … , n)代表列的索引。</p>
 </section>
-<section id="矩陣" class="level3" data-number="5.0.4">
-<h3 data-number="5.0.4" class="anchored" data-anchor-id="矩陣"><span class="header-section-number">5.0.4</span> 矩陣</h3>
+<section id="矩陣" class="level3" data-number="0.4">
+<h3 data-number="0.4" class="anchored" data-anchor-id="矩陣"><span class="header-section-number">0.4</span> 矩陣</h3>
 <p>和資料框架很類似，假設我們有 9 個數字，要設定資料結構為 3x3 的矩陣，可以使<code>matrix()</code>：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">15</span>,<span class="dv">17</span>)</span>
@@ -417,8 +417,8 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 </div>
 </div>
 </section>
-<section id="列表list" class="level3" data-number="5.0.5">
-<h3 data-number="5.0.5" class="anchored" data-anchor-id="列表list"><span class="header-section-number">5.0.5</span> 列表(list)</h3>
+<section id="列表list" class="level3" data-number="0.5">
+<h3 data-number="0.5" class="anchored" data-anchor-id="列表list"><span class="header-section-number">0.5</span> 列表(list)</h3>
 <p>前述的向量是一維的資料，而矩陣和資料框架則是二維的資料，而列表則可以是三維的資料。建立一個列表可使用 <code>list()</code>，在下面的例子中，我們使用 <code>sample()</code> 隨機建立兩個 3x3 的矩陣，分別指定為 x 及 y，並把他用<code>list()</code> 合併起來：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># 使用 sample() 建立隨機的正整數</span></span>
@@ -429,21 +429,21 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
      [,1] [,2] [,3]
-[1,]    4    1    5
-[2,]    7    8    6
-[3,]    3    9    2
+[1,]    5    8    1
+[2,]    7    3    9
+[3,]    6    4    2
 
 [[2]]
      [,1] [,2] [,3]
-[1,]    3    4    6
-[2,]    8    9    1
-[3,]    2    7    5</code></pre>
+[1,]    1    5    7
+[2,]    3    4    2
+[3,]    9    8    6</code></pre>
 </div>
 </div>
 <p>當看 list_xy 這個列表時，原本的 x 上方有 <code>[[1]]</code>，y 上方則有 <code>[[2]]</code> 來註記，這個是列表的編號。因此你可以使用 <code>list_xy[[1]]</code> 來取得編號 1 的矩陣資料。</p>
 </section>
-<section id="判斷及轉換不同的資料結構" class="level3" data-number="5.0.6">
-<h3 data-number="5.0.6" class="anchored" data-anchor-id="判斷及轉換不同的資料結構"><span class="header-section-number">5.0.6</span> 判斷及轉換不同的資料結構</h3>
+<section id="判斷及轉換不同的資料結構" class="level3" data-number="0.6">
+<h3 data-number="0.6" class="anchored" data-anchor-id="判斷及轉換不同的資料結構"><span class="header-section-number">0.6</span> 判斷及轉換不同的資料結構</h3>
 <p>判斷資料結構時，只要把資料結構的名稱前加上 <code>is.</code> 即可，例如：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">is.vector</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -469,8 +469,8 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 </div>
 </div>
 </section>
-<section id="資料結構的索引" class="level3" data-number="5.0.7">
-<h3 data-number="5.0.7" class="anchored" data-anchor-id="資料結構的索引"><span class="header-section-number">5.0.7</span> 資料結構的索引</h3>
+<section id="資料結構的索引" class="level3" data-number="0.7">
+<h3 data-number="0.7" class="anchored" data-anchor-id="資料結構的索引"><span class="header-section-number">0.7</span> 資料結構的索引</h3>
 <p>設定成資料框架或矩陣的好處就是你可以用 subscript 的方式來列出資料， 在 R 裡頭通常使用中括號(<code>[列數, 行數]</code>)來表示，例如列出第三列第五行</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># 隨機產生 50 個整數，使用 sample() 函式</span></span>
@@ -480,22 +480,22 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 <span id="cb25-5"><a href="#cb25-5"></a>x.m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1] [,2] [,3] [,4] [,5]
- [1,]   33   28   45   30    2
- [2,]   43   25   17   24    8
- [3,]   18   21   50   29   42
- [4,]   14   19   31   39   49
- [5,]   41   27   40   10   38
- [6,]   36    7    4   34   35
- [7,]   16   23   37    9   47
- [8,]   22    5   32   11    1
- [9,]   46   26   20   12    3
-[10,]   13   44    6   48   15</code></pre>
+ [1,]   11   44   34   43   18
+ [2,]   38   28   41   17   19
+ [3,]   46   45   48   37   21
+ [4,]    3   10   13   33    7
+ [5,]   15   49   12   22   26
+ [6,]    9   25   23    5   40
+ [7,]   27   31    4   47   42
+ [8,]    6    2    8   24   50
+ [9,]   29   36   30   35   16
+[10,]   32   20   39   14    1</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x.m[<span class="dv">3</span>,<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 42</code></pre>
+<pre><code>[1] 21</code></pre>
 </div>
 </div>
 <p>如果僅要列出某特定「列」或特定「行」，可以使用:</p>
@@ -503,33 +503,33 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># 列出第三列</span></span>
 <span id="cb29-2"><a href="#cb29-2"></a>x.m[<span class="dv">3</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 18 21 50 29 42</code></pre>
+<pre><code>[1] 46 45 48 37 21</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># 列出第三行</span></span>
 <span id="cb31-2"><a href="#cb31-2"></a>x.m[,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 45 17 50 31 40  4 37 32 20  6</code></pre>
+<pre><code> [1] 34 41 48 13 12 23  4  8 30 39</code></pre>
 </div>
 </div>
 <p>另一個 R 強大的功能就是你可以指定特定列數、行數外， 還可以做邏輯判斷和數學運算，例如我們把第三列取 log 值：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">log10</span>(x.m[<span class="dv">3</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.255273 1.322219 1.698970 1.462398 1.623249</code></pre>
+<pre><code>[1] 1.662758 1.653213 1.681241 1.568202 1.322219</code></pre>
 </div>
 </div>
 <p>或是條件篩選，把第三列中大於 30 的數字選出來</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>x.m[<span class="dv">3</span>,] <span class="sc">&gt;</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE</code></pre>
+<pre><code>[1]  TRUE  TRUE  TRUE  TRUE FALSE</code></pre>
 </div>
 </div>
 <p>你會發現它只會顯示邏輯判斷，即 True 或 False，若要顯示大於 30 的數字呢？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>x.m[<span class="dv">3</span>, x.m[<span class="dv">3</span>,]<span class="sc">&gt;</span><span class="dv">30</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 50 42</code></pre>
+<pre><code>[1] 46 45 48 37</code></pre>
 </div>
 </div>
 <p><a href="https://hackmd.io/toYS6t6BTAOFivs1mrnVGg">作業</a></p>

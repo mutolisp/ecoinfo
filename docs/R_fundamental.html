@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">資料塑形轉換</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -292,12 +292,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#自學-r-的要訣" id="toc-自學-r-的要訣" class="nav-link active" data-scroll-target="#自學-r-的要訣"> <span class="header-section-number">2.1</span> 自學 R 的要訣</a></li>
-  <li><a href="#讀懂-r-的說明檔" id="toc-讀懂-r-的說明檔" class="nav-link" data-scroll-target="#讀懂-r-的說明檔"> <span class="header-section-number">2.2</span> 讀懂 R 的說明檔</a></li>
-  <li><a href="#如何有智慧地問問題" id="toc-如何有智慧地問問題" class="nav-link" data-scroll-target="#如何有智慧地問問題"> <span class="header-section-number">2.3</span> 如何有智慧地問問題</a></li>
-  <li><a href="#搜尋" id="toc-搜尋" class="nav-link" data-scroll-target="#搜尋"> <span class="header-section-number">2.4</span> 搜尋</a></li>
-  <li><a href="#提出問題" id="toc-提出問題" class="nav-link" data-scroll-target="#提出問題"> <span class="header-section-number">2.5</span> 提出問題</a></li>
-  <li><a href="#自行找解答的模式" id="toc-自行找解答的模式" class="nav-link" data-scroll-target="#自行找解答的模式"> <span class="header-section-number">2.6</span> 自行找解答的模式</a></li>
+  <li><a href="#自學-r-的要訣" id="toc-自學-r-的要訣" class="nav-link active" data-scroll-target="#自學-r-的要訣"> <span class="header-section-number">1</span> 自學 R 的要訣</a></li>
+  <li><a href="#讀懂-r-的說明檔" id="toc-讀懂-r-的說明檔" class="nav-link" data-scroll-target="#讀懂-r-的說明檔"> <span class="header-section-number">2</span> 讀懂 R 的說明檔</a></li>
+  <li><a href="#如何有智慧地問問題" id="toc-如何有智慧地問問題" class="nav-link" data-scroll-target="#如何有智慧地問問題"> <span class="header-section-number">3</span> 如何有智慧地問問題</a></li>
+  <li><a href="#搜尋" id="toc-搜尋" class="nav-link" data-scroll-target="#搜尋"> <span class="header-section-number">4</span> 搜尋</a></li>
+  <li><a href="#提出問題" id="toc-提出問題" class="nav-link" data-scroll-target="#提出問題"> <span class="header-section-number">5</span> 提出問題</a></li>
+  <li><a href="#自行找解答的模式" id="toc-自行找解答的模式" class="nav-link" data-scroll-target="#自行找解答的模式"> <span class="header-section-number">6</span> 自行找解答的模式</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_fundamental.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_fundamental.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -343,12 +343,12 @@ Note
 <li>可以從外部把資料輸入進 R 及輸出</li>
 <li>知道怎麼進行資料處理及資料探索(data explore)</li>
 </ul>
-<section id="自學-r-的要訣" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="自學-r-的要訣"><span class="header-section-number">2.1</span> 自學 R 的要訣</h2>
+<section id="自學-r-的要訣" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="自學-r-的要訣"><span class="header-section-number">1</span> 自學 R 的要訣</h2>
 <p>R 的設計本身就很適合拿來自習，一開始如果沒有接觸過 UNIX 作業系統的人，通常會覺得 R 很難上手，而且都是使用指令來操作一定很不容易。雖說如此，R 的學習曲線在一開始會很陡，但是一旦習慣 R 的模式之後，後續的操作就會無往不利，你可以靠著眾多網路資源、經驗配合 R 本身彈性的設計來發揮你的創意，有許多分析和資料處理往往只需要腦筋轉個彎就能夠達成。這個章節會從怎麼閱讀 R 的說明檔開始、如何「有智慧地問問題」以及利用網路資源進行疑難排解。</p>
 </section>
-<section id="讀懂-r-的說明檔" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="讀懂-r-的說明檔"><span class="header-section-number">2.2</span> 讀懂 R 的說明檔</h2>
+<section id="讀懂-r-的說明檔" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="讀懂-r-的說明檔"><span class="header-section-number">2</span> 讀懂 R 的說明檔</h2>
 <p>在開始下一個階段教學之前，我想先花一些篇幅介紹 R 的說明檔。我認識許多人常說，R 裡頭的說明不知道在寫什麼耶，完全不了解它的明白！看起來寫的很詳細，但讀起來卻有點似懂非懂。這是因為 R 的前身 S 語言是從 UNIX 作業系統所開發出來的，這些資訊科學的前輩們，邏輯思考易於常人的清晰，說明檔的內容及格式也都有嚴格的定義及規範。R 受到了 UNIX 文件的影響，讀起來則和一般的文件不太一樣，但是仔細閱讀，你會發現這些文件都寫的十分詳細，只是閱讀上需要有一些技巧(當然不要被英文給嚇到了！大部分的英文都是很淺顯易懂的)。接下來我們一步一步來解析 R 的文件。</p>
 <p>查閱 R 的文件有幾種方式，如果你知道某個特定套件的函式 (function)，你可以在 R console 中輸入<code>?函式名稱</code>，就會直接顯示該函式的說明。如果你僅知道某些關鍵字，但不知道是在哪個特定的套件中之函式，你可以使用<code>??關鍵字</code>來查詢。如果你搜尋到某些套件，安裝完畢某套件之後，想要知道這個套件的簡介，還有它的功能、函式等，可以使用<code>help(package=套件名稱</code>」來閱讀。例如我們如果要查維度分析(ordination)這個關鍵字，我們先使用 <code>??ordination</code> 來查詢，在一般的 R Console 中會顯示如下：</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查詢特定關鍵字</span></span>
@@ -430,16 +430,16 @@ Note
 <p>在 Examples 裡頭，列出了範例 code，如果你想知道執行的結果，可以使用 <code>example()</code> 來執行，例如 <code>example(ls)</code>。</p>
 <p>另外你可能會發現到搜尋時會顯示像 <code>vegan::intro-vegan</code>、<code>vegan::ordiplot</code> 中間會有兩個冒號(:)，這代表「命名空間(namespace)」，在上述的例子中，<code>vegan</code>代表套件的名稱，兩個冒號後方代表 <code>vegan</code> 套件中的函式名稱。為什麼要這樣做呢？這是為了要解決不同命名空間中可能有函式名稱衝突的問題，假設 A 套件中有個功能叫做 <code>plot()</code>，和 <code>graphics</code> 裡頭的 <code>plot()</code>一模一樣，如果你在 R console 中輸入 <code>plot()</code>，預設會是 <code>graphics</code> 的 <code>plot()</code>，若你要呼叫 A 套件中的 <code>plot()</code>，此時就要使用<code>A::plot()</code> 來執行。強制使用命名空間是 R 2.14.0 版本之後才開始的，更早之前的 R 版本是沒有的，關於 namespace 的說明可以參考 Hadley Wickham 所寫的 <a href="http://r-pkgs.had.co.nz/namespace.html">Namespaces</a>。</p>
 </section>
-<section id="如何有智慧地問問題" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="如何有智慧地問問題"><span class="header-section-number">2.3</span> 如何有智慧地問問題</h2>
+<section id="如何有智慧地問問題" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="如何有智慧地問問題"><span class="header-section-number">3</span> 如何有智慧地問問題</h2>
 <blockquote class="blockquote">
 <p>這小節改寫自「<a href="http://mutolisp.logdown.com/posts/208213-how-to-effectively-asking-questions">如何有效率的「問」問題</a>」</p>
 </blockquote>
 <p>談到有智慧地問問題之前，一定得提及 <a href="http://en.wikipedia.org/wiki/Eric_S._Raymond">Eric Raymond</a>。Eric 寫了一篇很有名的文章來論述(Eric 是《<a href="https://zh.wikipedia.org/wiki/大教堂和市集">教堂與市集</a>》的作者，同時也是資深駭客，堪稱為自由軟體界的歷史學家)寫了一篇《<a href="http://www.catb.org/esr/faqs/smart-questions.html">How to ask question the smart way</a>》，直到最近仍有持續修訂這份經典之作。如果你沒有讀過這份文件，我<strong>強烈</strong>建議你讀一次，雖然是英文的，但文件本身非常輕鬆好讀。</p>
 <p>簡單講一下一些大原則，在你提出問題時，可以問看看你自己。</p>
 </section>
-<section id="搜尋" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="搜尋"><span class="header-section-number">2.4</span> 搜尋</h2>
+<section id="搜尋" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="搜尋"><span class="header-section-number">4</span> 搜尋</h2>
 <ul>
 <li>你真的有好好用過 Google / DuckDuckGO 等搜尋引擎找關鍵字嗎？(關鍵字：stackexchange, stackoverflow)</li>
 <li>你真的搜尋不到你要的相關主題或提示嗎？</li>
@@ -448,8 +448,8 @@ Note
 <p>搜尋主要是要有針對性與特定的問題，才能比較好過濾資訊，這個每個人都會有一些小撇步。依照我的經驗法則，通常可以用「方法」加上「使用軟體/步驟」及「文件類型」等來搭配，常常在搜尋引擎前三到四個頁面就可以找到我想要的答案(但當你什麼都不懂時，請先去學校上基礎課程，或是找一些 open course 來自修)。例如：</p>
 <p>我想要找空間資訊中的交集問題，你可以用 <code>gis + intersection</code> 但這樣的結果往往是出現最多人使用/或最常被搜索的關鍵字，所以若你已經知道有哪些軟體或方式可以做，你可以嘗試修改一下關鍵字： <code>postgis + intersection</code> 但這樣的搜尋結果也許不盡滿意，如果只是想看一下 postgis 做交集的範例說明，可以用下列的關鍵字搜尋： <code>postgis + intersection + tutorial</code> 若你不是想找文件和教學，而是實際上遇到了問題卡住，例如你今天做交集時，遇到 <code>ERROR:  function st_intersect(geometry, raster) does not exist</code>，也許你可以用: <code>postgis + st_intersect + error</code> 來找尋相關的解法（上述例子是 st_intersect() 拼錯字，字尾少了一個 s，這個有可能會有搜尋引擎自動幫你更正）</p>
 </section>
-<section id="提出問題" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="提出問題"><span class="header-section-number">2.5</span> 提出問題</h2>
+<section id="提出問題" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="提出問題"><span class="header-section-number">5</span> 提出問題</h2>
 <p>我舉幾個最近有人問我的問題來回答（為了相關人的隱私，所以只節錄問題主幹，問候語與署名等皆去除），這樣比較容易讓大家了解為什麼要這樣問，別人問的問題也許就是你想問的問題。</p>
 <ul>
 <li><p>範例一</p>
@@ -494,8 +494,8 @@ Note
 </ul>
 <p>最後請記得，沒有人有義務回答你的任何問題，大家都是花了自己額外的時間和精神互相幫忙，在別人幫你之前，請你自己先幫自己，作業要自己做，不要抄別人的。</p>
 </section>
-<section id="自行找解答的模式" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="自行找解答的模式"><span class="header-section-number">2.6</span> 自行找解答的模式</h2>
+<section id="自行找解答的模式" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="自行找解答的模式"><span class="header-section-number">6</span> 自行找解答的模式</h2>
 <p>讀完「有智慧地問問題」後，你可以試著查詢 <a href="http://stackoverflow.com">Stackoverflow</a> 上的問答。Stackoverflow 是一個專為「問問題」然後提供解答的網站，這裡的問題都是有明確解答的，但不包含「什麼是生命？」這類開放式的問題，例如：「 R 要如何匯入 Excel 的檔案？」這樣的問題。在 Stackoverflow 上發問都有人投票，如果你的問題問的清楚且容易理解，就會有其他人可以票選提昇你的問題能見度。回答問題也是類似的模式，若你回答其他人的問題時，其他人認為你的回答能解決提問者的問題或對他而言是有用的，此時其他人也能投票增加你的問題能見度。反之若你的問題不知所云或回答錯誤，投票評比則會減分，降低你提問或回答的能見度。所有在 Stackoverflow 上的問答都會賺取名譽(reputation)分數，累積到一定的分數才能投票或修改別人問題等權限。</p>
 <p>下圖為問問題的截圖(<a href="https://stackoverflow.com/questions/60706284/subsetting-a-dataframe-in-r-on-last-two-months">原始頁面</a>)，左方可投票(但是需要 15 點聲望值才會公開顯示) <img src="https://i.imgur.com/Lmam7GX.png" class="img-fluid" alt="Stackoverflow 問問題的模式"></p>
 <p>你可以參閱 <a href="http://stackoverflow.com/questions/39660668/how-can-i-flip-and-then-zoom-in-on-a-boxplot">How can I flip and then zoom in on a boxplot</a> 這個問題，底下的回答有加分也有減分的。</p>

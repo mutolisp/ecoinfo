@@ -1,3 +1,10 @@
+---
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+---
 # 自定函式
 
 R 和其他語言一樣，可以自行定義函式(function)，在基本操作的章節裡頭我們曾提過[使用 R 內建的函式](https://hackmd.io/s/S1CLyIynW#使用函式及表示式)。當你需要重複處理一些程序時，自己撰寫函式就可以反覆使用程式碼，不需要每次都得執行落落長的 R 程式。舉例來說，當計算 [Shannon-Wiener 多樣性指數](https://zh.wikipedia.org/wiki/多樣性指數)時，我們用 R 來計算會怎麼做呢？

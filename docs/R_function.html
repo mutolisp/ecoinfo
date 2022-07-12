@@ -239,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">資料塑形轉換</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -293,9 +293,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#函式結構" id="toc-函式結構" class="nav-link active" data-scroll-target="#函式結構"> <span class="header-section-number">8.1</span> 函式結構</a></li>
-  <li><a href="#分享你的函式" id="toc-分享你的函式" class="nav-link" data-scroll-target="#分享你的函式"> <span class="header-section-number">8.2</span> 分享你的函式</a></li>
-  <li><a href="#作業" id="toc-作業" class="nav-link" data-scroll-target="#作業"> <span class="header-section-number">8.3</span> 作業</a></li>
+  <li><a href="#函式結構" id="toc-函式結構" class="nav-link active" data-scroll-target="#函式結構"> <span class="header-section-number">1</span> 函式結構</a></li>
+  <li><a href="#分享你的函式" id="toc-分享你的函式" class="nav-link" data-scroll-target="#分享你的函式"> <span class="header-section-number">2</span> 分享你的函式</a></li>
+  <li><a href="#作業" id="toc-作業" class="nav-link" data-scroll-target="#作業"> <span class="header-section-number">3</span> 作業</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_function.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_function.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -476,8 +476,8 @@ H' = - \sum_{i=1}^{S} P_i \cdot ln (P_i)
 </div>
 <p><a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/demos/custom_functions.R">本範例 code 下載</a></p>
 <p>可是每次有一個新的資料進來，計算就得要重新執行一次 (也就是執行上面的程式碼)，此時就可以把上面的步驟包裝成一個函式，簡化工作。試著想想：如果有個函式叫做 <code>shannon()</code>，每當我們想要計算 Shannon-Wiener 多樣性指數的時候，就呼叫它計算，這樣是不是很方便呢？接下來我們將針對函式的結構及撰寫來做介紹。</p>
-<section id="函式結構" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="函式結構"><span class="header-section-number">8.1</span> 函式結構</h2>
+<section id="函式結構" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="函式結構"><span class="header-section-number">1</span> 函式結構</h2>
 <p>一般 R 函式的結構如下：</p>
 <div class="sourceCode" id="cb3" data-code-line-number="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>myFunction <span class="ot">&lt;-</span> <span class="cf">function</span>(參數1, 參數2, ...){</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    陳述(statements)</span>
@@ -554,8 +554,8 @@ H' = - \sum_{i=1}^{S} P_i \cdot ln (P_i)
 <p><a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/demos/func_ShannonWiener.R">本範例 code 下載</a></p>
 <p>在第一行內，<code>filePath</code>是我們要輸入的參數，也就是輸入的檔案路徑。所以在第二行就使用 <code>fread()</code> 來讀取這個參數。之後的4–8行和我們之前的程式碼相同。第九行則是傳回 <code>H</code> 這個變數，也就是計算完的 Shannon-Wiener 多樣性指數。</p>
 </section>
-<section id="分享你的函式" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="分享你的函式"><span class="header-section-number">8.2</span> 分享你的函式</h2>
+<section id="分享你的函式" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="分享你的函式"><span class="header-section-number">2</span> 分享你的函式</h2>
 <p>當撰寫完你的函式之後，如果你想和別人分享，可以把它包成套件(package)上傳 CRAN 或是 github 和其他人分享。但包套件是比較複雜的程序，需要有許多先備知識，未來進階的課程內容有機會會提到。這節將使用 http://gist.github.com (簡稱 gist )來分享你的函式。gist 是一個貼程式碼的網站(像剪貼簿一樣)，你可以直接把上面的程式碼複製貼上(請記得先登入，這樣以後就可以管理你的程式碼)。如下圖：</p>
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/paste_to_gist.png?raw=true" class="img-fluid"></p>
 <p>接下來你會在瀏覽器的網址列看到這段函式的網址列(即：https://gist.github.com/mutolisp/643dc4795d0b31f1ef3fdaca1641fa7e)。請先複製起來等會會用到。回到 RStudio 中，請確認一下已經安裝了 <a href="https://cran.r-project.org/web/packages/devtools/index.html">devtools</a> 套件。</p>
@@ -581,8 +581,8 @@ H' = - \sum_{i=1}^{S} P_i \cdot ln (P_i)
 <p><a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/demos/source_GistFunction.R">本範例 code 下載</a></p>
 <p>當使用 <code>source_gist()</code> 後你就直接可以用 <code>ShannonWiener</code> 函式了！</p>
 </section>
-<section id="作業" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="作業"><span class="header-section-number">8.3</span> 作業</h2>
+<section id="作業" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="作業"><span class="header-section-number">3</span> 作業</h2>
 <ol type="1">
 <li>請寫出一個可計算 Shannon-Wiener 多樣性指數和Simpson 多樣性指數(包含 Simpson index, Simpson diversity index, inverse Simpson)的函式，函式必須加入可讓使用者選擇多樣性指數的參數</li>
 <li>請寫出一個可計算費布納西(fibonacci)數列的函式`</li>

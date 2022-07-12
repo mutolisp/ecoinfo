@@ -292,18 +292,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#基本繪圖" id="toc-基本繪圖" class="nav-link active" data-scroll-target="#基本繪圖"> <span class="header-section-number">15.1</span> 基本繪圖</a>
+  <li><a href="#基本繪圖" id="toc-基本繪圖" class="nav-link active" data-scroll-target="#基本繪圖"> <span class="header-section-number">1</span> 基本繪圖</a>
   <ul class="collapse">
-  <li><a href="#盒鬚圖boxplot" id="toc-盒鬚圖boxplot" class="nav-link" data-scroll-target="#盒鬚圖boxplot"> <span class="header-section-number">15.1.1</span> 盒鬚圖(boxplot)</a></li>
-  <li><a href="#直方圖histogram" id="toc-直方圖histogram" class="nav-link" data-scroll-target="#直方圖histogram"> <span class="header-section-number">15.1.2</span> 直方圖(histogram)</a></li>
-  <li><a href="#散布圖scatterplot" id="toc-散布圖scatterplot" class="nav-link" data-scroll-target="#散布圖scatterplot"> <span class="header-section-number">15.1.3</span> 散布圖(scatterplot)</a></li>
-  <li><a href="#細部調整參數" id="toc-細部調整參數" class="nav-link" data-scroll-target="#細部調整參數"> <span class="header-section-number">15.1.4</span> 細部調整參數</a></li>
+  <li><a href="#盒鬚圖boxplot" id="toc-盒鬚圖boxplot" class="nav-link" data-scroll-target="#盒鬚圖boxplot"> <span class="header-section-number">1.1</span> 盒鬚圖(boxplot)</a></li>
+  <li><a href="#直方圖histogram" id="toc-直方圖histogram" class="nav-link" data-scroll-target="#直方圖histogram"> <span class="header-section-number">1.2</span> 直方圖(histogram)</a></li>
+  <li><a href="#散布圖scatterplot" id="toc-散布圖scatterplot" class="nav-link" data-scroll-target="#散布圖scatterplot"> <span class="header-section-number">1.3</span> 散布圖(scatterplot)</a></li>
+  <li><a href="#細部調整參數" id="toc-細部調整參數" class="nav-link" data-scroll-target="#細部調整參數"> <span class="header-section-number">1.4</span> 細部調整參數</a></li>
   </ul></li>
-  <li><a href="#參考資料以及延伸閱讀" id="toc-參考資料以及延伸閱讀" class="nav-link" data-scroll-target="#參考資料以及延伸閱讀"> <span class="header-section-number">15.2</span> 參考資料以及延伸閱讀</a></li>
-  <li><a href="#練習" id="toc-練習" class="nav-link" data-scroll-target="#練習"> <span class="header-section-number">15.3</span> 練習</a>
+  <li><a href="#參考資料以及延伸閱讀" id="toc-參考資料以及延伸閱讀" class="nav-link" data-scroll-target="#參考資料以及延伸閱讀"> <span class="header-section-number">2</span> 參考資料以及延伸閱讀</a></li>
+  <li><a href="#練習" id="toc-練習" class="nav-link" data-scroll-target="#練習"> <span class="header-section-number">3</span> 練習</a>
   <ul class="collapse">
-  <li><a href="#課堂練習-rscript" id="toc-課堂練習-rscript" class="nav-link" data-scroll-target="#課堂練習-rscript"> <span class="header-section-number">15.3.1</span> 課堂練習 RScript</a></li>
-  <li><a href="#作業" id="toc-作業" class="nav-link" data-scroll-target="#作業"> <span class="header-section-number">15.3.2</span> 作業</a></li>
+  <li><a href="#課堂練習-rscript" id="toc-課堂練習-rscript" class="nav-link" data-scroll-target="#課堂練習-rscript"> <span class="header-section-number">3.1</span> 課堂練習 RScript</a></li>
+  <li><a href="#作業" id="toc-作業" class="nav-link" data-scroll-target="#作業"> <span class="header-section-number">3.2</span> 作業</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_basic_graphics.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_basic_graphics.qmd" class="toc-action">View source</a></p></div></div></nav>
@@ -328,12 +328,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>R 支援基本的繪圖，包括散布圖(distribution plot)、盒鬚圖(boxplot)、直方圖(histogram)甚至是地圖等。若需要進階的繪圖，可安裝 <code>ggplot2</code> 等第三方套件支援。</p>
-<section id="基本繪圖" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="基本繪圖"><span class="header-section-number">15.1</span> 基本繪圖</h2>
+<section id="基本繪圖" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="基本繪圖"><span class="header-section-number">1</span> 基本繪圖</h2>
 <p>我們以下圖一來說明 R 繪圖的基本元件及定義 <img src="https://i.imgur.com/1wK9Z08.jpg" class="img-fluid"> 圖一、R 的基本繪圖</p>
 <p>A: 繪圖區，呈現點、線等圖之處 B: 圖標題(graph title, R 選項:<code>main</code>) C: X 軸(x-axis) D: Y 軸(y-axis) E: X 變數標題 (x label, R 選項: <code>xlab</code>) F: Y 變數標題 (y label, R 選項: <code>ylab</code>)</p>
-<section id="盒鬚圖boxplot" class="level3" data-number="15.1.1">
-<h3 data-number="15.1.1" class="anchored" data-anchor-id="盒鬚圖boxplot"><span class="header-section-number">15.1.1</span> 盒鬚圖(boxplot)</h3>
+<section id="盒鬚圖boxplot" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="盒鬚圖boxplot"><span class="header-section-number">1.1</span> 盒鬚圖(boxplot)</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 加載 mtcars 資料集，接下來就可以直接</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 mtcars 裡頭的變數</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 未加載 mtcars 要使用 mpg 變數: mtcars$mpg</span></span>
@@ -344,8 +344,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="https://i.imgur.com/bwa2k4q.jpg" class="img-fluid"> 圖二、盒鬚圖</p>
 </section>
-<section id="直方圖histogram" class="level3" data-number="15.1.2">
-<h3 data-number="15.1.2" class="anchored" data-anchor-id="直方圖histogram"><span class="header-section-number">15.1.2</span> 直方圖(histogram)</h3>
+<section id="直方圖histogram" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="直方圖histogram"><span class="header-section-number">1.2</span> 直方圖(histogram)</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(mtcars)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpg)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -358,30 +358,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="https://i.imgur.com/Rs1CbMa.jpg" class="img-fluid"> 圖四、多個直方圖合併在同一個圖表中</p>
 <p>使用 <code>ggplot2</code> 來繪圖</p>
 </section>
-<section id="散布圖scatterplot" class="level3" data-number="15.1.3">
-<h3 data-number="15.1.3" class="anchored" data-anchor-id="散布圖scatterplot"><span class="header-section-number">15.1.3</span> 散布圖(scatterplot)</h3>
+<section id="散布圖scatterplot" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="散布圖scatterplot"><span class="header-section-number">1.3</span> 散布圖(scatterplot)</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(mtcars)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> hp, <span class="at">y =</span> mpg, <span class="at">main =</span> <span class="st">'Scatterplot: HP v.s. MPG'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="https://i.imgur.com/tt2xUP2.jpg" class="img-fluid"></p>
 </section>
-<section id="細部調整參數" class="level3" data-number="15.1.4">
-<h3 data-number="15.1.4" class="anchored" data-anchor-id="細部調整參數"><span class="header-section-number">15.1.4</span> 細部調整參數</h3>
+<section id="細部調整參數" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="細部調整參數"><span class="header-section-number">1.4</span> 細部調整參數</h3>
 <p>TBD</p>
 </section>
 </section>
-<section id="參考資料以及延伸閱讀" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="參考資料以及延伸閱讀"><span class="header-section-number">15.2</span> 參考資料以及延伸閱讀</h2>
+<section id="參考資料以及延伸閱讀" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="參考資料以及延伸閱讀"><span class="header-section-number">2</span> 參考資料以及延伸閱讀</h2>
 <ul>
 <li><a href="http://r-graph-gallery.com">R graphics gallery</a></li>
 <li><a href="https://www.statmethods.net/graphs/index.html">Quick-R graph</a></li>
 </ul>
 </section>
-<section id="練習" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="練習"><span class="header-section-number">15.3</span> 練習</h2>
+<section id="練習" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="練習"><span class="header-section-number">3</span> 練習</h2>
 <p>登入 datacamp 之後可以自我練習 R 繪圖 https://www.datacamp.com/courses/data-visualization-in-r</p>
-<section id="課堂練習-rscript" class="level3" data-number="15.3.1">
-<h3 data-number="15.3.1" class="anchored" data-anchor-id="課堂練習-rscript"><span class="header-section-number">15.3.1</span> 課堂練習 RScript</h3>
+<section id="課堂練習-rscript" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="課堂練習-rscript"><span class="header-section-number">3.1</span> 課堂練習 RScript</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hdata <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># draw histogram using hist()</span></span>
@@ -405,8 +405,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">heat.colors</span>(<span class="dv">5</span>)</span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">terrain.colors</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="作業" class="level3" data-number="15.3.2">
-<h3 data-number="15.3.2" class="anchored" data-anchor-id="作業"><span class="header-section-number">15.3.2</span> 作業</h3>
+<section id="作業" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="作業"><span class="header-section-number">3.2</span> 作業</h3>
 <ol type="1">
 <li>請使用 R 內建的 iris 資料集，嘗試繪出類似下列的盒鬚圖。圖中必須包含標題、x 及 y 軸標籤。</li>
 </ol>

@@ -294,9 +294,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#註解" id="toc-註解" class="nav-link active" data-scroll-target="#註解"> <span class="header-section-number">3.0.1</span> 註解</a></li>
-  <li><a href="#使用函式及表示式" id="toc-使用函式及表示式" class="nav-link" data-scroll-target="#使用函式及表示式"> <span class="header-section-number">3.0.2</span> 使用函式及表示式</a></li>
-  <li><a href="#指定變數variables" id="toc-指定變數variables" class="nav-link" data-scroll-target="#指定變數variables"> <span class="header-section-number">3.0.3</span> 指定變數(variables)</a></li>
+  <li><a href="#註解" id="toc-註解" class="nav-link active" data-scroll-target="#註解"> <span class="header-section-number">0.1</span> 註解</a></li>
+  <li><a href="#使用函式及表示式" id="toc-使用函式及表示式" class="nav-link" data-scroll-target="#使用函式及表示式"> <span class="header-section-number">0.2</span> 使用函式及表示式</a></li>
+  <li><a href="#指定變數variables" id="toc-指定變數variables" class="nav-link" data-scroll-target="#指定變數variables"> <span class="header-section-number">0.3</span> 指定變數(variables)</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_basic.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_basic.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -335,24 +335,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>第二個例子是 5 除以 3：</p>
 <p><code>R &gt; 5 / 3 [1] 1.666667</code></p>
 <p>眼尖的你可能會發現到上面的第一個例子沒有空格，第二個例子有空格。 在 R 裡面運算符號和數值之間的空格不會影響到執行的結果， 但我建議你可以在數值和運算符號中保留空格， 這可以讓閱讀 R 程式碼時更加舒適且美觀。</p>
-<section id="註解" class="level3" data-number="3.0.1">
-<h3 data-number="3.0.1" class="anchored" data-anchor-id="註解"><span class="header-section-number">3.0.1</span> 註解</h3>
+<section id="註解" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="註解"><span class="header-section-number">0.1</span> 註解</h3>
 <p>在撰寫 R 語言時，只要開頭有井字號(#)的 R 都會把它視為註解。 因此不論後面再加上什麼指令或函式，R 都會把這些當成註解不執行， 例如：</p>
 <p><code>R # 這是註解 #### 這也是註解</code></p>
 <p>如果你有多行文字需要註解，在 RStudio 中，你可以把這幾行選取起來，在選單 Code 中的 Comment/Uncomment Lines 把這幾行註解起來。或是使用快速鍵 Shift-Ctrl-C (MacOS 則是 Shift-Command-C)註解。而註解有何用處呢？就是能夠把 R 程式中額外需要解釋的，像是某功能代表什麼意思？各個參數的限制，有沒有什麼其他值得給自己或他人參考的文字內容等。另外註解還有一個很重要的功能就是幫助自己回憶 code，當你花了許多時間寫了許多 R code，過了一段時間可能忘記到底在寫些什麼，這些註解就可以幫助你回憶。比如說下面是一個 R 函式，我就會在函式的前方寫這個函式是在做什麼、輸入資料的類型以及參數解釋等：</p>
 <p>``R ## [FUNCTION] Find countries in focal list and store PolySet in a vector # # arguments: # * ref_area.prj: projected area (SpatialPolygon object) # * focal_list: focal list # find_focal &lt;- function(ref_area.prj, focal_list) { require(PBSmapping) focal_list.ps &lt;- vector(mode=“list”, length=length(focal_list)) for ( i in 1:length(focal_list) ) { # check if the focal_list names match the fieldname in ref_area.prj if ( focal_list[i] %in% ref_area.prj<span class="math inline">\(NAME ) {  focal_list.ps[[i]] &lt;- combinePolys(SpatialPolygons2PolySet(ref_area.prj[ref_area.prj\)</span>NAME==focal_list[i],])) } else { print(paste(“Error!”, focal_list[i],“does not match in the reference area”, sep=” “)) } } return(focal_list.ps) }</p>
 <p>``</p>
 </section>
-<section id="使用函式及表示式" class="level3" data-number="3.0.2">
-<h3 data-number="3.0.2" class="anchored" data-anchor-id="使用函式及表示式"><span class="header-section-number">3.0.2</span> 使用函式及表示式</h3>
+<section id="使用函式及表示式" class="level3" data-number="0.2">
+<h3 data-number="0.2" class="anchored" data-anchor-id="使用函式及表示式"><span class="header-section-number">0.2</span> 使用函式及表示式</h3>
 <p>R 裡頭執行指令或是函式(function)時，必須要加上括號，例如 <code>ls()</code>，如果沒有加上括號「()」，R 預設就會把其原始碼在螢幕上印出，例如:</p>
 <p><code>R &gt; ls function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,     pattern, sorted = TRUE) {     if (!missing(name)) {     ... 中間省略 ...             }         }         grep(pattern, all.names, value = TRUE)     }     else all.names } &lt;bytecode: 0x1039a66e0&gt; &lt;environment: namespace:base&gt;</code></p>
 <p>若輸入的指令為 <code>ls()</code> 時才會正確去執行該函式，即：</p>
 <p><code>R &gt; ls() character(0)</code></p>
 <p>如何自訂函式我們會在後面的<a href="https://hackmd.io/s/S1FsWYQWX">自訂函式</a>章節裡頭介紹。</p>
 </section>
-<section id="指定變數variables" class="level3" data-number="3.0.3">
-<h3 data-number="3.0.3" class="anchored" data-anchor-id="指定變數variables"><span class="header-section-number">3.0.3</span> 指定變數(variables)</h3>
+<section id="指定變數variables" class="level3" data-number="0.3">
+<h3 data-number="0.3" class="anchored" data-anchor-id="指定變數variables"><span class="header-section-number">0.3</span> 指定變數(variables)</h3>
 <p>對於複雜一點的 R 程式，也許你會想有沒有什麼其他的方式可以重複使用計算過的數值、或是執行過的函式呢？舉例來說，我想計算 15 塊錢美金可以換算成多少新臺幣， 假設一塊美金可以換成 31.53 新臺幣，R 可以這樣計算：</p>
 <p><code>R &gt; 15 * 31.53 [1] 472.95</code></p>
 <p>但每天的美金兌換新臺幣的匯率都不同，這個時候我們就可以把「匯率」當成一個「變數(variable)」，顧名思義，變數就是會「變」動的「數」值(或文字、函式等)。所以我們用變數的概念來呈現上述的例子：</p>

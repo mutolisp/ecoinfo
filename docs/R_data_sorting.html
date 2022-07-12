@@ -315,35 +315,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2"></a>s1 <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(<span class="dv">100</span>, <span class="dv">10</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a>s1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  85  11  54  77   3  10  76 100  43  92</code></pre>
+<pre><code> [1]  1 92 72 73 52 20 87 99  8 25</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># 使用 order 排序</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">order</span>(s1) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  5  6  2  9  3  7  4  1 10  8</code></pre>
+<pre><code> [1]  1  9  6 10  5  3  4  7  2  8</code></pre>
 </div>
 </div>
 <p>此時你會發現怎麼跟想像中的不太一樣，用 <code>order()</code> 排序完給的是順序，即最小的是第八個、次之是第六個，…，而不是排序好的數字，若要直接針對一個數列排序，就得要用 <code>sort()</code> 了。所以如果用 <code>order()</code> 把原本的數列排序好顯示則要用 <code>s1[order(s1)]</code>：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>s1[<span class="fu">order</span>(s1)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]   3  10  11  43  54  76  77  85  92 100</code></pre>
+<pre><code> [1]  1  8 20 25 52 72 73 87 92 99</code></pre>
 </div>
 </div>
 <p>等同於</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">sort</span>(s1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]   3  10  11  43  54  76  77  85  92 100</code></pre>
+<pre><code> [1]  1  8 20 25 52 72 73 87 92 99</code></pre>
 </div>
 </div>
 <p>你可能會觀察到不管是 <code>order()</code> 或是 <code>sort()</code> 都是升冪排序(ascending)，那如果要用降冪排序(descending)呢？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">sort</span>(s1, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 100  92  85  77  76  54  43  11  10   3</code></pre>
+<pre><code> [1] 99 92 87 73 72 52 25 20  8  1</code></pre>
 </div>
 </div>
 <p>如果要針對 data.frame 排序呢？ 如果你嘗試使用 <code>sort()</code> 來排序一個 data.frame 的話，馬上就會得到錯誤訊息顯示如下：</p>

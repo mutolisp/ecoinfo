@@ -1,5 +1,11 @@
 ---
 tag: R, ecoinformatics, 課程, 生態資訊學
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+
 ---
 # 數學運算及邏輯判斷
 

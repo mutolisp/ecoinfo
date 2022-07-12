@@ -1,3 +1,10 @@
+---
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+---
 # 資料篩選
 
 當你面對一筆資料的時候，除了基礎的排序外，你可能還會想要篩選資料來進一步了解其樣貌。例如家戶所得的收支報告，你可能會想知道除了平均所得之外，哪一個縣市的收入最高？哪一個鄉鎮市區的收入最低？諸如此類的問題就可以使用 data.table、dplyr 套件或是透過結構化查詢語言(structural query language)來篩選查詢外部的資料庫。

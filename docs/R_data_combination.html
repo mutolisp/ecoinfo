@@ -292,9 +292,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#使用-merge-來合併資料" id="toc-使用-merge-來合併資料" class="nav-link active" data-scroll-target="#使用-merge-來合併資料"> <span class="header-section-number">10.1</span> 使用 merge 來合併資料</a></li>
-  <li><a href="#進階的-merge-不同的-join-方式" id="toc-進階的-merge-不同的-join-方式" class="nav-link" data-scroll-target="#進階的-merge-不同的-join-方式"> <span class="header-section-number">10.2</span> 進階的 merge: 不同的 join 方式</a></li>
-  <li><a href="#作業" id="toc-作業" class="nav-link" data-scroll-target="#作業"> <span class="header-section-number">10.3</span> 作業</a></li>
+  <li><a href="#使用-merge-來合併資料" id="toc-使用-merge-來合併資料" class="nav-link active" data-scroll-target="#使用-merge-來合併資料"> <span class="header-section-number">1</span> 使用 merge 來合併資料</a></li>
+  <li><a href="#進階的-merge-不同的-join-方式" id="toc-進階的-merge-不同的-join-方式" class="nav-link" data-scroll-target="#進階的-merge-不同的-join-方式"> <span class="header-section-number">2</span> 進階的 merge: 不同的 join 方式</a></li>
+  <li><a href="#作業" id="toc-作業" class="nav-link" data-scroll-target="#作業"> <span class="header-section-number">3</span> 作業</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_data_combination.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_data_combination.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -421,8 +421,8 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 </div>
 <p>同樣的，<code>rbind()</code> 也可以用來組合兩個以上的 data.frame。不過如果你直接使用 <code>rbind(mtcars1, mtcars2)</code>是無法成功的，因為兩個 data.frame 的欄位名稱是不同的。所以在合併多個 data.frame 時，一定要有相同的欄位，以<a href="https://zh.wikipedia.org/zh-tw/關聯式資料庫">關聯式資料庫(relational database)</a>的術語來說就是要有一組 key (鍵)，這組鍵可以把不同的資料表(data table，在這裡我們指的是兩個或以上的資料集)連結起來，此稱之為 join。在 R 裡頭內建的 <code>merge()</code> 就是一種 join 的方式(即 inner join)，另外還有 left join 以及 right join 等，其示意圖如圖一，假設有兩個 data.frame df1 及 df2，如果 join 的方式要保留 df1 中所有的元素，這稱之為 left join；同樣地如果要保留 df2 所有的元素，則稱為 right join；如果只保留有交集的元素，我們稱之為 inner join。下一節我們將介紹如何使用 merge 來合併資料。</p>
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/join.png?raw=true" class="img-fluid"> 圖一、不同類型的 join</p>
-<section id="使用-merge-來合併資料" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="使用-merge-來合併資料"><span class="header-section-number">10.1</span> 使用 merge 來合併資料</h2>
+<section id="使用-merge-來合併資料" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="使用-merge-來合併資料"><span class="header-section-number">1</span> 使用 merge 來合併資料</h2>
 <p>如果你曾經使用過 Excel 或是類似的試算表軟體，有個功能 vlookup 和這裡的 merge 是非常類似的，都可以針對某個相同欄位來合併資料。我們把合併資料的概念圖繪製如下呈現：</p>
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/data_merge.png?raw=true" class="img-fluid"> 圖二、針對相同欄位合併的示意圖</p>
 <p>假設有兩個 data.frame ，其中各有一個欄位 X 都是相同的，我們就可以針對 X 把這兩個 data.frame 合併在一起。在 R 裡頭我們可以這樣做：</p>
@@ -444,10 +444,10 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb12-2"><a href="#cb12-2"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z
-1 1 a  0.741595447324438
-2 3 b -0.501911507853847
-3 5 a  -2.65485512399538
-4 7 c  -1.83042589064212</code></pre>
+1 1 a -0.494671828420966
+2 3 b -0.407762834826426
+3 5 a   1.00318269095987
+4 7 c  -1.82018850483896</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -455,10 +455,10 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb14-2"><a href="#cb14-2"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x a b
-1 1 4 F
-2 3 3 F
-3 5 1 T
-4 7 2 T</code></pre>
+1 1 1 F
+2 3 2 F
+3 5 4 T
+4 7 3 T</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -466,15 +466,15 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">merge</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a  0.741595447324438 4 F
-2 3 b -0.501911507853847 3 F
-3 5 a  -2.65485512399538 1 T
-4 7 c  -1.83042589064212 2 T</code></pre>
+1 1 a -0.494671828420966 1 F
+2 3 b -0.407762834826426 2 F
+3 5 a   1.00318269095987 4 T
+4 7 c  -1.82018850483896 3 T</code></pre>
 </div>
 </div>
 </section>
-<section id="進階的-merge-不同的-join-方式" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="進階的-merge-不同的-join-方式"><span class="header-section-number">10.2</span> 進階的 merge: 不同的 join 方式</h2>
+<section id="進階的-merge-不同的-join-方式" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="進階的-merge-不同的-join-方式"><span class="header-section-number">2</span> 進階的 merge: 不同的 join 方式</h2>
 <p>前一小節的範例中，df1 和 df2 共有的欄位 x 都有四個相同數值(也就是 1,3,5,7)，可是如果 df1 少了一個數值(假設把第四列移除)，和 df2 合併的時候結果會怎麼樣呢？示意圖請參照圖三</p>
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/data_merge_na.png?raw=true" class="img-fluid"> 圖三、當 df1 沒有 df2 的數值時</p>
 <p>所以如果要保留所有 df2 的 X 欄位，合併完的 Y 欄位和 Z 欄位的 x41 就對應不到 df1 中之數值，所以會留空。以 <code>merge()</code> 來說，預設會使用 inner join，也就是只有 df1 和 df2 交集的資料才會合併在一起：</p>
@@ -486,9 +486,9 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb18-5"><a href="#cb18-5"></a><span class="fu">merge</span>(df1, df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a  0.741595447324438 4 F
-2 3 b -0.501911507853847 3 F
-3 5 a  -2.65485512399538 1 T</code></pre>
+1 1 a -0.494671828420966 1 F
+2 3 b -0.407762834826426 2 F
+3 5 a   1.00318269095987 4 T</code></pre>
 </div>
 </div>
 <p>如果要實作 left 或 right join 呢？<code>merge()</code> 中只要加上參數 <code>all.x = TRUE</code> 或是 <code>all.y = TRUE</code> 即可，x 指的是第一個提到的 df1， y 則是 df2，也可以直接在 <code>merge()</code> 的參數中指定，例如 <code>merge(x=df1, y=df2)</code>。</p>
@@ -497,19 +497,19 @@ Valiant           18.1   6  225 105 2.76 3.460</code></pre>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="fu">merge</span>(df1, df2, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a  0.741595447324438 4 F
-2 3 b -0.501911507853847 3 F
-3 5 a  -2.65485512399538 1 T</code></pre>
+1 1 a -0.494671828420966 1 F
+2 3 b -0.407762834826426 2 F
+3 5 a   1.00318269095987 4 T</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">merge</span>(df1, df2, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x    y                  z a b
-1 1    a  0.741595447324438 4 F
-2 3    b -0.501911507853847 3 F
-3 5    a  -2.65485512399538 1 T
-4 7 &lt;NA&gt;               &lt;NA&gt; 2 T</code></pre>
+1 1    a -0.494671828420966 1 F
+2 3    b -0.407762834826426 2 F
+3 5    a   1.00318269095987 4 T
+4 7 &lt;NA&gt;               &lt;NA&gt; 3 T</code></pre>
 </div>
 </div>
 <p>除了 R 內建 base 的 merge 之外，你也可以嘗試使用 Wickham 寫的 <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr</a> 套件中的 <a href="https://dplyr.tidyverse.org/reference/join.html"><code>left_join()</code></a>、<a href="https://dplyr.tidyverse.org/reference/join.html"><code>right_join()</code></a>及<a href="https://dplyr.tidyverse.org/reference/join.html"><code>inner_join()</code></a>等功能。在 dplyr 中 join 的使用可參見下表：</p>
@@ -566,9 +566,9 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a  0.741595447324438 4 F
-2 3 b -0.501911507853847 3 F
-3 5 a  -2.65485512399538 1 T</code></pre>
+1 1 a -0.494671828420966 1 F
+2 3 b -0.407762834826426 2 F
+3 5 a   1.00318269095987 4 T</code></pre>
 </div>
 </div>
 <p>結果如下：</p>
@@ -585,16 +585,16 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y                  z a b
-1 1 a  0.741595447324438 4 F
-2 3 b -0.501911507853847 3 F
-3 5 a  -2.65485512399538 1 T</code></pre>
+1 1 a -0.494671828420966 1 F
+2 3 b -0.407762834826426 2 F
+3 5 a   1.00318269095987 4 T</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># 等同於 left_join(df1, df2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/demos/data_merge.R">本節範例 code 下載</a></p>
 </section>
-<section id="作業" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="作業"><span class="header-section-number">10.3</span> 作業</h2>
+<section id="作業" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="作業"><span class="header-section-number">3</span> 作業</h2>
 <ol type="1">
 <li><p>請使用 <code>merge()</code> 來合併 <a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/data/twforest.csv">twforest</a> 和 <a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/data/twforest_families.csv">twforest_families</a> 這兩個檔案</p></li>
 <li><p>請練習使用 <code>merge()</code> 或是 <code>dplyr::left_join()</code>, <code>dplyr::right_join()</code> 把 <a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/data/twforest_families.csv">twforest_families</a> 和 <a href="https://raw.githubusercontent.com/mutolisp/ecoinformatics_course/master/data/apgiv_families.csv">apgiv_families</a> 合併成下列的格式</p>

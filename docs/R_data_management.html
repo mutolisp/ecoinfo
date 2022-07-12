@@ -246,24 +246,24 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p>本節將會針對常用的資料變換形式解說。常常我們在分析資料時， 都會遇到一些資料格式的問題，因此在這個章節的第一部分， 先簡介資料的類型。通常一筆乾淨的資料直行稱為欄(columns, 之前在資料結構章節有提到過)， 如 <a href="#fig-column_example">Figure&nbsp;<span class="quarto-unresolved-ref">fig-column_example</span></a> 所示，也就是變數(variables)，例如溫度、雨量、pH 值等。 列則是橫向的(如 <a href="#fig-row_example">Figure&nbsp;<span class="quarto-unresolved-ref">fig-row_example</span></a> 所示)，代表資料記錄，一列就是一筆資料。</p>
+<p>本節將會針對常用的資料變換形式解說。常常我們在分析資料時， 都會遇到一些資料格式的問題，因此在這個章節的第一部分， 先簡介資料的類型。通常一筆乾淨的資料直行稱為欄(columns, 之前在資料結構章節有提到過)， 如 <a href="#fig-column_example">圖&nbsp;<span>1</span></a> 所示，也就是變數(variables)，例如溫度、雨量、pH 值等。 列則是橫向的(如 <a href="#fig-row_example">圖&nbsp;<span>2</span></a> 所示)，代表資料記錄，一列就是一筆資料。</p>
 <div id="fig-column_example" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/data_struc_cols.png?raw=true" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 1: 欄的示意圖</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 1: 欄的示意圖</figcaption><p></p>
 </figure>
 </div>
 <div id="fig-row_example" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/data_struc_rows.png?raw=true" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 2: 列的示意圖</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 2: 列的示意圖</figcaption><p></p>
 </figure>
 </div>
 <p>但有時候為了效率，資料也可能儲存成矩陣的形式，如下圖三所示：</p>
 <div id="fig-data_matrix" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://github.com/mutolisp/ecoinformatics_course/blob/master/images/data_struc_matrix.png?raw=true" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 3: 資料矩陣格式</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 3: 資料矩陣格式</figcaption><p></p>
 </figure>
 </div>
 <p>直的欄位是變數 V，有四個類別；變數 W 是橫向的欄位，有三個類別。以植群調查的資料為例， 變數 V 是物種，有四個物種 A, B, C, D；而變數 W 是調查樣區，有三個樣區 X, Y, Z。 資料數值則是物種的覆蓋度(百分等級)，所以 XA 代表第 X 樣區中的 A 物種，覆蓋度數值就是 a11， XB 則是第 X 樣區的 B 物種，覆蓋度數值就是 a21，以此類推。</p>

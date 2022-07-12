@@ -176,7 +176,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R_data_wrangling.html</span></a>
+  <a href="./R_data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">資料塑形轉換</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -230,14 +230,14 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#本章概要" id="toc-本章概要" class="nav-link active" data-scroll-target="#本章概要"> <span class="header-section-number">1.1</span> 本章概要</a></li>
-  <li><a href="#為什麼要使用-r" id="toc-為什麼要使用-r" class="nav-link" data-scroll-target="#為什麼要使用-r"> <span class="header-section-number">1.2</span> 為什麼要使用 R?</a></li>
-  <li><a href="#安裝-r" id="toc-安裝-r" class="nav-link" data-scroll-target="#安裝-r"> <span class="header-section-number">1.3</span> 安裝 R</a></li>
-  <li><a href="#整合性圖形介面環境" id="toc-整合性圖形介面環境" class="nav-link" data-scroll-target="#整合性圖形介面環境"> <span class="header-section-number">1.4</span> 整合性圖形介面環境</a>
+  <li><a href="#本章概要" id="toc-本章概要" class="nav-link active" data-scroll-target="#本章概要"> <span class="header-section-number">1</span> 本章概要</a></li>
+  <li><a href="#為什麼要使用-r" id="toc-為什麼要使用-r" class="nav-link" data-scroll-target="#為什麼要使用-r"> <span class="header-section-number">2</span> 為什麼要使用 R?</a></li>
+  <li><a href="#安裝-r" id="toc-安裝-r" class="nav-link" data-scroll-target="#安裝-r"> <span class="header-section-number">3</span> 安裝 R</a></li>
+  <li><a href="#整合性圖形介面環境" id="toc-整合性圖形介面環境" class="nav-link" data-scroll-target="#整合性圖形介面環境"> <span class="header-section-number">4</span> 整合性圖形介面環境</a>
   <ul class="collapse">
-  <li><a href="#rstudio-總覽" id="toc-rstudio-總覽" class="nav-link" data-scroll-target="#rstudio-總覽"> <span class="header-section-number">1.4.1</span> RStudio 總覽</a></li>
+  <li><a href="#rstudio-總覽" id="toc-rstudio-總覽" class="nav-link" data-scroll-target="#rstudio-總覽"> <span class="header-section-number">4.1</span> RStudio 總覽</a></li>
   </ul></li>
-  <li><a href="#faq" id="toc-faq" class="nav-link" data-scroll-target="#faq"> <span class="header-section-number">1.5</span> FAQ</a></li>
+  <li><a href="#faq" id="toc-faq" class="nav-link" data-scroll-target="#faq"> <span class="header-section-number">5</span> FAQ</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_intro.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_intro.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -280,12 +280,12 @@ Note
 <p>請先安裝好 <a href="http://www.rstudio.com">Rstudio</a> 以及 <a href="http://www.r-project.org">R</a></p>
 </div>
 </div>
-<section id="本章概要" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="本章概要"><span class="header-section-number">1.1</span> 本章概要</h2>
+<section id="本章概要" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="本章概要"><span class="header-section-number">1</span> 本章概要</h2>
 <p>本章將會介紹 R 以及 RStudio 這個整合性開發環境</p>
 </section>
-<section id="為什麼要使用-r" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="為什麼要使用-r"><span class="header-section-number">1.2</span> 為什麼要使用 R?</h2>
+<section id="為什麼要使用-r" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="為什麼要使用-r"><span class="header-section-number">2</span> 為什麼要使用 R?</h2>
 <p>現在市面上有許多商業的專業統計軟體，例如 SAS、SPSS、Statistica等，為什麼我要介紹各位使用 R?你可能會問，我這些資料很簡單，用Microsoft Excel 做統計分析或 SPSS 按一按就好了，報表也都能漂亮地印出來，為什麼還要再多花心思去學一套新的軟體? 因為 R 是:</p>
 <ol type="1">
 <li>百分之百自由軟體 (free software)，這意味著你可以自由取得、複製及散佈</li>
@@ -298,17 +298,17 @@ Note
 <li>支援許多資料分析的功能，可處理大量的資料</li>
 </ol>
 </section>
-<section id="安裝-r" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="安裝-r"><span class="header-section-number">1.3</span> 安裝 R</h2>
+<section id="安裝-r" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="安裝-r"><span class="header-section-number">3</span> 安裝 R</h2>
 <p>在這個章節中,我不打算花太多的篇幅講 R 的安裝,都是重點提示，詳細的安裝說明請至 R 的網站上閱讀。R 的下載網址為 http://www.r-project.org 現在的 GNU/Linux 作業系統通常都會有套件管理 程式,你可以直接從該套件管理 程式安裝 R 程式，下面以 Debian/Ubuntu 的 apt 套件管理程式為例，示範如何安裝: 終端機底下安裝 R 主程式(或是你可以從圖形化的套件管理程式來安裝)</p>
 <pre class="shell"><code># apt-get install r-base</code></pre>
 <p>在 Windows 作業系統中安裝 R 程式只需要下載執行檔 R-版本號碼.exe, 並按照步驟安裝即可。因為 R 本身的圖形開發介面較為陽春，在這裡我們將使用 RStudio 這套整合性的開發環境來教學，請參見下節</p>
 </section>
-<section id="整合性圖形介面環境" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="整合性圖形介面環境"><span class="header-section-number">1.4</span> 整合性圖形介面環境</h2>
+<section id="整合性圖形介面環境" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="整合性圖形介面環境"><span class="header-section-number">4</span> 整合性圖形介面環境</h2>
 <p>雖然 R 本身是透過指令控制的，官方提供的套件也有簡單的整合性圖形介面環境可以使用，非官方的整合軟體像是 <a href="http://sourceforge.net/projects/tinn-r">tinn-r</a> 或是 <a href="http://www.rstudio.com">RStudio</a>等，我們推薦使用 <a href="http://www.rstudio.com">RStudio</a>來進行 R 的指令寫作、測試以及管理工作環境、安裝第三方套件等功能。</p>
-<section id="rstudio-總覽" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="rstudio-總覽"><span class="header-section-number">1.4.1</span> RStudio 總覽</h3>
+<section id="rstudio-總覽" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="rstudio-總覽"><span class="header-section-number">4.1</span> RStudio 總覽</h3>
 <p>對於常常需要使用 R 來做統計分析的人來說，RStudio是一個非常方便又強大的整合性工具。它除了基本的指令語法強化功能(syntax highlighting， 透過不同的顏色顯示函式功能、變數等，可提高程式碼的易讀性)、<a href="https://support.rstudio.com/hc/en-us/articles/205273297-Code-Completion">tab 鍵指令補齊</a>、歷史指令控制管理、資料變數管理等功能外，也整合了<a href="https://www.r-bloggers.com/rstudio-and-github/">版本控制系統</a>(version control，預設使用的是 <a href="http://git-scm.com">git</a> ，需要額外安裝)、第三方套件管理、<a href="http://rmarkdown.rstudio.com">Markdown 語法</a>、簡報投影片等。除此之外，RStudio 最重要的特徵就是它也是開放原始碼軟體，而且完全免費！</p>
 <ul>
 <li><p>安裝 RStudio</p>
@@ -345,8 +345,8 @@ Note
 </ul>
 </section>
 </section>
-<section id="faq" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="faq"><span class="header-section-number">1.5</span> FAQ</h2>
+<section id="faq" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="faq"><span class="header-section-number">5</span> FAQ</h2>
 <ol type="1">
 <li><p>如果開啟 Rstudio 碰到 Fatal error 和權限有關的錯誤訊息導致無法開啟怎麼辦？</p>
 <blockquote class="blockquote">

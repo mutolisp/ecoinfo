@@ -1,3 +1,10 @@
+---
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+---
 # 資料的排序
 
 在 R 裡頭最常用到的排序功能是 ``order()`` 和 ``sort()``。 這些排序函式不只能夠針對 vector 排序，也能排序 data.frame, list 等不同的資料結構。以下是排序的一些例子介紹：

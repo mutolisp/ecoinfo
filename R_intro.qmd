@@ -3,6 +3,11 @@ sourceURL: https://hackmd.io/y3Ix2ubhTX6uQ-CWzOvgBA
 tag: R, 課程, 生態資訊學
 date: 2022-01-24 00:16:52
 modificationDate: 2022-07-12 11:26:34
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
 ---
 # R 的介紹
 

@@ -1,3 +1,11 @@
+---
+crossref:
+    fig-title: 圖     # (default is "Figure")
+    tbl-title: 表     # (default is "Table")
+    fig-prefix: 圖    # (default is "Figure")
+    tbl-prefix: 表    # (default is "Table")
+
+---
 # 資料組合
 
 當處理資料時，有時候會新增刪減欄位、資料，之前我們介紹過 R 簡單的資料結構，並使用 data.frame 來儲存管理資料。一般來說如果單純要在 data.frame 中加上新的欄位，我們可以使用 ``cbind()`` (也就是 <font color="red">c</font>olumn <font color="red">bind</font>的意思，把欄位綁在一起)，如下面的範例：

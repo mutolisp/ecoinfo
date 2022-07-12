@@ -292,13 +292,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#讀取檔案" id="toc-讀取檔案" class="nav-link active" data-scroll-target="#讀取檔案"> <span class="header-section-number">7.1</span> 讀取檔案</a>
+  <li><a href="#讀取檔案" id="toc-讀取檔案" class="nav-link active" data-scroll-target="#讀取檔案"> <span class="header-section-number">1</span> 讀取檔案</a>
   <ul class="collapse">
-  <li><a href="#大檔案的讀取" id="toc-大檔案的讀取" class="nav-link" data-scroll-target="#大檔案的讀取"> <span class="header-section-number">7.1.1</span> 大檔案的讀取</a></li>
+  <li><a href="#大檔案的讀取" id="toc-大檔案的讀取" class="nav-link" data-scroll-target="#大檔案的讀取"> <span class="header-section-number">1.1</span> 大檔案的讀取</a></li>
   </ul></li>
-  <li><a href="#檔案的輸出" id="toc-檔案的輸出" class="nav-link" data-scroll-target="#檔案的輸出"> <span class="header-section-number">7.2</span> 檔案的輸出</a></li>
-  <li><a href="#工作資料的儲存" id="toc-工作資料的儲存" class="nav-link" data-scroll-target="#工作資料的儲存"> <span class="header-section-number">7.3</span> 工作資料的儲存</a></li>
-  <li><a href="#練習-script" id="toc-練習-script" class="nav-link" data-scroll-target="#練習-script"> <span class="header-section-number">7.4</span> 練習 Script</a></li>
+  <li><a href="#檔案的輸出" id="toc-檔案的輸出" class="nav-link" data-scroll-target="#檔案的輸出"> <span class="header-section-number">2</span> 檔案的輸出</a></li>
+  <li><a href="#工作資料的儲存" id="toc-工作資料的儲存" class="nav-link" data-scroll-target="#工作資料的儲存"> <span class="header-section-number">3</span> 工作資料的儲存</a></li>
+  <li><a href="#練習-script" id="toc-練習-script" class="nav-link" data-scroll-target="#練習-script"> <span class="header-section-number">4</span> 練習 Script</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mutolisp/ecoinfo/edit/main/R_data_io.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mutolisp/ecoinfo/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/mutolisp/ecoinfo/blob/main/R_data_io.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -322,8 +322,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>把外部資料輸入進 R 的時候，可使用 csv (逗號分隔檔案)或是 txt 資料表的格式。如果你習慣使用 Microsoft Excel 的話，也可以安裝<a href="https://cran.r-project.org/web/packages/readxl/index.html"><code>readxl</code></a> 這個套件來讀取 Excel 的檔案格式。</p>
-<section id="讀取檔案" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="讀取檔案"><span class="header-section-number">7.1</span> 讀取檔案</h2>
+<section id="讀取檔案" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="讀取檔案"><span class="header-section-number">1</span> 讀取檔案</h2>
 <p><strong>讀取 Microsoft Excel 檔案</strong></p>
 <p>讀取 Excel 時，可使用 <a href="https://cran.r-project.org/web/packages/readxl/index.html"><code>readxl</code></a> 套件中的 <code>read_excel()</code> 來讀取，讀取的時候需要設定活頁簿(sheet)的名稱，若不知道名稱可以用 <code>excel_sheets()</code> 來取得名稱</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># 載入 readxl 檔案</span></span>
@@ -497,8 +497,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-4"><a href="#cb3-4"></a><span class="co"># "data\example.csv" 是相對路徑</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a>rawdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/datainput_example.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>常用的參數有 <code>header</code> (欄位名稱的有無)、<code>sep</code>(分隔符號)、<code>na.strings</code> (沒有資料的字串，例如 -9999)、<code>skip</code> (省略的行數)等。例如預設讀入 csv 時，會把第一列當成欄位名稱，若你的資料中沒有欄位名稱，就可以使用<code>header=FALSE</code> 來關掉讀取第一列當成欄位名稱。 分隔符號則是當你在讀取以 Tab、pipeline (|) 所需要輸入的符號，例如以 Tab 分隔，參數則為 <code>sep = "\t"</code> (<code>\t</code> 代表 Tab 鍵)。另外還有個常用的是編碼(encodings)，如果編碼是 unicode，參數為<code>encoding = "UTF-8"</code>。</p>
-<section id="大檔案的讀取" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="大檔案的讀取"><span class="header-section-number">7.1.1</span> 大檔案的讀取</h3>
+<section id="大檔案的讀取" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="大檔案的讀取"><span class="header-section-number">1.1</span> 大檔案的讀取</h3>
 <p>不管你是使用 <code>read.table()</code> 或是 <code>read.csv()</code> 等輸入指令，碰到大檔案的時候，我會建議使用 <code>data.table</code> 套件底下的<code>fread()</code> 來讀取資料。舉例來說，有個 csv 檔案約 20 MB，如果使用 <code>read.csv()</code> 來讀取大概要 3.4 秒：</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># proc.time() 來取得計算的時間</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>ptm <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
@@ -509,15 +509,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>因此當你如果有讀取大檔案的需求，請使用 <code>fread()</code> 來讀取檔案。</p>
 </section>
 </section>
-<section id="檔案的輸出" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="檔案的輸出"><span class="header-section-number">7.2</span> 檔案的輸出</h2>
+<section id="檔案的輸出" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="檔案的輸出"><span class="header-section-number">2</span> 檔案的輸出</h2>
 <p>和 <code>read.csv</code> 相同，有 read 就有 write，例如：</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">write.csv</span>(x, <span class="st">'file/path/to/output/file.csv'</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>`<code>write.csv()</code> 預設會輸出列數，若你沒有這個需求的話， 可以把它關閉(<code>row.names=FALSE</code>)。</p>
 <p>另外 data.table 中，也可以使用 <code>data.table::fwrite()</code> 來輸出檔案。</p>
 </section>
-<section id="工作資料的儲存" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="工作資料的儲存"><span class="header-section-number">7.3</span> 工作資料的儲存</h2>
+<section id="工作資料的儲存" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="工作資料的儲存"><span class="header-section-number">3</span> 工作資料的儲存</h2>
 <p>在 R 裡頭可以把目前工作階段中儲存之變數、載入的資料用 <code>save.image('儲存的路徑/.rdata')</code> 儲存成 R 映像檔，以方便下次使用。在使用 RStudio 退出時，通常也會問您是否要儲存工作階段的映像檔案至家目錄下，如下圖</p>
 <p><img src="https://i.imgur.com/mZvFXLl.png" class="img-fluid"></p>
 <p>若要手動儲存與載入的話，可以分別使用 <code>save.image()</code> 和 <code>load()</code> 來載入所儲存的 R 映像檔</p>
@@ -545,8 +545,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="練習-script" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="練習-script"><span class="header-section-number">7.4</span> 練習 Script</h2>
+<section id="練習-script" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="練習-script"><span class="header-section-number">4</span> 練習 Script</h2>
 <ol type="1">
 <li>基本的輸入資料練習 <a href="https://gist.github.com/mutolisp/252b751ce7235461274ca5f339043ad4"><small>R Script 下載</small></a></li>
 </ol>
