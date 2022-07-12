@@ -517,54 +517,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption aria-hidden="true" class="figure-caption">圖 1: 建立使用者</figcaption><p></p>
 </figure>
 </div></li>
-<li><p>設定權限，讓 ruser 可以登入並建立資料庫，即開啟 “Can login?” 和 “Create databases?”。設定完之後按 Save</p>
+<li><p>設定權限，讓 ruser 可以登入並建立資料庫，即開啟 “Can login?” 和 “Create databases?”。設定完之後按 Save</p></li>
+</ol>
 <div id="fig-grant_db_priviledge" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://i.imgur.com/bKkIUfR.png" class="img-fluid figure-img"></p>
 <p></p><figcaption aria-hidden="true" class="figure-caption">圖 2: 設定 postgres 權限</figcaption><p></p>
 </figure>
-</div></li>
-<li><p>建立資料庫：在左邊選單中的 Databases 按滑鼠右鍵，選擇 “Create” &gt; “Databases..”。輸入資料庫名稱，這邊以 ecoinformatics 為範例，Owner 選擇 ruser。最後按 Save 建立資料庫。</p>
-<p><img src="https://i.imgur.com/MGuoWGd.jpg" class="img-fluid"></p></li>
+</div>
+<ol start="3" type="1">
+<li>建立資料庫：在左邊選單中的 Databases 按滑鼠右鍵，選擇 “Create” &gt; “Databases..”。輸入資料庫名稱，這邊以 ecoinformatics 為範例，Owner 選擇 ruser。最後按 Save 建立資料庫。</li>
 </ol>
+<div id="fig-create_database_with_pgsql" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://i.imgur.com/MGuoWGd.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 3: 建立資料庫</figcaption><p></p>
+</figure>
+</div>
 </section>
 </section>
 <section id="在-rstudio-中使用資料庫" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="在-rstudio-中使用資料庫"><span class="header-section-number">3</span> 3. 在 RStudio 中使用資料庫</h2>
 <section id="連接資料庫" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="連接資料庫"><span class="header-section-number">3.1</span> 連接資料庫</h3>
-<p>開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下)。點選我們建立的 ecoinformatics odbc 設定</p>
-<div class="quarto-figure quarto-figure-center">
+<p>開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下 <a href="#fig-create_db_connection">圖&nbsp;<span>14.4</span></a>)。 點選我們建立的 ecoinformatics odbc 設定</p>
+<div id="fig-create_db_connection" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://i.imgur.com/V8a594Q.png" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">建立一筆與資料庫的連結</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 4: 建立一筆與資料庫的連結</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="course/生態資訊學/講義/讓%20Rstudio%20支援資料庫/Rstudio_createdb_connection.png" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">建立一筆與資料庫的連結</figcaption><p></p>
-</figure>
-</div>
-<p>建立一筆與資料庫的連結</p>
 <p>點選完 ecoinformatics 之後，會開啟詳細參數的設定(圖3.1.2)，你可以在這裡選擇把參數丟進 R Console 或是新建一個 R Script 把指令丟出去，之後再執行指令建立一筆資料庫連結。透過 DBI 套件去連結的指令如下：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb7-2"><a href="#cb7-2"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(odbc<span class="sc">::</span><span class="fu">odbc</span>(), <span class="st">"ecoinformatics"</span>, <span class="at">timeout =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>上面的指令中，<code>[dbConnect()](https://dbi.r-dbi.org/reference/dbconnect)</code> 是 DBI 套件連接資料庫的函式，裡頭的參數需包含資料庫的驅動程式(database driver)。以本例來說，是使用 <code>odbc::odbc()</code> 來連接 PostgreSQL 資料庫，而 “ecoinformatics” 則是我們寫在 <code>odbc.ini</code> 設定檔中的參數名稱；timeout 則是等待連接時間為 10 秒，超過後無法連接則回傳錯誤訊息。</p>
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-dbconnect" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://i.imgur.com/oyWIT9X.png" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">資料庫連結指令</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 5: 資料庫連結指令</figcaption><p></p>
 </figure>
 </div>
-<p>資料庫連結指令</p>
 <p>若成功連接的話，就能夠看到正確顯示範例資料庫 <code>ecoinformatics</code> 的畫面</p>
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-connect_db_successfully" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://i.imgur.com/7xRN3cO.png" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">成功連接資料庫的畫面</figcaption><p></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">圖 6: 成功連接資料庫的畫面</figcaption><p></p>
 </figure>
 </div>
 </section>

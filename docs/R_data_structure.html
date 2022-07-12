@@ -429,15 +429,15 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
      [,1] [,2] [,3]
-[1,]    1    2    9
-[2,]    3    8    5
-[3,]    6    7    4
+[1,]    4    2    3
+[2,]    1    7    9
+[3,]    6    8    5
 
 [[2]]
      [,1] [,2] [,3]
-[1,]    2    1    6
-[2,]    7    8    3
-[3,]    5    4    9</code></pre>
+[1,]    9    7    5
+[2,]    4    3    6
+[3,]    8    1    2</code></pre>
 </div>
 </div>
 <p>當看 list_xy 這個列表時，原本的 x 上方有 <code>[[1]]</code>，y 上方則有 <code>[[2]]</code> 來註記，這個是列表的編號。因此你可以使用 <code>list_xy[[1]]</code> 來取得編號 1 的矩陣資料。</p>
@@ -480,22 +480,22 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 <span id="cb25-5"><a href="#cb25-5"></a>x.m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1] [,2] [,3] [,4] [,5]
- [1,]   24   43    8    3    4
- [2,]   14   19   28   35   17
- [3,]   16   50   36   23   32
- [4,]   37   48    1    6   46
- [5,]   10    9   18   44   47
- [6,]   40   12   13   20   27
- [7,]   45   26   33   30   38
- [8,]   49    5   42   21   31
- [9,]   29   15   39   25   11
-[10,]    2   34   22   41    7</code></pre>
+ [1,]    5   47   49   41    8
+ [2,]    2   35   44   12   14
+ [3,]   31    9   25   19    7
+ [4,]   50    4   48   18   20
+ [5,]   46   17   24   15   32
+ [6,]   34   40   22   29   21
+ [7,]   26   27   33   13   28
+ [8,]   23   45   42   43   38
+ [9,]   37   36    3   10   11
+[10,]   30   39    6   16    1</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x.m[<span class="dv">3</span>,<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 32</code></pre>
+<pre><code>[1] 7</code></pre>
 </div>
 </div>
 <p>如果僅要列出某特定「列」或特定「行」，可以使用:</p>
@@ -503,33 +503,33 @@ Levels: valley &lt; lower slope &lt; upper slope &lt; ridge</code></pre>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># 列出第三列</span></span>
 <span id="cb29-2"><a href="#cb29-2"></a>x.m[<span class="dv">3</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 16 50 36 23 32</code></pre>
+<pre><code>[1] 31  9 25 19  7</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># 列出第三行</span></span>
 <span id="cb31-2"><a href="#cb31-2"></a>x.m[,<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  8 28 36  1 18 13 33 42 39 22</code></pre>
+<pre><code> [1] 49 44 25 48 24 22 33 42  3  6</code></pre>
 </div>
 </div>
 <p>另一個 R 強大的功能就是你可以指定特定列數、行數外， 還可以做邏輯判斷和數學運算，例如我們把第三列取 log 值：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">log10</span>(x.m[<span class="dv">3</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.204120 1.698970 1.556303 1.361728 1.505150</code></pre>
+<pre><code>[1] 1.4913617 0.9542425 1.3979400 1.2787536 0.8450980</code></pre>
 </div>
 </div>
 <p>或是條件篩選，把第三列中大於 30 的數字選出來</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>x.m[<span class="dv">3</span>,] <span class="sc">&gt;</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE  TRUE  TRUE FALSE  TRUE</code></pre>
+<pre><code>[1]  TRUE FALSE FALSE FALSE FALSE</code></pre>
 </div>
 </div>
 <p>你會發現它只會顯示邏輯判斷，即 True 或 False，若要顯示大於 30 的數字呢？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>x.m[<span class="dv">3</span>, x.m[<span class="dv">3</span>,]<span class="sc">&gt;</span><span class="dv">30</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 50 36 32</code></pre>
+<pre><code>[1] 31</code></pre>
 </div>
 </div>
 <p><a href="https://hackmd.io/toYS6t6BTAOFivs1mrnVGg">作業</a></p>

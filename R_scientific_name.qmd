@@ -11,9 +11,7 @@ crossref:
 
 ## 使用正規表示式來處理學名
 
-:::info
-tbw
-:::
+
 
 ## 使用 GNParser 來處理學名
 
@@ -22,14 +20,11 @@ GNParser 是 [Global Names Architecture (GNA)](http://globalnames.org)底下的�
 **案例：把學名去除掉命名者**
 
 鹽膚木的學名為 *Rhus javanica* L. 作者為林奈(L.)，若要去掉命名者則是把 *javanica* 後面全部刪除就行了。
-    
 但若是有種以下位階者，例如羅氏鹽膚木
 
 *Rhus javanica* L. var. *roxburghii* (DC.) Rehd. & E.H. Wilson
 
 其中 (DC.) Rehd. & E.H. Wilson 為此變種學名的作者，若要全部移除作者，就要把 L. (基本異名[basionym]的作者)
-
-
 
 
 ### 安裝

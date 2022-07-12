@@ -323,16 +323,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>在處理生態或生物多樣性資料時，學名往往都會是一個棘手的問題。有些資料集內，用學名加作者；有些則是僅用學名不含作者。這些文字上可以使用正規表示式(regular expression)</p>
 <section id="使用正規表示式來處理學名" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="使用正規表示式來處理學名"><span class="header-section-number">1</span> 使用正規表示式來處理學名</h2>
-<div class="info">
-<p>tbw</p>
-</div>
 </section>
 <section id="使用-gnparser-來處理學名" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="使用-gnparser-來處理學名"><span class="header-section-number">2</span> 使用 GNParser 來處理學名</h2>
 <p>GNParser 是 <a href="http://globalnames.org">Global Names Architecture (GNA)</a>底下的一個專案。GNA 主要的目的是提供處理生物物種線上資訊服務，除了建立索引、檢核學名，也能在文件中查找學名。而 GNParser 能夠把複雜的學名拆解成許多元件，例如：</p>
 <p><strong>案例：把學名去除掉命名者</strong></p>
-<p>鹽膚木的學名為 <em>Rhus javanica</em> L. 作者為林奈(L.)，若要去掉命名者則是把 <em>javanica</em> 後面全部刪除就行了。</p>
-<p>但若是有種以下位階者，例如羅氏鹽膚木</p>
+<p>鹽膚木的學名為 <em>Rhus javanica</em> L. 作者為林奈(L.)，若要去掉命名者則是把 <em>javanica</em> 後面全部刪除就行了。 但若是有種以下位階者，例如羅氏鹽膚木</p>
 <p><em>Rhus javanica</em> L. var. <em>roxburghii</em> (DC.) Rehd. &amp; E.H. Wilson</p>
 <p>其中 (DC.) Rehd. &amp; E.H. Wilson 為此變種學名的作者，若要全部移除作者，就要把 L. (基本異名[basionym]的作者)</p>
 <section id="安裝" class="level3" data-number="2.1">

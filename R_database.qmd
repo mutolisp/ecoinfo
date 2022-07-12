@@ -136,26 +136,22 @@ CREATE DATABASE ecoinformatics WITH OWNER = ruser;
 
 2. 設定權限，讓 ruser 可以登入並建立資料庫，即開啟 “Can login?” 和 “Create databases?”。設定完之後按 Save
 
-   ![設定 postgres 權限](https://i.imgur.com/bKkIUfR.png){#fig-grant_db_priviledge}
+![設定 postgres 權限](https://i.imgur.com/bKkIUfR.png){#fig-grant_db_priviledge}
 
 3. 建立資料庫：在左邊選單中的 Databases 按滑鼠右鍵，選擇 “Create” > “Databases..”。輸入資料庫名稱，這邊以 ecoinformatics 為範例，Owner 選擇 ruser。最後按 Save 建立資料庫。
 
-   ![](https://i.imgur.com/MGuoWGd.jpg)
+![建立資料庫](https://i.imgur.com/MGuoWGd.jpg){#fig-create_database_with_pgsql}
 
-  
 
 
 ## 3. 在 RStudio 中使用資料庫
 
 ### 連接資料庫
 
-開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下)。點選我們建立的 ecoinformatics odbc 設定
+開啟 RStudio 後，在右上方的面板中按 New Connection 來建立資料庫連結(如下 @fig-create_db_connection)。
+點選我們建立的 ecoinformatics odbc 設定
 
-![ 建立一筆與資料庫的連結](https://i.imgur.com/V8a594Q.png)
-
-![ 建立一筆與資料庫的連結](course/生態資訊學/講義/讓%20Rstudio%20支援資料庫/Rstudio_createdb_connection.png)
-
- 建立一筆與資料庫的連結
+![建立一筆與資料庫的連結](https://i.imgur.com/V8a594Q.png){#fig-create_db_connection}
 
 點選完 ecoinformatics 之後，會開啟詳細參數的設定(圖3.1.2)，你可以在這裡選擇把參數丟進 R Console 或是新建一個  R Script 把指令丟出去，之後再執行指令建立一筆資料庫連結。透過 DBI 套件去連結的指令如下：
 
@@ -166,15 +162,11 @@ con <- dbConnect(odbc::odbc(), "ecoinformatics", timeout = 10)
 
 上面的指令中，```[dbConnect()](https://dbi.r-dbi.org/reference/dbconnect)``` 是 DBI 套件連接資料庫的函式，裡頭的參數需包含資料庫的驅動程式(database driver)。以本例來說，是使用 ```odbc::odbc()``` 來連接 PostgreSQL 資料庫，而 "ecoinformatics" 則是我們寫在 ```odbc.ini``` 設定檔中的參數名稱；timeout 則是等待連接時間為 10 秒，超過後無法連接則回傳錯誤訊息。
 
-![ 資料庫連結指令](https://i.imgur.com/oyWIT9X.png)
-
- 資料庫連結指令
+![資料庫連結指令](https://i.imgur.com/oyWIT9X.png){#fig-dbconnect}
 
 若成功連接的話，就能夠看到正確顯示範例資料庫 ```ecoinformatics``` 的畫面
 
-
-![成功連接資料庫的畫面](https://i.imgur.com/7xRN3cO.png)
-
+![成功連接資料庫的畫面](https://i.imgur.com/7xRN3cO.png){#fig-connect_db_successfully}
 
 ### 建立資料表(Table)
 

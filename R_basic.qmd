@@ -13,10 +13,9 @@ crossref:
 # 基本操作
 
 R 一開啟的時候會出現類似[終端機](https://zh.wikipedia.org/wiki/終端)的介面顯示，
-如下圖 2-1 所示，
+如下@fig-r_console 所示，
 
-![R Console](img/ch1_r_console.png){#fig-R_console}
-![R Console](https://i.imgur.com/nCQYyzq.png)
+![R Console](https://i.imgur.com/nCQYyzq.png){#fig-r_console}
 
 圖 2-1、R console (這裡以 RStudio 為例)
 

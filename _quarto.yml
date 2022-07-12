@@ -64,3 +64,4 @@ format:
     #    documentclass: scrreprt
   epub:
     css: epub-styles.css
+    toc: true
